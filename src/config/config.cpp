@@ -20,6 +20,7 @@ void Config::save(){
     QString input_serial = QString::fromStdString(m_serial);
     settings.setValue("m_serial", input_serial);
     settings.setValue("m_baudrate", m_baudrate);
+    settings.setValue("m_fullscreen", m_fullscreen);
 }
 
 void Config::load(){
@@ -32,5 +33,8 @@ void Config::load(){
     }
     if(settings.contains("m_baudrate")){
         m_baudrate = settings.value("m_baudrate").toInt();
+    }
+    if(settings.contains("m_fullscreen")){
+        m_fullscreen = settings.value("m_fullscreen").toBool();
     }
 }

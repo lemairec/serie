@@ -1,6 +1,7 @@
 #include "main_window.hpp"
 #include "../option_widget.hpp"
 #include "../../util/directory_manager.hpp"
+#include "../../framework.hpp"
 
 #include <QGridLayout>
 #include <QTabWidget>
@@ -71,12 +72,13 @@ void MainWindow::setupUi(){
     this->setCentralWidget(m_my_widget);
     
     
-    /*GpsFramework & f = GpsFramework::Instance();
+    Framework & f = Framework::Instance();
     if(f.m_config.m_fullscreen){
         showFullScreen();
     } else {
         creerMenu();
-    }*/
+    }
+    
     
     //showMaximized();
     //showFullScreen();

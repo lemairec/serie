@@ -26,6 +26,7 @@ class Config  {
 public:
     std::string m_serial;
     int m_baudrate = 115200;
+    bool m_fullscreen = true;
 
     Config();
     

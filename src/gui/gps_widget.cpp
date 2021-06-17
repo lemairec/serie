@@ -107,7 +107,7 @@ void GpsWidget::drawMessages(){
         drawText(s, x, y);
         y+= -inter;
         ++i;
-        if(i > 20){
+        if(y < 60){
             break;
         }
     }
