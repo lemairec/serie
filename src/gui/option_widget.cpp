@@ -1,6 +1,6 @@
 #include "option_widget.hpp"
 
-#include "gps_widget.hpp"
+#include "main_widget.hpp"
 #include "environnement.hpp"
 #include "qt/main_window.hpp"
 

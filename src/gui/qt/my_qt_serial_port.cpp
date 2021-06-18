@@ -4,7 +4,7 @@
 #include <QMetaEnum>
 #include <QSerialPortInfo>
 
-#include "../gps_widget.hpp"
+#include "../main_widget.hpp"
 
 #include "environnement.hpp"
 #include "../../util/directory_manager.hpp"
@@ -270,7 +270,7 @@ void MyQTSerialPorts::handlePilot(){
         }
         if(m_serial_searchs_i > 1000){
             analyseRecherche();
-            GpsWidget::Instance()->m_menuWidget.m_close = true;
+            MainWidget::instance()->m_menuWidget.m_close = true;
             m_serial_searchs_i = 0;
             
         }

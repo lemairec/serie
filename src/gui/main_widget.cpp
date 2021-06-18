@@ -1,4 +1,4 @@
-#include "gps_widget.hpp"
+#include "main_widget.hpp"
 
 #include <sstream>
 #include <fstream>
@@ -20,7 +20,7 @@ QPixmap * p;
 
 int l_bottom = 20;
 
-GpsWidget::GpsWidget()
+MainWidget::MainWidget()
 {
     
     m_imgMenu = loadImage("/images/menu.png");
@@ -28,31 +28,51 @@ GpsWidget::GpsWidget()
     //m_widgets.push_back(&m_satWidget);
     m_widgets.push_back(&m_menuWidget);
     m_widgets.push_back(&m_key_pad_widget);
+    m_widgets.push_back(&m_harxon_widget);
 }
 
-void GpsWidget::setSize(int width, int height){
+void MainWidget::setSize(int width, int height){
     BaseWidget::setSize(width, height);
     
     m_widthMax = m_width/2-50;
     m_heightMax = m_height/2-50;
     
+    m_harxon_widget.setSize(m_width, m_height);
     for(auto p : m_widgets){
         p->setSize(m_width, m_height);
     }
     m_key_pad_widget.setSize(m_width, m_height);
-     m_key_board_widget.setSize(m_width, m_height);
+    m_key_board_widget.setSize(m_width, m_height);
     
     m_buttonMenu.setResize(40, m_height-30, m_gros_button);
-    m_buttonSendMessage.setResize(0.7*m_width, 0.5*m_height, m_gros_button);
+    m_buttonSendMessage.setResize(m_width-100, 0.5*m_height, m_gros_button);
+    
+    int y = m_height-180;
+    int y2 = y+20;
+    int inter = 16;
+    int i = 0;
+    
+    m_categories.clear();
+    for(auto c : Framework::Instance().m_categories){
+        ButtonGui * b = new ButtonGui();
+        b->setResize(20, y2, 8);
+        b->m_labelInt = i;
+        
+        ++i;
+        y2+= inter;
+        m_categories.push_back(b);
+        
+    }
 }
 
-GpsWidget * GpsWidget::Instance(){
-    static GpsWidget gf;
+MainWidget * MainWidget::instance(){
+    static MainWidget gf;
     return &gf;
 }
 
-void GpsWidget::setPainter(QPainter * p){
+void MainWidget::setPainter(QPainter * p){
     BaseWidget::setPainter(p);
+    m_harxon_widget.setPainter(p);
     for(auto p2 : m_widgets){
         p2->setPainter(p);
     }
@@ -63,7 +83,7 @@ int max = 10000;
 
 
 
-void GpsWidget::draw(){
+void MainWidget::draw(){
     //scene = s;
     DEBUG("BEGIN");
     draw_force();
@@ -71,7 +91,7 @@ void GpsWidget::draw(){
 }
 
 
-void GpsWidget::draw_force(){
+void MainWidget::draw_force(){
     m_painter->setPen(m_penBlack);
     m_painter->setBrush(m_brushDarkGray);
     
@@ -79,6 +99,7 @@ void GpsWidget::draw_force(){
     m_painter->drawRect(0, m_height-60, m_width, 60);
     
     drawMessages();
+    drawCategories();
     drawButtons();
     
     for(auto p : m_widgets){
@@ -92,22 +113,61 @@ void GpsWidget::draw_force(){
     }
 }
 
-void GpsWidget::drawMessages(){
+void MainWidget::drawMessages(){
     m_painter->setBrush(m_brushWhite);
     
-    m_painter->drawRect(10, 60, m_width/2, m_height-140);
+    int x = 10;
+    int w = m_width-200;
+    int y = 60;
+    int h = m_height-60-20-180;
+    m_painter->drawRect(x, y, w, h);
     
-    int x = 20;
-    int y = 60+m_height-140-10;
+    int y2 = y-10+h;
     int inter = 16;
     
     Framework & f = Framework::Instance();
     int i = 0;
     for(auto s : f.m_messages_serial){
-        drawText(s, x, y);
-        y+= -inter;
+        if(y2 < y){
+            break;
+        }
+        drawText(s, x+10, y2);
+        y2+= -inter;
         ++i;
-        if(y < 60){
+        
+    }
+    
+}
+
+void MainWidget::drawCategories(){
+    m_painter->setBrush(m_brushWhite);
+    
+    int x = 10;
+    int w = m_width-200;
+    int y = m_height-180;
+    int h = 100;
+    m_painter->drawRect(x, y, w, h);
+    
+    int y2 = y+20;
+    int inter = 16;
+    
+    Framework & f = Framework::Instance();
+    int i = 0;
+    for(auto b : m_categories){
+        auto c = f.m_categories[b->m_labelInt];
+        if(c->m_enable){
+            drawButton(*b, COLOR_CHECK);
+        } else {
+            drawButton(*b, COLOR_OTHER);
+        }
+    }
+    for(auto s : f.m_categories){
+        drawText(s->m_begin, x+20, y2);
+        drawQText(QString::number(s->m_count), x+100, y2);
+        drawText(s->m_last, x+140, y2);
+        y2 += inter;
+        ++i;
+        if(y2 > y+h){
             break;
         }
     }
@@ -115,14 +175,14 @@ void GpsWidget::drawMessages(){
 }
 
 
-void GpsWidget::drawButtons(){
+void MainWidget::drawButtons(){
     drawButtonImage(m_buttonMenu, m_imgMenu);
     drawButton(m_buttonSendMessage);
-    drawText("envoyer message", m_buttonSendMessage.m_x, m_buttonSendMessage.m_y);
+    drawText("envoyer message", m_buttonSendMessage.m_x, m_buttonSendMessage.m_y, sizeText_little, true);
 }
 
 
-void GpsWidget::onMouse(int x, int y){
+void MainWidget::onMouse(int x, int y){
     Framework & f = Framework::Instance();
     
     size_t n = m_widgets.size();
@@ -132,6 +192,18 @@ void GpsWidget::onMouse(int x, int y){
             p->onMouse(x, y);
             return;
         }
+    }
+    
+    for(auto b : m_categories){
+        if(b->isActive(x, y)){
+            INFO("la " << b->m_labelInt);
+            auto c = f.m_categories[b->m_labelInt];
+            c->m_enable = !c->m_enable;
+            INFO("ici " << c->m_begin);
+        };
+    }
+    for(auto c : f.m_categories){
+        INFO(c->m_begin << " " << c->m_enable);
     }
     
     if(m_buttonMenu.isActive(x, y)){

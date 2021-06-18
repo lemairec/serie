@@ -1,22 +1,26 @@
-#ifndef GPS_WIDGET_H
-#define GPS_WIDGET_H
+#ifndef MAIN_WIDGET_H
+#define MAIN_WIDGET_H
 
 #include "base_widget.hpp"
 #include "option_widget.hpp"
 #include "menu_widget.hpp"
 #include "keyboard_widget.hpp"
+#include "harxon_widget.hpp"
 
-class GpsWidget : public BaseWidget {
-    GpsWidget();
+class MainWidget : public BaseWidget {
+    MainWidget();
 public:
-    static GpsWidget * Instance();
+    static MainWidget * instance();
     
     MenuWidget m_menuWidget;
+    HarxonWidget m_harxon_widget;
+    
     std::vector<BaseWidget *> m_widgets;
     
     KeyPadWidget m_key_pad_widget;
     KeyBoardWidget m_key_board_widget;
     
+    std::vector<ButtonGui *> m_categories;
     
     int m_widthMax;
     int m_heightMax;
@@ -35,6 +39,7 @@ public:
     void draw_force();
     void drawButtons();
     void drawMessages();
+    void drawCategories();
 
     
     void setSize(int width, int height);

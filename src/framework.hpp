@@ -15,6 +15,14 @@ public:
     virtual void onNewPoint() = 0;
 };
 
+class Categorie {
+public:
+    std::string m_begin;
+    int m_count = 0;
+    bool m_enable = true;
+    std::string m_last = "";
+};
+
 class Framework {
     Framework();
     
@@ -27,6 +35,8 @@ public:
     std::string m_messages_errors;
     void addError(std::string s);
     
+    void addCategorie(std::string s);
+    std::vector<Categorie*> m_categories;
     std::list<std::string> m_messages_serial;
     void addSerialMessage(std::string s);
     std::string m_message = "";

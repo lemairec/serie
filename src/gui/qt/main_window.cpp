@@ -19,7 +19,7 @@ void MyWidget::mouseReleaseEvent ( QMouseEvent * event ){
     int x = event->x()-5;
     int y = event->y()-5;
     
-    m_gpsWidget->onMouse(x, y);
+    m_main_widget->onMouse(x, y);
 }
 
 
@@ -63,9 +63,9 @@ void MainWindow::setupUi(){
     this->resize(800, 480);
     
     m_my_widget = new MyWidget();
-    m_gpsWidget = GpsWidget::Instance();
-    m_my_widget->m_gpsWidget = m_gpsWidget;
-    m_my_widget->m_gpsWidget->setSize(800, 480);
+    m_main_widget = MainWidget::instance();
+    m_my_widget->m_main_widget = m_main_widget;
+    m_my_widget->m_main_widget->setSize(800, 480);
     
 
     //m_my_widget->setupUi();
@@ -91,7 +91,7 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     DEBUG("begin");
     int width = event->size().width();
     int height = event->size().height();
-    m_gpsWidget->setSize(width, height);
+    m_main_widget->setSize(width, height);
     //m_gpsWidget->resizeEvent(event);
     DEBUG("end");
 }
