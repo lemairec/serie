@@ -52,7 +52,7 @@ Framework::Framework(){
 }
 
 void Framework::addSerialMessage(std::string s){
-    m_messages_serial.push_front("salut teuteu");
+    m_messages_serial.push_front(s);
 }
 
 void Framework::addCategorie(std::string s){
@@ -94,6 +94,13 @@ void Framework::addSerialChar(char c){
         m_message+=c;
     }
 }
+
+void Framework::sendMessages(const std::string & s){
+    m_serial_port.writeGpsSerialS(s);
+    std::string s2 = "===> " + s;
+    addSerialMessage(s2);
+}
+
 
 
 Framework & Framework::Instance(){

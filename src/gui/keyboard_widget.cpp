@@ -119,7 +119,10 @@ void KeyBoardWidget::setSize(int width, int height){
     int y = y1;
     int x = m_x+m_lg/2-4.5*inter;
     m_button_virgule.setResize(x, y, rayon);
-    m_button_dollard.setResize(x+inter, y, rayon);
+    x += inter;
+    m_button_dollard.setResize(x, y, rayon);
+    x += inter;
+    m_button_space_2.setResize(x, y, rayon);
     
     y = y1+inter;
     x = m_x+m_lg/2-4.5*inter;
@@ -237,6 +240,7 @@ void KeyBoardWidget::draw(){
     myDrawButton(&m_button_virgule, ",");
     myDrawButton(&m_button_dollard, "$");
     myDrawButton(&m_buttonSpace, "_");
+    myDrawButton(&m_button_space_2, " ");
     
     myDrawButton(&m_button_ok, "ok");
 }
@@ -324,6 +328,8 @@ void KeyBoardWidget::onMouse(int x, int y){
         addLetter(",");
     } else if(m_button_dollard.isActive(x, y)){
         addLetter("$");
+    } else if(m_button_space_2.isActive(x, y)){
+        addLetter(" ");
     } else if(m_button_ok.isActive(x, y)){
         if(m_value){
             m_value->m_text = m_res.toUtf8().constData();

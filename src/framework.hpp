@@ -42,6 +42,8 @@ public:
     std::string m_message = "";
     void addSerialChar(char c);
     
+    void sendMessages(const std::string & m);
+    
     Config m_config;
     
     MyQTSerialPorts m_serial_port;

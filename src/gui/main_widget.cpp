@@ -28,7 +28,7 @@ MainWidget::MainWidget()
     //m_widgets.push_back(&m_satWidget);
     m_widgets.push_back(&m_menuWidget);
     m_widgets.push_back(&m_key_pad_widget);
-    m_widgets.push_back(&m_harxon_widget);
+    m_widgets.push_back(&m_harxon_widget    );
 }
 
 void MainWidget::setSize(int width, int height){
@@ -196,14 +196,9 @@ void MainWidget::onMouse(int x, int y){
     
     for(auto b : m_categories){
         if(b->isActive(x, y)){
-            INFO("la " << b->m_labelInt);
             auto c = f.m_categories[b->m_labelInt];
             c->m_enable = !c->m_enable;
-            INFO("ici " << c->m_begin);
         };
-    }
-    for(auto c : f.m_categories){
-        INFO(c->m_begin << " " << c->m_enable);
     }
     
     if(m_buttonMenu.isActive(x, y)){
@@ -218,8 +213,7 @@ void MainWidget::onMouse(int x, int y){
             QString s2 = m_key_board_widget.m_res;
             s2 += "\n";
             std::string s = s2.toUtf8().constData();
-            INFO(s);
-            f.m_serial_port.writeGpsSerialS(s);
+            f.sendMessages(s);
         }
     }
 }

@@ -45,6 +45,7 @@ class KeyBoardWidget : public BaseWidget {
     
     ButtonGui m_button_virgule;
     ButtonGui m_button_dollard;
+    ButtonGui m_button_space_2;
     ButtonGui m_buttonA;
     ButtonGui m_buttonB;
     ButtonGui m_buttonC;
