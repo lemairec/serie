@@ -139,6 +139,7 @@ void KeyBoardWidget::setSize(int width, int height){
     
     y = y1+2*inter;
     x = m_x+m_lg/2-4.5*inter;
+    m_button_maj.setResize(x-inter, y, rayon);
     m_buttonA.setResize(x, y, rayon);
     m_buttonZ.setResize(x+inter, y, rayon);
     m_buttonE.setResize(x+2*inter, y, rayon);
@@ -176,6 +177,7 @@ void KeyBoardWidget::setSize(int width, int height){
     
     //m_button_point.setResize(x, y, rayon);
     m_button_ok.setResize(x+8*inter, y, rayon);
+    m_button_cancel.setResize(x+9*inter, y, rayon);
     
 }
 
@@ -201,32 +203,63 @@ void KeyBoardWidget::draw(){
     s = m_res;
     drawQText(s, m_x+m_lg/2, 0.25*m_height, sizeText_big, true);
     
-    myDrawButton(&m_buttonA, "A");
-    myDrawButton(&m_buttonB, "B");
-    myDrawButton(&m_buttonC, "C");
-    myDrawButton(&m_buttonD, "D");
-    myDrawButton(&m_buttonE, "E");
-    myDrawButton(&m_buttonF, "F");
-    myDrawButton(&m_buttonG, "G");
-    myDrawButton(&m_buttonH, "H");
-    myDrawButton(&m_buttonI, "I");
-    myDrawButton(&m_buttonJ, "J");
-    myDrawButton(&m_buttonK, "K");
-    myDrawButton(&m_buttonL, "L");
-    myDrawButton(&m_buttonM, "M");
-    myDrawButton(&m_buttonN, "N");
-    myDrawButton(&m_buttonO, "O");
-    myDrawButton(&m_buttonP, "P");
-    myDrawButton(&m_buttonQ, "Q");
-    myDrawButton(&m_buttonR, "R");
-    myDrawButton(&m_buttonS, "S");
-    myDrawButton(&m_buttonT, "T");
-    myDrawButton(&m_buttonU, "U");
-    myDrawButton(&m_buttonV, "V");
-    myDrawButton(&m_buttonW, "W");
-    myDrawButton(&m_buttonX, "X");
-    myDrawButton(&m_buttonY, "Y");
-    myDrawButton(&m_buttonZ, "Z");
+    if(m_maj){
+        myDrawButton(&m_button_maj, "maj");
+        myDrawButton(&m_buttonA, "A");
+        myDrawButton(&m_buttonB, "B");
+        myDrawButton(&m_buttonC, "C");
+        myDrawButton(&m_buttonD, "D");
+        myDrawButton(&m_buttonE, "E");
+        myDrawButton(&m_buttonF, "F");
+        myDrawButton(&m_buttonG, "G");
+        myDrawButton(&m_buttonH, "H");
+        myDrawButton(&m_buttonI, "I");
+        myDrawButton(&m_buttonJ, "J");
+        myDrawButton(&m_buttonK, "K");
+        myDrawButton(&m_buttonL, "L");
+        myDrawButton(&m_buttonM, "M");
+        myDrawButton(&m_buttonN, "N");
+        myDrawButton(&m_buttonO, "O");
+        myDrawButton(&m_buttonP, "P");
+        myDrawButton(&m_buttonQ, "Q");
+        myDrawButton(&m_buttonR, "R");
+        myDrawButton(&m_buttonS, "S");
+        myDrawButton(&m_buttonT, "T");
+        myDrawButton(&m_buttonU, "U");
+        myDrawButton(&m_buttonV, "V");
+        myDrawButton(&m_buttonW, "W");
+        myDrawButton(&m_buttonX, "X");
+        myDrawButton(&m_buttonY, "Y");
+        myDrawButton(&m_buttonZ, "Z");
+    } else {
+        myDrawButton(&m_button_maj, "MAJ");
+        myDrawButton(&m_buttonA, "a");
+        myDrawButton(&m_buttonB, "b");
+        myDrawButton(&m_buttonC, "c");
+        myDrawButton(&m_buttonD, "d");
+        myDrawButton(&m_buttonE, "e");
+        myDrawButton(&m_buttonF, "f");
+        myDrawButton(&m_buttonG, "g");
+        myDrawButton(&m_buttonH, "h");
+        myDrawButton(&m_buttonI, "i");
+        myDrawButton(&m_buttonJ, "j");
+        myDrawButton(&m_buttonK, "k");
+        myDrawButton(&m_buttonL, "l");
+        myDrawButton(&m_buttonM, "m");
+        myDrawButton(&m_buttonN, "n");
+        myDrawButton(&m_buttonO, "o");
+        myDrawButton(&m_buttonP, "p");
+        myDrawButton(&m_buttonQ, "q");
+        myDrawButton(&m_buttonR, "r");
+        myDrawButton(&m_buttonS, "s");
+        myDrawButton(&m_buttonT, "t");
+        myDrawButton(&m_buttonU, "u");
+        myDrawButton(&m_buttonV, "v");
+        myDrawButton(&m_buttonW, "w");
+        myDrawButton(&m_buttonX, "x");
+        myDrawButton(&m_buttonY, "y");
+        myDrawButton(&m_buttonZ, "z");
+    }
     myDrawButton(&m_button1, "1");
     myDrawButton(&m_button2, "2");
     myDrawButton(&m_button3, "3");
@@ -243,14 +276,32 @@ void KeyBoardWidget::draw(){
     myDrawButton(&m_button_space_2, " ");
     
     myDrawButton(&m_button_ok, "ok");
+    myDrawButton(&m_button_cancel, "cancel");
 }
 
 void KeyBoardWidget::addLetter(QString se){
     m_res = m_res + se;
 }
 
+
+
+void KeyBoardWidget::addLetter2(QString se1, QString se2){
+    if(m_maj){
+        m_res = m_res + se1;
+    } else {
+        m_res = m_res + se2;
+    }
+}
+
+void KeyBoardWidget::removeLetter(){
+    m_res = m_res.left(m_res.size()-1);
+}
+
+
 void KeyBoardWidget::onMouse(int x, int y){
-    if(m_button0.isActive(x, y)){
+    if(m_button_maj.isActive(x, y)){
+        m_maj = !m_maj;
+    } else if(m_button0.isActive(x, y)){
         addLetter("0");
     } else if(m_button1.isActive(x, y)){
         addLetter("1");
@@ -271,21 +322,21 @@ void KeyBoardWidget::onMouse(int x, int y){
     } else if(m_button9.isActive(x, y)){
         addLetter("9");
     } else if(m_buttonA.isActive(x, y)){
-        addLetter("A");
+        addLetter2("A", "a");
     } else if(m_buttonB.isActive(x, y)){
-        addLetter("B");
+        addLetter2("B", "b");
     } else if(m_buttonC.isActive(x, y)){
-        addLetter("C");
+        addLetter2("C", "c");
     } else if(m_buttonD.isActive(x, y)){
-        addLetter("D");
+        addLetter2("D", "d");
     } else if(m_buttonE.isActive(x, y)){
-        addLetter("E");
+        addLetter2("E", "e");
     } else if(m_buttonF.isActive(x, y)){
-        addLetter("F");
+        addLetter2("F", "f");
     } else if(m_buttonG.isActive(x, y)){
-        addLetter("G");
+        addLetter2("G", "g");
     } else if(m_buttonH.isActive(x, y)){
-        addLetter("H");
+        addLetter2("H", "h");
     } else if(m_buttonI.isActive(x, y)){
         addLetter("I");
     } else if(m_buttonJ.isActive(x, y)){
@@ -305,14 +356,14 @@ void KeyBoardWidget::onMouse(int x, int y){
     } else if(m_buttonQ.isActive(x, y)){
         addLetter("Q");
     } else if(m_buttonR.isActive(x, y)){
-        addLetter("R");
+        addLetter2("R", "r");
     } else if(m_buttonS.isActive(x, y)){
         addLetter("S");
     } else if(m_buttonT.isActive(x, y)){
-        addLetter("T");
+        addLetter2("T", "t");
     } else if(m_buttonU.isActive(x, y)){
-        addLetter("U");
-    } else if(m_buttonV.isActive(x, y)){
+        addLetter2("U", "u");
+     } else if(m_buttonV.isActive(x, y)){
         addLetter("V");
     } else if(m_buttonW.isActive(x, y)){
         addLetter("W");
@@ -334,6 +385,10 @@ void KeyBoardWidget::onMouse(int x, int y){
         if(m_value){
             m_value->m_text = m_res.toUtf8().constData();
         }
+        //m_res.clear();
+        m_close = true;
+    } else if(m_button_cancel.isActive(x, y)){
+        m_res.clear();
         m_close = true;
     }
     

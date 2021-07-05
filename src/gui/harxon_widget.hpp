@@ -6,14 +6,35 @@
 #include "menu_widget.hpp"
 #include "keyboard_widget.hpp"
 
-class HarxonWidget : public BaseWidget {
+class SerieButton {
 public:
-    HarxonWidget();
+    ButtonGui m_button;
+    double m_x, m_y;
+    std::string m_label;
+    std::string m_command;
+};
+
+class BaseWidgetSerie : public BaseWidget {
+    ButtonGui m_button_close;
+    QPixmap * m_imgClose;
+    std::vector<SerieButton*> m_buttons;
+public:
+    BaseWidgetSerie();
 
     void setSize(int width, int height);
     
+    void add(double x, double y, std::string label, std::string m_command);
     virtual void draw();
     virtual void onMouse(int x, int y);
 };
 
+class HarxonWidget : public BaseWidgetSerie {
+public:
+    HarxonWidget();
+};
+
+class MotorWidget : public BaseWidgetSerie {
+public:
+    MotorWidget();
+};
 #endif // GPS_WIDGET_H

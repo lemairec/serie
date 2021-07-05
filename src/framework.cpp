@@ -48,6 +48,7 @@ Framework::Framework(){
     addCategorie("$GPGGA");
     addCategorie("$GPRMC");
     addCategorie("$GPZDA");
+    addCategorie("CSQ");
     
 }
 
@@ -79,12 +80,11 @@ void Framework::addSerialChar(char c){
             }
             if(same){
                 c->m_count++;
+                c->m_last = s;
                 if(!c->m_enable){
-                    c->m_last = s;
                     return;
-                } else {
-                    c->m_last = "";
                 }
+                
             }
             
         }

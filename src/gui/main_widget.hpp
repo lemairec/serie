@@ -14,6 +14,7 @@ public:
     
     MenuWidget m_menuWidget;
     HarxonWidget m_harxon_widget;
+    MotorWidget m_motor_widget;
     
     std::vector<BaseWidget *> m_widgets;
     
@@ -29,6 +30,8 @@ public:
     
     
     ButtonGui m_buttonMenu;
+    ButtonGui m_buttonMenu2;
+    ButtonGui m_buttonMenu3;
     ButtonGui m_buttonSendMessage;
     
     bool m_debug = false;
@@ -44,8 +47,6 @@ public:
     
     void setSize(int width, int height);
     
-    
-    void mouseReleaseEvent ( QMouseEvent * event );
     
     void onMouse(int x, int y);
 };

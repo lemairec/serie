@@ -21,3 +21,14 @@ $CFG IMU TILTZERO\r\n
 
 $CFG NET orange\r\n
 $CFG NTRIP ip port NOVP user pass 3\r\n
+
+$CFG NET free
+$CFG NTRIP 51.68.227.135 2101 NOVP teuteu teuteu 3
+```
+Hadrien Callens
+Hadrien, date d’envoi : Aujourd’hui, à 19:27
+$CFG NTRIP 51.68.227.135 8083 VRSAGTF lemairec lemairec 3
+$CFG NTRIP 51.68.227.135 8083 VRSAGTFGG lemairec lemairec 3
+$CFG NTRIP 51.68.227.135 8083 NRSAGTF lemairec lemairec 3
+    addLetter2("R", "r");
+    

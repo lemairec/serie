@@ -28,7 +28,8 @@ MainWidget::MainWidget()
     //m_widgets.push_back(&m_satWidget);
     m_widgets.push_back(&m_menuWidget);
     m_widgets.push_back(&m_key_pad_widget);
-    m_widgets.push_back(&m_harxon_widget    );
+    m_widgets.push_back(&m_harxon_widget);
+    m_widgets.push_back(&m_motor_widget);
 }
 
 void MainWidget::setSize(int width, int height){
@@ -45,6 +46,8 @@ void MainWidget::setSize(int width, int height){
     m_key_board_widget.setSize(m_width, m_height);
     
     m_buttonMenu.setResize(40, m_height-30, m_gros_button);
+    m_buttonMenu2.setResize(120, m_height-30, m_petit_button);
+    m_buttonMenu3.setResize(160, m_height-30, m_petit_button);
     m_buttonSendMessage.setResize(m_width-100, 0.5*m_height, m_gros_button);
     
     int y = m_height-180;
@@ -177,6 +180,8 @@ void MainWidget::drawCategories(){
 
 void MainWidget::drawButtons(){
     drawButtonImage(m_buttonMenu, m_imgMenu);
+    drawButton(m_buttonMenu2);
+    drawButton(m_buttonMenu3);
     drawButton(m_buttonSendMessage);
     drawText("envoyer message", m_buttonSendMessage.m_x, m_buttonSendMessage.m_y, sizeText_little, true);
 }
@@ -203,6 +208,10 @@ void MainWidget::onMouse(int x, int y){
     
     if(m_buttonMenu.isActive(x, y)){
         m_menuWidget.m_close = false;
+    } else if(m_buttonMenu2.isActive(x, y)){
+        m_harxon_widget.m_close = false;
+    } else if(m_buttonMenu3.isActive(x, y)){
+        m_motor_widget.m_close = false;
     } else if(m_buttonSendMessage.isActive(x, y)){
         m_key_board_widget.m_close = false;
         
@@ -211,7 +220,7 @@ void MainWidget::onMouse(int x, int y){
         m_key_board_widget.onMouse(x, y);
         if(m_key_board_widget.m_close){
             QString s2 = m_key_board_widget.m_res;
-            s2 += "\n";
+            s2 += "\r\n";
             std::string s = s2.toUtf8().constData();
             f.sendMessages(s);
         }

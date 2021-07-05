@@ -84,10 +84,13 @@ class KeyBoardWidget : public BaseWidget {
     ButtonGui m_button9;
     ButtonGui m_buttonSpace;
     ButtonGui m_button_ok;
+    ButtonGui m_button_cancel;
+    ButtonGui m_button_maj;
     
     void myDrawButton(ButtonGui *, QString s);
     
     ValueGuiKeyBoard * m_value = NULL;
+    bool m_maj = true;
 public:
     QString m_res;
     
@@ -104,6 +107,8 @@ public:
     }
     
     void addLetter(QString se);
+    void addLetter2(QString se1, QString se2);
+    void removeLetter();
 };
 
 

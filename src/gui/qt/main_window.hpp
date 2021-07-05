@@ -46,6 +46,20 @@ protected:
     void onNewPoint();
     void creerMenu();
 
+    void keyPressEvent(QKeyEvent *event){
+        if(event->key() == Qt::Key_Backspace){
+            m_my_widget->m_main_widget->m_key_board_widget.removeLetter();
+        } else{
+            INFO("tata " << event->key());
+            m_my_widget->m_main_widget->m_key_board_widget.addLetter(event->text());
+        }
+        
+    }
+    
+    void keyReleaseEvent(QKeyEvent *event){
+        INFO("tutu");
+    }
+    
 signals:
     void onValueChangeSignal();
 
