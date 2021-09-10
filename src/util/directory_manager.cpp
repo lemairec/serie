@@ -34,7 +34,7 @@ void DirectoryManager::readFile(){
 DirectoryManager::DirectoryManager(){
     readFile();
     if(m_source_dir.empty()){
-        ofstream myfile ("path.txt");
+        ofstream myfile ("path_serie.txt");
         if (myfile.is_open())
         {
             myfile << ProjectSourceBin2;
