@@ -13,7 +13,7 @@ DirectoryManager & DirectoryManager::Instance(){
 
 void DirectoryManager::readFile(){
     string line;
-    ifstream myfile ("path.txt");
+    ifstream myfile ("path_serie.txt");
     int i =0;
     if (myfile.is_open())
     {
