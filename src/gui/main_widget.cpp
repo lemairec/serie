@@ -44,10 +44,16 @@ void MainWidget::setSize(int width, int height){
     }
     m_key_pad_widget.setSize(m_width, m_height);
     m_key_board_widget.setSize(m_width, m_height);
+
     
-    m_buttonMenu.setResize(40, m_height-30, m_gros_button);
-    m_buttonMenu2.setResize(120, m_height-30, m_petit_button);
-    m_buttonMenu3.setResize(160, m_height-30, m_petit_button);
+    int inter_x = m_petit_button*3;
+    int x = inter_x;
+    m_buttonMenu.setResize(x, m_height-30, m_gros_button);
+    x += inter_x;
+    x += inter_x;
+    m_buttonMenu2.setResize(x, m_height-30, m_petit_button);
+    x += inter_x;
+    m_buttonMenu3.setResize(x, m_height-30, m_petit_button);
     m_buttonSendMessage.setResize(m_width-100, 0.5*m_height, m_gros_button);
     
     int y = m_height-180;
