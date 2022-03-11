@@ -51,9 +51,13 @@ void BaseWidgetSerie::add(double x, double y, std::string label, std::string com
 }
 
 HarxonWidget::HarxonWidget(){
-    add(0.2, 0.2, "NOVP teuteu", "$CFG NTRIP 51.68.227.135 2101 NOVP teuteu teuteu 3\r\n");
+    add(0.2, 0.2, "NOVP lemairec", "$CFG NTRIP 51.68.227.135 2101 NOVP lemairec lemairec 3\r\n");
     add(0.2, 0.4, "NRSAGTF lemairec", "$CFG NTRIP 51.68.227.135 8083 NRSAGTF lemairec lemairec 3\r\n");
     add(0.2, 0.6, "VRSAGTF lemairec", "$CFG NTRIP 51.68.227.135 8083 VRSAGTF lemairec lemairec 3\r\n");
+    add(0.2, 0.7, "Free APN", "$CFG NET free\r\n");
+    
+    
+    
 }
 
 MotorWidget::MotorWidget(){
