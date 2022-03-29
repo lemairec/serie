@@ -17,7 +17,6 @@ if(APPLE)
 endif()
 
 FIND_PACKAGE(Qt5Core)
-find_library(PTHREAD pthread)
 
 set(CMAKE_AUTOMOC ON)
 
@@ -42,7 +41,7 @@ FIND_PACKAGE(Qt5Core)
 add_executable(serie ${sources})
 qt5_use_modules(serie Widgets SerialPort)
 
-target_link_libraries(serie ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} ${PTHREAD})
+target_link_libraries(serie ${Boost_LIBRARIES})
 
 ###
 # grouping files for visual studio or xcode
