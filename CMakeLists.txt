@@ -27,7 +27,7 @@ if(UNIX)
     #ADD_DEFINITIONS(-g -Wall)
 endif()
 
-find_package(Boost REQUIRED COMPONENTS system thread)
+find_package(Boost REQUIRED COMPONENTS system)
 include_directories( ${Boost_INCLUDE_DIR}   )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
