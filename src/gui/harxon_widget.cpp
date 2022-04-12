@@ -51,12 +51,22 @@ void BaseWidgetSerie::add(double x, double y, std::string label, std::string com
 }
 
 HarxonWidget::HarxonWidget(){
-    add(0.2, 0.3, "NOVP lemairec", "$CFG NTRIP 51.68.227.135 2101 NOVP lemairec lemairec 3\r\n");
-    add(0.2, 0.45, "NRSAGTF lemairec", "$CFG NTRIP 51.68.227.135 8083 NRSAGTF lemairec lemairec 3\r\n");
-    add(0.2, 0.6, "VRSAGTF lemairec", "$CFG NTRIP 51.68.227.135 8083 VRSAGTF lemairec lemairec 3\r\n");
-    add(0.2, 0.75, "LAON centipede", "$CFG NTRIP caster.centipede.fr 2101 LAON centipede centipede 3\r\n");
-    add(0.6, 0.4, "Free APN", "$CFG NET free\r\n");
-    add(0.6, 0.6, "Thing Mobile APN", "$CFG NET TM\r\n");
+    double x = 0.2;
+    double y = 0.3;
+    double inter = 0.1;
+    
+    add(x, y, "NOVP lemairec", "$CFG NTRIP 51.68.227.135 2101 NOVP lemairec lemairec 3\r\n");
+    y+=inter;
+    add(x, y, "NRSAGTF lemairec", "$CFG NTRIP 51.68.227.135 8083 NRSAGTF lemairec lemairec 3\r\n");
+    y+=inter;
+    add(x, y, "VRSAGTF lemairec", "$CFG NTRIP 51.68.227.135 8083 VRSAGTF lemairec lemairec 3\r\n");
+    y+=inter;
+    add(x, y, "LAON centipede", "$CFG NTRIP caster.centipede.fr 2101 LAON centipede centipede 3\r\n");
+    x = 0.6;
+    y = 0.3;
+    add(x, y, "Free APN", "$CFG NET free\r\n");
+    y+=inter;
+    add(x, y, "Thing Mobile APN", "$CFG NET TM\r\n");
     
     
     
