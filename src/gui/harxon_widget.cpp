@@ -52,8 +52,9 @@ void BaseWidgetSerie::add(double x, double y, std::string label, std::string com
 
 HarxonWidget::HarxonWidget(){
     add(0.2, 0.3, "NOVP lemairec", "$CFG NTRIP 51.68.227.135 2101 NOVP lemairec lemairec 3\r\n");
-    add(0.2, 0.5, "NRSAGTF lemairec", "$CFG NTRIP 51.68.227.135 8083 NRSAGTF lemairec lemairec 3\r\n");
-    add(0.2, 0.7, "VRSAGTF lemairec", "$CFG NTRIP 51.68.227.135 8083 VRSAGTF lemairec lemairec 3\r\n");
+    add(0.2, 0.45, "NRSAGTF lemairec", "$CFG NTRIP 51.68.227.135 8083 NRSAGTF lemairec lemairec 3\r\n");
+    add(0.2, 0.6, "VRSAGTF lemairec", "$CFG NTRIP 51.68.227.135 8083 VRSAGTF lemairec lemairec 3\r\n");
+    add(0.2, 0.75, "LAON centipede", "$CFG NTRIP caster.centipede.fr 2101 LAON centipede centipede 3\r\n");
     add(0.6, 0.4, "Free APN", "$CFG NET free\r\n");
     add(0.6, 0.6, "Thing Mobile APN", "$CFG NET TM\r\n");
     
