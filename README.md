@@ -31,4 +31,5 @@ $CFG NTRIP 51.68.227.135 8083 VRSAGTF lemairec lemairec 3
 $CFG NTRIP 51.68.227.135 8083 VRSAGTFGG lemairec lemairec 3
 $CFG NTRIP 51.68.227.135 8083 NRSAGTF lemairec lemairec 3
     addLetter2("R", "r");
-    
+
+ $CFG ROVER GGA 1.00\r\n
