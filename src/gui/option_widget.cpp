@@ -105,7 +105,7 @@ void OptionWidget::draw(){
     }
 }
 
-void OptionWidget::onMouse(int x, int y){
+int OptionWidget::onMouse(int x, int y){
     
     if(m_button_close.isActive(x,y)){
         m_close = true;
@@ -136,6 +136,7 @@ void OptionWidget::onMouse(int x, int y){
             onMousePage6(x, y);
         }
     }
+    return 0;
 }
 
 
@@ -169,24 +170,24 @@ void OptionWidget::drawPage1(){
         
     drawText("titre", 0.5*m_width, 0.3*m_height);
     
-    drawSelectButtonGuiClose(m_select_serial);
+    /*drawSelectButtonGuiClose(m_select_serial);
     drawSelectButtonGuiClose(m_select_baudrates);
     
     
     drawSelectButtonGuiOpen(m_select_baudrates);
-    drawSelectButtonGuiOpen(m_select_serial);
+    drawSelectButtonGuiOpen(m_select_serial);*/
         
 }
 
 void OptionWidget::onMousePage1(int x, int y){
     Framework & f = Framework::Instance();
-    if(onMouseSelectButton(m_select_serial, x, y)){
+    /*if(onMouseSelectButton(m_select_serial, x, y)){
         f.m_config.m_serial = m_select_serial.getValueString();
         f.initOrLoadConfig();
     } else if(onMouseSelectButton(m_select_baudrates, x, y)){
         f.m_config.m_baudrate = m_select_baudrates.getValueInt();
         f.initOrLoadConfig();
-    }
+    }*/
 }
 
 

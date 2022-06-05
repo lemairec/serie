@@ -1,5 +1,6 @@
 #include "include_qt.hpp"
 #include "../main_widget.hpp"
+#include "../../util/log.hpp"
 
 class MyWidget : public QWidget
 {
@@ -33,7 +34,7 @@ class MainWindow : public QMainWindow
     explicit MainWindow(QWidget *parent = 0);
     
 public:
-    static MainWindow * Instance_ptr();
+    static MainWindow * instance();
     MyWidget * m_my_widget;
 
     ~MainWindow();
@@ -47,11 +48,19 @@ protected:
     void creerMenu();
 
     void keyPressEvent(QKeyEvent *event){
-        if(event->key() == Qt::Key_Backspace){
-            m_my_widget->m_main_widget->m_key_board_widget.removeLetter();
-        } else{
-            INFO("tata " << event->key());
-            m_my_widget->m_main_widget->m_key_board_widget.addLetter(event->text());
+        if(!m_my_widget->m_main_widget->m_key_board_widget.m_close){
+            if(event->key() == Qt::Key_Backspace){
+                m_my_widget->m_main_widget->m_key_board_widget.removeLetter();
+            } else{
+                INFO("tata " << event->key());
+                m_my_widget->m_main_widget->m_key_board_widget.addLetter(event->text());
+            }
+        } else {
+            if(event->key() == Qt::Key_Escape){
+                exit(1);
+            } else if(event->key() == Qt::Key_Q){
+                exit(1);
+            }
         }
         
     }
@@ -68,5 +77,6 @@ public slots:
     void onTimerSlot();
     
     void openFile();
-
+    void quitFullScreen();
+    
 };

@@ -193,7 +193,7 @@ void MainWidget::drawButtons(){
 }
 
 
-void MainWidget::onMouse(int x, int y){
+int MainWidget::onMouse(int x, int y){
     Framework & f = Framework::Instance();
     
     size_t n = m_widgets.size();
@@ -225,11 +225,12 @@ void MainWidget::onMouse(int x, int y){
     } else if(!m_key_board_widget.m_close){
         m_key_board_widget.onMouse(x, y);
         if(m_key_board_widget.m_close){
-            QString s2 = m_key_board_widget.m_res;
+            QString s2 = m_key_board_widget.getText();
             s2 += "\r\n";
             std::string s = s2.toUtf8().constData();
             f.sendMessages(s);
         }
     }
+    return 0;
 }
 

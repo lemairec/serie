@@ -1,7 +1,7 @@
 #ifndef MENU_WIDGET_H
 #define MENU_WIDGET_H
 
-#include "base_widget.hpp"
+#include "base/base_widget.hpp"
 #include "option_widget.hpp"
 
 class MenuWidget : public BaseWidget {
@@ -29,7 +29,7 @@ public:
     void setPainter(QPainter * s);
     
     virtual void draw();
-    virtual void onMouse(int x, int y);
+    virtual int onMouse(int x, int y);
     
 };
 

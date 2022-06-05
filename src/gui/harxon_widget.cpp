@@ -27,7 +27,7 @@ void BaseWidgetSerie::draw(){
     }
     
 };
-void BaseWidgetSerie::onMouse(int x, int y){
+int BaseWidgetSerie::onMouse(int x, int y){
     if(m_button_close.isActive(x,y)){
         m_close = true;
     }
@@ -37,6 +37,7 @@ void BaseWidgetSerie::onMouse(int x, int y){
         }
         //drawText(c->m_label,c->m_x*m_width +50, c->m_y*m_height);
     }
+    return 0;
     
 };
 

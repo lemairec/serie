@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 project(serie)
 
 # The version number.
-set (PROJECT_VERSION_MAJOR 21)
-set (PROJECT_VERSION_MINOR 07)
+set (PROJECT_VERSION_MAJOR 22)
+set (PROJECT_VERSION_MINOR 06)
 set (PROJECT_VERSION_PATCH 01)
 
 configure_file (

@@ -16,17 +16,19 @@
 #include "environnement.hpp"
 
 void MyWidget::mouseReleaseEvent ( QMouseEvent * event ){
-    int x = event->x()-5;
-    int y = event->y()-5;
-    
-    m_main_widget->onMouse(x, y);
+    if(m_main_widget){
+        int x = event->x();
+        int y = event->y();
+        
+        m_main_widget->onMouse(x, y);
+    }
 }
 
 
 
 
 
-MainWindow * MainWindow::Instance_ptr(){
+MainWindow * MainWindow::instance(){
     static MainWindow gf;
     return &gf;
 }
@@ -75,14 +77,15 @@ void MainWindow::setupUi(){
     Framework & f = Framework::Instance();
     if(f.m_config.m_fullscreen){
         showFullScreen();
-    } else {
-        creerMenu();
     }
     
     
     //showMaximized();
-    //showFullScreen();
     DEBUG("end");
+}
+
+void MainWindow::quitFullScreen(){
+    showNormal();
 }
 
 //debug

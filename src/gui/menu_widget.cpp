@@ -50,7 +50,7 @@ void MenuWidget::draw(){
     
     }
 }
-void MenuWidget::onMouse(int x, int y){
+int MenuWidget::onMouse(int x, int y){
     if(!m_options_widget.m_close){
         m_options_widget.onMouse(x, y);
     } else {
@@ -64,6 +64,6 @@ void MenuWidget::onMouse(int x, int y){
             m_options_widget.m_close = false;
         }
     }
-   
+    return 0;
     
 }

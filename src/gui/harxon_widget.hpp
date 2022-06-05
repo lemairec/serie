@@ -1,10 +1,10 @@
 #ifndef HARXON_WIDGET_H
 #define HARXON_WIDGET_H
 
-#include "base_widget.hpp"
+#include "base/base_widget.hpp"
 #include "option_widget.hpp"
 #include "menu_widget.hpp"
-#include "keyboard_widget.hpp"
+#include "base/keyboard_widget.hpp"
 
 class SerieButton {
 public:
@@ -25,7 +25,7 @@ public:
     
     void add(double x, double y, std::string label, std::string m_command);
     virtual void draw();
-    virtual void onMouse(int x, int y);
+    virtual int onMouse(int x, int y);
 };
 
 class HarxonWidget : public BaseWidgetSerie {

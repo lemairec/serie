@@ -1,7 +1,7 @@
 #ifndef OPTION_WIDGET_H
 #define OPTION_WIDGET_H
 
-#include "base_widget.hpp"
+#include "base/base_widget.hpp"
 
 class OptionWidget : public BaseWidget {
     QPixmap * m_imgClose;
@@ -41,7 +41,7 @@ public:
     void setSize(int width, int height);
     
     virtual void draw();
-    virtual void onMouse(int x, int y);
+    virtual int onMouse(int x, int y);
     
     //page_imu
     SelectButtonGui m_select_serial;

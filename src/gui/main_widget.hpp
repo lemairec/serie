@@ -1,10 +1,10 @@
 #ifndef MAIN_WIDGET_H
 #define MAIN_WIDGET_H
 
-#include "base_widget.hpp"
+#include "base/base_widget.hpp"
 #include "option_widget.hpp"
 #include "menu_widget.hpp"
-#include "keyboard_widget.hpp"
+#include "base/keyboard_widget.hpp"
 #include "harxon_widget.hpp"
 
 class MainWidget : public BaseWidget {
@@ -48,7 +48,7 @@ public:
     void setSize(int width, int height);
     
     
-    void onMouse(int x, int y);
+    int onMouse(int x, int y);
 };
 
 #endif // GPS_WIDGET_H

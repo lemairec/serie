@@ -25,7 +25,7 @@ class MyQTSerialPorts : public QObject{
     std::vector<std::string> m_serials;
     std::map<std::string, SerialSearch *> m_serial_searchs;
     
-    int m_pilot_langage = PILOT_LANGAGE_ARDUINO;
+    int m_pilot_langage = 0;
 public:
     int m_serial_searchs_i = 0;
     

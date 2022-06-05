@@ -20,25 +20,7 @@ MyQTSerialPorts::MyQTSerialPorts(){
 }
 void MyQTSerialPorts::initOrLoad(Config & config){
     DEBUG("begin");
-    INFO(m_serial << " " << config.m_serial);
-    //m_pilot_langage = config.m_pilot_langage;
-    
-    if(config.m_serial != "none" && config.m_serial != "file"){
-        if(m_serial == config.m_serial && m_serialPort.isOpen()){
-            INFO("gps port already open");
-        } else {
-            if(m_serialPort.isOpen()){
-                m_serialPort.close();
-            }
-            m_serial = config.m_serial;
-            m_serialPort.setPortName(QString::fromStdString(m_serial));
-            m_serialPort.setBaudRate(config.m_baudrate);
-            if (!m_serialPort.open(QIODevice::ReadWrite)) {
-                std::ostringstream oss;
-                oss << "Failed to open gps port " << m_serial << ", error:" << m_serialPort.errorString().toUtf8().constData();
-            }
-        }
-    }
+
     
     /*m_timerPilot.stop();
     m_timerPilot.start(1000/config.m_pilot_frequence);*/
@@ -55,11 +37,9 @@ void MyQTSerialPorts::closeAll(){
 
 void MyQTSerialPorts::handleReadyReadGps(){
     DEBUG("begin");
-    QByteArray a = m_serialPort.readAll();
-    Framework & f = Framework::Instance();
-    for(int i = 0; i < (int)a.size(); ++i){
-        f.addSerialChar((char)(a.data()[i]));
-    }
+    //QByteArray a = m_serialPort.readAll();
+    //Framework & f = Framework::Instance();
+    
     //INFO(s);
     
     DEBUG("end");
@@ -216,7 +196,7 @@ void MyQTSerialPorts::analyseRecherche(){
 #include <sstream>
 
 std::string execute3(std::string cmd){
-    std::string file = DirectoryManager::Instance().getBinDirectory() + "/tmp_cmd";
+    std::string file = DirectoryManager::Instance().getDataDirectory() + "/tmp_cmd";
     std::string cmd2 = cmd + " > " + file;
     system(cmd2.c_str());
     std::ifstream infile(file);
@@ -254,7 +234,7 @@ void MyQTSerialPorts::handlePilot(){
     DEBUG("begin");
     //INFO("coucou je suis ici");
     
-    if(m_pilot_langage == PILOT_LANGAGE_HADRIEN){
+    if(m_pilot_langage == 0){
         //TODOGpsFramework::Instance().m_pilotModule.handleHadrien();
         //GpsFramework::Instance().m_pilotModule.update();
     } else {

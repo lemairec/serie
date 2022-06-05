@@ -1,4 +1,5 @@
-#include "../../logging.hpp"
+#pragma once
+
 #include <QMainWindow>
 #include <QApplication>
 #include <QDate>
@@ -7,5 +8,4 @@
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
 #include <QMouseEvent>
-#include <QKeyEvent>
 #include <QGraphicsPixmapItem>

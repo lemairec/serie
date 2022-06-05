@@ -13,6 +13,8 @@ public:
     double m_moy;
     double m_et;
     
+    double m_sec_connected = 2.0;
+    
     void setNewTime(){
         auto begin = std::chrono::system_clock::now();
         std::chrono::duration<double> diff = begin - m_last_time_received;
@@ -26,7 +28,7 @@ public:
         auto begin = std::chrono::system_clock::now();
         std::chrono::duration<double> diff = begin - m_last_time_received;
 
-        if(diff.count() < 2.0){
+        if(diff.count() < m_sec_connected){
             return true;
         } else {
             return false;

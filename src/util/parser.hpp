@@ -13,18 +13,19 @@ public:
     void readFrame(const std::string & frame);
     void readChar(char c);
 
+    void resetBuffer();
 protected:
     size_t m_bufferIndLast = 0;
     char m_buffer[200];
     size_t m_tempInd = 0;
     
-    void resetBuffer();
     void error();
     void debug();
     
     virtual void parseBuffer() = 0;
     
     void readUntilCommat();
+    char readNextCharAndCommat();
     int getOneInt();
     int getIntWithChar(char c);
     int readNegInt();
