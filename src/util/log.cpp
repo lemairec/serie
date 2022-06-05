@@ -4,6 +4,7 @@
 #include "directory_manager.hpp"
 #include <iostream>
 #include <cerrno>
+#include <string.h>
 
 LogFile::LogFile(std::string path, Level levelMin)
    :ILogger(levelMin)
