@@ -429,6 +429,8 @@ bool BaseWidget::isActiveValueGuiKeyBoard(ValueGuiKeyBoard & value, int x, int y
  m_langage.addValue(Langage::getKey("EN"));
  m_langage.addValue(Langage::getKey("DE"));
  drawPart1Title(m_langage.m_y-2*m_y_inter, m_y_inter*3, "langue");
+ 
+ //draw
  drawButtonLabel2(m_langage.m_buttonOpen);
  
  if(m_select_widget.m_close){

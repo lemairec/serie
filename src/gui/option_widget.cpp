@@ -183,7 +183,7 @@ void OptionWidget::resizePage1(){
     
     m_select_serial.setResize(m_part_1_x+m_part_1_w/2, y, "OPT_CONN_CART", true, m_part_1_w/2);
     y+= inter;
-    m_select_baudrates.setResize(x, y, m_petit_button);
+    m_select_baudrates.setResize(m_part_1_x+m_part_1_w/2, y, "BAUDRATES", true, m_part_1_w/2);
     
     m_select_baudrates.clear();
     m_select_baudrates.addValueInt("9600", 9600);
@@ -203,9 +203,11 @@ void OptionWidget::drawPage1(){
     
     if(m_select_widget.m_close){
         m_select_serial.setValueString( f.m_config.m_serial);
+        m_select_baudrates.setValueInt( f.m_config.m_baudrate);
     }
     drawButtonLabel2(m_select_serial.m_buttonOpen);
-    
+    drawButtonLabel2(m_select_baudrates.m_buttonOpen);
+   
     /*drawSelectButtonGuiClose(m_select_serial);
     drawSelectButtonGuiClose(m_select_baudrates);
     
@@ -218,7 +220,20 @@ void OptionWidget::drawPage1(){
 void OptionWidget::onMousePage1(int x, int y){
     Framework & f = Framework::Instance();
     
+    if(!m_select_widget.m_close){
+        if(m_select_widget.onMouseSelect(x, y)){
+            std::string s = m_select_widget.m_selectButton->getValueString();
+            f.m_config.m_serial = m_select_serial.getValueString();
+            f.initOrLoadConfig();
+        }
+       
+        return;
+    }
     
+    if(m_select_serial.m_buttonOpen.isActive(x, y)){
+        m_select_widget.open();
+        m_select_widget.setValueGuiKeyPad(&m_select_serial);
+    }
     /*if(onMouseSelectButton(m_select_serial, x, y)){
         f.m_config.m_serial = m_select_serial.getValueString();
         f.initOrLoadConfig();

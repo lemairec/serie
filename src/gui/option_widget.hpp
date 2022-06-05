@@ -36,6 +36,8 @@ class OptionWidget : public BaseWidget {
     void drawPart2(double y, double h, std::string title);
     void drawPart1(double y, double h, std::string title);
     
+    
+    
     int m_x2, m_y2, m_width2, m_height2;
     int m_width3, m_y_title, m_y_begin, m_y_inter;
     int m_part_1_x, m_part_1_w, m_part_1_x2, m_part_1_x3, m_part_2_x, m_part_2_w, m_part_2_x2, m_part_2_x3;
@@ -48,6 +50,11 @@ public:
     
     virtual void draw();
     virtual int onMouse(int x, int y);
+    
+    virtual void setPainter(QPainter * p){
+        m_select_widget.setPainter(p);
+        m_painter = p;
+    }
     
     //page_imu
     SelectButtonGui m_select_serial;
