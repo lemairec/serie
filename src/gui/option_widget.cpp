@@ -31,7 +31,29 @@ OptionWidget::OptionWidget(){
 
 void OptionWidget::setSize(int width, int height){
     BaseWidget::setSize(width, height);
-    m_button_close.setResize(0.75*m_width, 0.83*m_height, m_gros_button);
+    
+    m_width2 = m_width;
+    m_height2 = m_height;
+    m_x2 = 0;
+    m_y2 = 0;
+    
+    m_y_title = m_y2+m_height*0.08;
+    m_y_inter = 0.08*m_height2;
+    m_y_begin = m_y_title+4*m_y_inter;
+    
+    
+    m_width3 = 0.9*m_width2;
+    m_part_1_x = m_width3*0.04;
+    m_part_1_w = m_width3*0.44;
+    m_part_1_x2 = m_part_1_x+0.1*m_width3*0.44;
+    m_part_1_x3 = m_part_1_x+0.8*m_width3*0.44;
+    m_part_2_x = m_width3*0.52;
+    m_part_2_w = m_width3*0.44;
+    m_part_2_x2 = m_part_2_x+0.1*m_width3*0.44;
+    m_part_2_x3 = m_part_2_x+0.8*m_width3*0.44;
+    
+    m_button_close.setResizeStd(0.75*m_width, m_y2+0.9*m_height2, "CLOSE");
+    m_select_widget.setSize(width, height);
     
     m_button_p1.setResize(0.1*m_width, 0.20*m_height, m_gros_button);
     m_button_p2.setResize(0.1*m_width, 0.30*m_height, m_gros_button);
@@ -51,12 +73,17 @@ void OptionWidget::setSize(int width, int height){
 
 void OptionWidget::draw(){
     m_painter->setPen(m_penBlack);
-    m_painter->setBrush(m_brushWhiteAlpha);
-    m_painter->drawRect(m_width*0.05, m_height*0.1, m_width*0.9, m_height*0.8);
-    m_painter->setBrush(m_brushDarkGray);
-    m_painter->drawRect(m_width*0.05, m_height*0.1, m_width*0.1, m_height*0.8);
+    m_painter->setBrush(m_brushGrayAlpha);
+    double h = m_height;
+    m_painter->drawRect(0, 0, m_width, h);
     
-    drawButtonImage(m_button_close, m_imgClose);
+    m_painter->setBrush(m_brushWhite);
+    m_painter->drawRect(m_x2, m_y2, m_width2, h);
+    
+    m_painter->setBrush(m_brushDarkGray);
+    m_painter->drawRect(m_width2*0.9 , m_y2, m_width2*0.1, h);
+    
+    drawButtonValidate(m_button_close);
     
     if(m_page == 1){
         drawButtonImage(m_button_p1, m_imgOptionBlanc);
@@ -102,6 +129,10 @@ void OptionWidget::draw(){
         drawPage6();
     } else {
         drawButtonImage(m_button_p6, m_imgVolantGris);
+    }
+    
+    if(!m_select_widget.m_close){
+        m_select_widget.draw();
     }
 }
 
@@ -150,7 +181,7 @@ void OptionWidget::resizePage1(){
     int y = 0.4*m_height;
     int inter = 0.1*m_height;
     
-    m_select_serial.setResize(x, y, m_petit_button);
+    m_select_serial.setResize(m_part_1_x+m_part_1_w/2, y, "OPT_CONN_CART", true, m_part_1_w/2);
     y+= inter;
     m_select_baudrates.setResize(x, y, m_petit_button);
     
@@ -170,6 +201,11 @@ void OptionWidget::drawPage1(){
         
     drawText("titre", 0.5*m_width, 0.3*m_height);
     
+    if(m_select_widget.m_close){
+        m_select_serial.setValueString( f.m_config.m_serial);
+    }
+    drawButtonLabel2(m_select_serial.m_buttonOpen);
+    
     /*drawSelectButtonGuiClose(m_select_serial);
     drawSelectButtonGuiClose(m_select_baudrates);
     
@@ -181,6 +217,8 @@ void OptionWidget::drawPage1(){
 
 void OptionWidget::onMousePage1(int x, int y){
     Framework & f = Framework::Instance();
+    
+    
     /*if(onMouseSelectButton(m_select_serial, x, y)){
         f.m_config.m_serial = m_select_serial.getValueString();
         f.initOrLoadConfig();

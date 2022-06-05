@@ -2,6 +2,7 @@
 #define OPTION_WIDGET_H
 
 #include "base/base_widget.hpp"
+#include "base/select_widget.hpp"
 
 class OptionWidget : public BaseWidget {
     QPixmap * m_imgClose;
@@ -34,7 +35,12 @@ class OptionWidget : public BaseWidget {
     
     void drawPart2(double y, double h, std::string title);
     void drawPart1(double y, double h, std::string title);
-
+    
+    int m_x2, m_y2, m_width2, m_height2;
+    int m_width3, m_y_title, m_y_begin, m_y_inter;
+    int m_part_1_x, m_part_1_w, m_part_1_x2, m_part_1_x3, m_part_2_x, m_part_2_w, m_part_2_x2, m_part_2_x3;
+    
+    SelectWidget m_select_widget;
 public:
     OptionWidget();
     

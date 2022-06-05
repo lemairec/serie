@@ -7,8 +7,8 @@
 #include <QThread>
 #include <time.h>
 #include <math.h>
-#include "logging.hpp"
 #include "util/stat.hpp"
+#include "util/log.hpp"
 
 class IGpsObserver {
 public:

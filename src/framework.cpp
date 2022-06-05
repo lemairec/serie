@@ -1,5 +1,4 @@
 #include "framework.hpp"
-#include "logging.hpp"
 #include "config/config.hpp"
 #include "environnement.hpp"
 #include "util/util.hpp"

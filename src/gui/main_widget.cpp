@@ -7,9 +7,9 @@
 #include <chrono>
 #include <iomanip>
 
-#include "../logging.hpp"
 #include "environnement.hpp"
 #include "../framework.hpp"
+#include "../util/log.hpp"
 
 
 #define MY_WIDTH 800
@@ -33,7 +33,15 @@ MainWidget::MainWidget()
 }
 
 void MainWidget::setSize(int width, int height){
-    BaseWidget::setSize(width, height);
+    {
+        BaseWidget::setSize(width, height);
+        int x_right = width-40;
+        int mil = width/2-35;
+        int inter = 0.09*height;
+        int y = inter*0.8;
+        m_buttonMenu.setResize(x_right, y, m_gros_button);
+    }
+    
     
     m_widthMax = m_width/2-50;
     m_heightMax = m_height/2-50;
@@ -48,7 +56,6 @@ void MainWidget::setSize(int width, int height){
     
     int inter_x = m_petit_button*3;
     int x = inter_x;
-    m_buttonMenu.setResize(x, m_height-30, m_gros_button);
     x += inter_x;
     x += inter_x;
     m_buttonMenu2.setResize(x, m_height-30, m_petit_button);
@@ -107,6 +114,8 @@ void MainWidget::draw_force(){
     m_painter->drawRect(0, 0, m_width, 40);
     m_painter->drawRect(0, m_height-60, m_width, 60);
     
+    drawMenuRight();
+    m_painter->setPen(m_penBlack);
     drawMessages();
     drawCategories();
     drawButtons();
@@ -183,6 +192,12 @@ void MainWidget::drawCategories(){
     
 }
 
+void MainWidget::drawMenuRight(){
+    m_painter->setPen(m_penNo);
+    m_painter->setBrush(m_brushDarkGray);
+    
+    m_painter->drawRect(m_width-80, 0, 80, m_height);
+}
 
 void MainWidget::drawButtons(){
     drawButtonImage(m_buttonMenu, m_imgMenu);

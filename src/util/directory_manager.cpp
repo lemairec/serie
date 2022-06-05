@@ -34,7 +34,7 @@ void DirectoryManager::readFile(){
 }
 
 void DirectoryManager::init(){
-    std::string dir = m_home+"/lemca_data/lemca";
+    std::string dir = m_home+"/lemca_data/serie";
     std::string s2 = "mkdir -p "+ dir + ";";
     std::cout << s2 << std::endl;;
     if(system( s2.c_str() )){
@@ -44,20 +44,20 @@ void DirectoryManager::init(){
 
 DirectoryManager::DirectoryManager(){
     m_home = std::getenv("HOME");
-    m_file_path = m_home + "/lemca_data/path_lemca.txt";
+    m_file_path = m_home + "/lemca_data/path_serie.txt";
     init();
     readFile();
     if(m_source_dir.empty()){
         ofstream myfile(m_file_path);
         if (myfile.is_open())
         {
-            myfile << m_home+"/lemca_data/lemca";
+            myfile << m_home+"/lemca_data/serie";
             myfile << std::endl;
             myfile << ProjectSourceDir2;
             myfile.close();
             std::cout << "write" << std::endl;
         } else {
-            m_data_dir = m_home+"/lemca_data/lemca";
+            m_data_dir = m_home+"/lemca_data/serie";
             m_source_dir = ProjectSourceDir2;
             std::cout << "not open :(" << std::endl;
             
@@ -65,7 +65,7 @@ DirectoryManager::DirectoryManager(){
         readFile();
     }
     m_log_file = m_data_dir+"/log.txt";
-    m_config_file = m_data_dir+"/lemca.ini";
+    m_config_file = m_data_dir+"/serie.ini";
     std::cout << "m_source_dir " << m_source_dir << std::endl;
     std::cout << "m_data_dir " << m_data_dir << std::endl;
     std::cout << "m_log_file " << m_log_file << std::endl;
