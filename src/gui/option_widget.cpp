@@ -177,7 +177,6 @@ int OptionWidget::onMouse(int x, int y){
 
 void OptionWidget::resizePage1(){
     //m_select_serial
-    int x = 0.3*m_width;
     int y = 0.4*m_height;
     int inter = 0.1*m_height;
     

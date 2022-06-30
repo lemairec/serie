@@ -36,7 +36,6 @@ void MainWidget::setSize(int width, int height){
     {
         BaseWidget::setSize(width, height);
         int x_right = width-40;
-        int mil = width/2-35;
         int inter = 0.09*height;
         int y = inter*0.8;
         m_buttonMenu.setResize(x_right, y, m_gros_button);
@@ -216,7 +215,7 @@ int MainWidget::onMouse(int x, int y){
         auto p = m_widgets[n-i-1];
         if(!p->m_close){
             p->onMouse(x, y);
-            return;
+            return 0;
         }
     }
     
