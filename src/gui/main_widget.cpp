@@ -69,6 +69,7 @@ void MainWidget::setSize(int width, int height){
     
     m_categories.clear();
     for(auto c : Framework::Instance().m_categories){
+        (void)c;
         ButtonGui * b = new ButtonGui();
         b->setResize(20, y2, 8);
         b->m_labelInt = i;
