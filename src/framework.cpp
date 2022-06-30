@@ -45,6 +45,7 @@ Framework::Framework(){
     m_config.load();
     
     addCategorie("$GPGGA");
+    addCategorie("$GPVTG");
     addCategorie("$GPRMC");
     addCategorie("$GPZDA");
     addCategorie("CSQ");
