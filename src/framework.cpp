@@ -63,6 +63,22 @@ void Framework::addCategorie(std::string s){
     
 }
 
+std::ofstream m_logFile;
+void Framework::changeSaveLog(){
+    m_save_log = !m_save_log;
+    if(m_save_log){
+        std::string path = "logserial.txt";
+        m_logFile.open(path);
+        if(m_logFile.fail()){
+            std::cerr << "open failure as expected: " << strerror(errno) << std::endl;
+            std::cerr << "Warning File fail " << path << std::endl;
+            exit(1);
+        }
+        m_logFile << "### begin ###" << std::endl;
+        m_logFile << "#############" << std::endl;
+    }
+}
+
 void Framework::addSerialChar(char c){
     if(c == '\n'){
         std::string s =m_message;
@@ -92,6 +108,9 @@ void Framework::addSerialChar(char c){
         
     } else {
         m_message+=c;
+    }
+    if(m_save_log){
+        m_logFile << c;
     }
 }
 

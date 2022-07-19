@@ -60,8 +60,6 @@ HarxonWidget::HarxonWidget(){
     y+=inter;
     add(x, y, "NRSAGTF lemairec", "$CFG NTRIP 51.68.227.135 8083 NRSAGTF lemairec lemairec 3\r\n");
     y+=inter;
-    add(x, y, "VRSAGTF lemairec", "$CFG NTRIP 51.68.227.135 8083 VRSAGTF lemairec lemairec 3\r\n");
-    y+=inter;
     add(x, y, "LAON centipede", "$CFG NTRIP caster.centipede.fr 2101 LAON centipede centipede 3\r\n");
     x = 0.6;
     y = 0.3;

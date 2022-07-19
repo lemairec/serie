@@ -33,6 +33,7 @@ public:
     ButtonGui m_buttonMenu2;
     ButtonGui m_buttonMenu3;
     ButtonGui m_buttonSendMessage;
+    ButtonGui m_buttonSaveLog;
     
     bool m_debug = false;
     

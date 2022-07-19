@@ -45,6 +45,8 @@ public:
     void sendMessages(const std::string & m);
     
     Config m_config;
+    bool m_save_log;
+    void changeSaveLog();
     
     MyQTSerialPorts m_serial_port;
 private:
