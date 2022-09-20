@@ -352,6 +352,7 @@ void OptionWidget::onMousePage3(int x, int y){
 }
 
 void OptionWidget::open(){
+    m_close = false;
     addSerials();
 }
 

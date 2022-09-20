@@ -241,7 +241,7 @@ int MainWidget::onMouse(int x, int y){
     }
     
     if(m_buttonMenu.isActive(x, y)){
-        m_option_widget.m_close = false;
+        m_option_widget.open();
     } else if(m_buttonMenu2.isActive(x, y)){
         m_harxon_widget.m_close = false;
     } else if(m_buttonMenu3.isActive(x, y)){
