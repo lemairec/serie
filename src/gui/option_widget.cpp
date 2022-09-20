@@ -31,24 +31,26 @@ OptionWidget::OptionWidget(){
 
 void OptionWidget::setSize(int width, int height){
     BaseWidget::setSize(width, height);
+    m_y2 = m_height*0.04;
+    m_x2 = m_y2;
+    m_width2 = m_width-2*m_y2-m_gros_button*2.4;
+    m_height2 = m_height-2*m_y2;
     
-    m_width2 = m_width;
-    m_height2 = m_height;
-    m_x2 = 0;
-    m_y2 = 0;
     
     m_y_title = m_y2+m_height*0.08;
     m_y_inter = 0.08*m_height2;
     m_y_begin = m_y_title+4*m_y_inter;
     
     
-    m_width3 = 0.9*m_width2;
+    m_width3 = m_width2+m_y2+m_y2;
     m_part_1_x = m_width3*0.04;
     m_part_1_w = m_width3*0.44;
+    //m_part_1_m = m_part_1_x+0.5*m_width3*0.44;
     m_part_1_x2 = m_part_1_x+0.1*m_width3*0.44;
     m_part_1_x3 = m_part_1_x+0.8*m_width3*0.44;
     m_part_2_x = m_width3*0.52;
     m_part_2_w = m_width3*0.44;
+    //m_part_2_m = m_part_2_x+0.5*m_width3*0.44;
     m_part_2_x2 = m_part_2_x+0.1*m_width3*0.44;
     m_part_2_x3 = m_part_2_x+0.8*m_width3*0.44;
     
@@ -72,16 +74,14 @@ void OptionWidget::setSize(int width, int height){
 }
 
 void OptionWidget::draw(){
-    m_painter->setPen(m_penBlack);
-    m_painter->setBrush(m_brushGrayAlpha);
-    double h = m_height;
-    m_painter->drawRect(0, 0, m_width, h);
-    
-    m_painter->setBrush(m_brushWhite);
-    m_painter->drawRect(m_x2, m_y2, m_width2, h);
-    
     m_painter->setBrush(m_brushDarkGray);
-    m_painter->drawRect(m_width2*0.9 , m_y2, m_width2*0.1, h);
+    m_painter->drawRect(0 , 0, m_width, m_height);
+    
+    m_painter->setPen(m_penBlack);
+    m_painter->setBrush(m_brushWhite);
+    m_painter->drawRoundedRect(m_x2, m_y2, m_width2, m_height2, RAYON_ROUNDED, RAYON_ROUNDED);
+    
+    //drawButtonOption(m_button_ok, m_img_return, false, 0.3);
     
     drawButtonValidate(m_button_close);
     
