@@ -93,6 +93,9 @@ BineuseWidget::BineuseWidget(){
     add(0.2, y, "$R,-155", "$R,-155\r\n");
     add(0.6, y, "$R,155", "$R,155\r\n");
     y+=inter;
-    add(0.2, y, "$R,-55", "$R,-55\r\n");
-    add(0.6, y, "$R,55", "$R,55\r\n");
+    add(0.2, y, "$R,-15", "$R,-15\r\n");
+    add(0.6, y, "$R,15", "$R,15\r\n");
+    y+=inter;
+    add(0.2, y, "$R,-3", "$R,-3\r\n");
+    add(0.6, y, "$R,3", "$R,3\r\n");
 }
