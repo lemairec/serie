@@ -20,7 +20,12 @@ class OptionWidget : public BaseWidget {
     QPixmap * m_imgImuBlanc;
     QPixmap * m_imgImuGris;
     
+    QPixmap * m_img_off;
+    QPixmap * m_img_return;
+    
+    
     ButtonGui m_button_close;
+    ButtonGui m_button_ok;
     
     ButtonGui m_button_p1;
     ButtonGui m_button_p2;
@@ -140,6 +145,8 @@ public:
     
     void open();
     
+    
+    void drawButtonOption(ButtonGui & button, QPixmap * image, bool check, double scale);
 };
 
 #endif

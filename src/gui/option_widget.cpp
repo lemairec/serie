@@ -25,6 +25,8 @@ OptionWidget::OptionWidget(){
     m_imgImuGris = loadImage("/images/imu_gris.png");
     
     //m_close=false;
+    m_img_off = loadImage("/gui/off.png");
+    m_img_return = loadImage("/gui/return.png");
     //m_page =5;
     //addSerials();
 }
@@ -81,9 +83,9 @@ void OptionWidget::draw(){
     m_painter->setBrush(m_brushWhite);
     m_painter->drawRoundedRect(m_x2, m_y2, m_width2, m_height2, RAYON_ROUNDED, RAYON_ROUNDED);
     
-    //drawButtonOption(m_button_ok, m_img_return, false, 0.3);
+    drawButtonOption(m_button_ok, m_img_return, false, 0.3);
     
-    drawButtonValidate(m_button_close);
+    drawButtonOption(m_button_close, m_img_off, false, 0.3);
     
     if(m_page == 1){
         drawButtonImage(m_button_p1, m_imgOptionBlanc);
@@ -358,9 +360,17 @@ void OptionWidget::addSerials(){
     
     
     
-    
     m_select_serial.clear();
     for(auto serial: serials){
         m_select_serial.addValue(serial);
     }
+}
+
+
+
+
+//base
+
+void OptionWidget::drawButtonOption(ButtonGui & button, QPixmap * image, bool check, double scale){
+    drawButtonImageCarre(button, image, scale*3, check);
 }

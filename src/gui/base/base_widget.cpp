@@ -7,6 +7,7 @@
 
 BaseWidget::BaseWidget(){
     m_penBlack = QPen(Qt::black);
+    m_penWhite = QPen(Qt::white);
     m_penGray = QPen(QColor(120,120,120));
     m_penRed = QPen(Qt::red);
     m_penGreen = QPen(Qt::green);
@@ -21,7 +22,7 @@ BaseWidget::BaseWidget(){
     m_brushBackGround2 = QBrush(QColor(183*1.2,166*1.2,138*1.2));
     
     
-    m_brushDarkGray = QBrush (QColor(60,60,60));
+    m_brushDarkGray = QBrush (QColor(80,80,80));
     m_brushGray = QBrush (QColor(200,200,200));
     
     QColor gray = QColor(120,120,120);
@@ -93,6 +94,28 @@ void BaseWidget::drawButtonImage(ButtonGui & button, QPixmap * pixmap, double sc
     m_painter->setBrush(m_brushWhiteAlpha);
     m_painter->drawEllipse(x, y, d, d);
 #endif
+}
+
+void BaseWidget::drawButtonImageCarre(ButtonGui & button, QPixmap * pixmap, double scale, bool open){
+    double scale2 = 0.4*scale;
+    int w = pixmap->size().width()*scale2;
+    int h = pixmap->size().height()*scale2;
+
+    int x = button.m_x-button.m_rayon;
+    int y = button.m_y-button.m_rayon;
+    int d = button.m_rayon*2;
+    m_painter->setPen(m_penBlack);
+    m_painter->setBrush(m_brushDarkGray);
+    m_painter->drawRoundedRect(x, y, d, d, 5, 5);
+    
+    m_painter->drawPixmap(button.m_x-w/2, button.m_y-h/2, w, h, *pixmap);
+
+    if(open){
+        m_painter->setPen(m_penBlack);
+        m_painter->setBrush(m_brushWhiteAlpha);
+        
+        m_painter->drawRoundedRect(x, y, d, d, 5, 5);
+    }
 }
 
 void BaseWidget::drawMyImage(QPixmap & pixmap, int x, int y, double scale, bool center){
@@ -306,7 +329,7 @@ void BaseWidget::drawValueGuiKeyPad(ValueGui & value){
     m_painter->setPen(m_penBlack);
     m_painter->setBrush(m_brushGreenAlpha);
     m_painter->drawRect(value.m_x-40, value.m_y-15, 80, 30);
-    drawQText(s, value.m_x, value.m_y, sizeText_medium, true);    
+    drawQText(s, value.m_x, value.m_y, sizeText_medium, true);
 }
 
 
@@ -415,6 +438,11 @@ void BaseWidget::drawValueGuiKeyBoard(ValueGuiKeyBoard & value){
     m_painter->drawRect(value.m_x-80, value.m_y-15, 160, 30);
     drawText(value.m_text, value.m_x, value.m_y, sizeText_medium, true);
 }
+
+void BaseWidget::drawValueGuiKeyBoardDisable(ValueGuiKeyBoard & value){
+    drawText(value.m_text, value.m_x, value.m_y, sizeText_medium, true);
+}
+
 bool BaseWidget::isActiveValueGuiKeyBoard(ValueGuiKeyBoard & value, int x, int y){
     if(value.m_x-80 < x && x < value.m_x + 80 && value.m_y-15 < y && y < value.m_y+15){
        return true;
@@ -429,8 +457,6 @@ bool BaseWidget::isActiveValueGuiKeyBoard(ValueGuiKeyBoard & value, int x, int y
  m_langage.addValue(Langage::getKey("EN"));
  m_langage.addValue(Langage::getKey("DE"));
  drawPart1Title(m_langage.m_y-2*m_y_inter, m_y_inter*3, "langue");
- 
- //draw
  drawButtonLabel2(m_langage.m_buttonOpen);
  
  if(m_select_widget.m_close){

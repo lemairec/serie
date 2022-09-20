@@ -9,7 +9,9 @@ class BaseWidget{
 public:
     QPainter * m_painter;
     
+    QPen m_pen_black_inv;
     QPen m_penBlack;
+    QPen m_penWhite;
     QPen m_penGray;
     QPen m_penRed;
     QPen m_penGreen;
@@ -29,6 +31,7 @@ public:
     QBrush m_brushGreenButton;
     QBrush m_brushRedButton;
     
+    QBrush m_brush_background_1;
     QBrush m_brushDarkGray;
     QBrush m_brushLightGrayDebug;
     QBrush m_brushGrayAlpha;
@@ -54,6 +57,8 @@ public:
         m_painter = p;
     }
 public:
+    bool m_black_mode = true;
+    
     int m_gros_button = 10;
     int m_gros_gros_button = 10;
     int m_petit_button = 10;
@@ -80,6 +85,7 @@ public:
     void drawButtonCheck(ButtonGui & button, bool check);
     void drawButtonLabel2(ButtonGui & button, int color = 0);
     void drawButtonImage(ButtonGui & button, QPixmap * pixmap, double scale=1.0);
+    void drawButtonImageCarre(ButtonGui & button, QPixmap * pixmap, double scale=1.0, bool open = false);
     void drawButtonValidate(ButtonGui & button);
     void drawButtonCancel(ButtonGui & button);
 
@@ -98,9 +104,11 @@ public:
     bool onMouseKeyPad2(ValueGui & keypad, double x, double y, double inter = 1.0);
 
     void drawValueGuiKeyBoard(ValueGuiKeyBoard & value);
+    void drawValueGuiKeyBoardDisable(ValueGuiKeyBoard & value);
     bool isActiveValueGuiKeyBoard(ValueGuiKeyBoard & value, int x, int y);
 
     QPixmap * loadImage(const std::string & s);
+    QPixmap * loadImageInv(const std::string & s);
 };
 
 #endif
