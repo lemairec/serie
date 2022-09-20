@@ -78,3 +78,18 @@ MotorWidget::MotorWidget(){
     add(0.4, 0.6, "$0", "$L,0\r\n");
     add(0.6, 0.6, "$R,255", "$R,255\r\n");
 }
+
+BineuseWidget::BineuseWidget(){
+    add(0.2, 0.2, "$V", "$V\r\n");
+    add(0.2, 0.3, "$P", "$P\r\n");
+    double y = 0.5;
+    double inter = 0.1;
+    add(0.2, y, "$ON,L", "$ON,L\r\n");
+    add(0.6, y, "$ON,R", "$ON,R\r\n");
+    y+=inter;
+    add(0.2, y, "$R,-255", "$R,-255\r\n");
+    add(0.6, y, "$R,255", "$R,255\r\n");
+    y+=inter;
+    add(0.2, y, "$R,-155", "$R,-155\r\n");
+    add(0.6, y, "$R,155", "$R,155\r\n");
+}

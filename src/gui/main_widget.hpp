@@ -3,7 +3,6 @@
 
 #include "base/base_widget.hpp"
 #include "option_widget.hpp"
-#include "menu_widget.hpp"
 #include "base/keyboard_widget.hpp"
 #include "harxon_widget.hpp"
 
@@ -12,9 +11,10 @@ class MainWidget : public BaseWidget {
 public:
     static MainWidget * instance();
     
-    MenuWidget m_menuWidget;
+    OptionWidget m_option_widget;
     HarxonWidget m_harxon_widget;
     MotorWidget m_motor_widget;
+    BineuseWidget m_bineuse_widget;
     
     std::vector<BaseWidget *> m_widgets;
     
@@ -32,6 +32,7 @@ public:
     ButtonGui m_buttonMenu;
     ButtonGui m_buttonMenu2;
     ButtonGui m_buttonMenu3;
+    ButtonGui m_buttonMenu4;
     ButtonGui m_buttonSendMessage;
     ButtonGui m_buttonSaveLog;
     

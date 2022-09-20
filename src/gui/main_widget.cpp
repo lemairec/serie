@@ -28,10 +28,11 @@ MainWidget::MainWidget()
     m_img_check_off = loadImage("/images/check_off.png");
 
     //m_widgets.push_back(&m_satWidget);
-    m_widgets.push_back(&m_menuWidget);
+    m_widgets.push_back(&m_option_widget);
     m_widgets.push_back(&m_key_pad_widget);
     m_widgets.push_back(&m_harxon_widget);
     m_widgets.push_back(&m_motor_widget);
+    m_widgets.push_back(&m_bineuse_widget);
 }
 
 void MainWidget::setSize(int width, int height){
@@ -62,6 +63,8 @@ void MainWidget::setSize(int width, int height){
     m_buttonMenu2.setResize(x, m_height-30, m_petit_button);
     x += inter_x;
     m_buttonMenu3.setResize(x, m_height-30, m_petit_button);
+    x += inter_x;
+    m_buttonMenu4.setResize(x, m_height-30, m_petit_button);
     m_buttonSendMessage.setResize(m_width-100, 0.5*m_height, m_gros_button);
     
     m_buttonSaveLog.setResize(m_width-30, m_height-30, m_gros_button);
@@ -207,6 +210,7 @@ void MainWidget::drawButtons(){
     drawButtonImage(m_buttonMenu, m_imgMenu);
     drawButton(m_buttonMenu2);
     drawButton(m_buttonMenu3);
+    drawButton(m_buttonMenu4);
     
     Framework & f = Framework::Instance();
     drawButton(m_buttonSaveLog);
@@ -237,11 +241,13 @@ int MainWidget::onMouse(int x, int y){
     }
     
     if(m_buttonMenu.isActive(x, y)){
-        m_menuWidget.m_close = false;
+        m_option_widget.m_close = false;
     } else if(m_buttonMenu2.isActive(x, y)){
         m_harxon_widget.m_close = false;
     } else if(m_buttonMenu3.isActive(x, y)){
         m_motor_widget.m_close = false;
+    } else if(m_buttonMenu4.isActive(x, y)){
+        m_bineuse_widget.m_close = false;
     } else if(m_buttonSaveLog.isActive(x, y)){
         f.changeSaveLog();
     } else if(m_buttonSendMessage.isActive(x, y)){

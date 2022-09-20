@@ -3,7 +3,6 @@
 
 #include "base/base_widget.hpp"
 #include "option_widget.hpp"
-#include "menu_widget.hpp"
 #include "base/keyboard_widget.hpp"
 
 class SerieButton {
@@ -36,5 +35,10 @@ public:
 class MotorWidget : public BaseWidgetSerie {
 public:
     MotorWidget();
+};
+
+class BineuseWidget : public BaseWidgetSerie {
+public:
+    BineuseWidget();
 };
 #endif // GPS_WIDGET_H

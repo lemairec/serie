@@ -269,7 +269,7 @@ void MyQTSerialPorts::handlePilot(){
         }
         if(m_serial_searchs_i > 1000){
             analyseRecherche();
-            MainWidget::instance()->m_menuWidget.m_close = true;
+            //MainWidget::instance()->m_menuWidget.m_close = true;
             m_serial_searchs_i = 0;
             
         }

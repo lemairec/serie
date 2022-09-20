@@ -25,8 +25,8 @@ OptionWidget::OptionWidget(){
     m_imgImuGris = loadImage("/images/imu_gris.png");
     
     //m_close=false;
-    m_img_off = loadImage("/gui/off.png");
-    m_img_return = loadImage("/gui/return.png");
+    m_img_off = loadImage("/images/off.png");
+    m_img_return = loadImage("/images/return.png");
     //m_page =5;
     //addSerials();
 }
@@ -72,6 +72,11 @@ void OptionWidget::setSize(int width, int height){
     resizePage4();
     resizePage5();
     resizePage6();
+    int x_right = width-m_gros_button*1.2;
+    int inter = m_gros_button*2.1;
+    int y = m_gros_button*1.2;
+    m_button_close.setResize(x_right, y, m_gros_button);
+    m_button_ok.setResize(x_right, m_height-m_gros_button*1.2, m_gros_button);
     
 }
 
@@ -140,9 +145,11 @@ void OptionWidget::draw(){
 
 int OptionWidget::onMouse(int x, int y){
     
-    if(m_button_close.isActive(x,y)){
+    if(m_button_ok.isActive(x,y)){
         m_close = true;
-    } else if(m_button_p1.isActive(x,y)){
+    } else if(m_button_close.isActive(x,y)){
+        exit(0);
+    } else  if(m_button_p1.isActive(x,y)){
         m_page = 1;
     } else if(m_button_p2.isActive(x,y)){
         m_page = 2;
