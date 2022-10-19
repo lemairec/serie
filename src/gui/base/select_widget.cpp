@@ -19,9 +19,12 @@ void SelectWidget::setSizePart(int x, int y, int width, int height, int width_to
     m_y = y;
     //m_close = false;
     m_ok.setResizeStd(m_x+m_width2*0.25, m_y+m_height2*0.9, ("OK"), true);
-    m_cancel.setResizeStd(m_x+m_width2*0.75, m_y+m_height2*0.9,     ("CANCEL"), true);
+    m_cancel.setResizeStd(m_x+m_width2*0.75, m_y+m_height2*0.9, ("CANCEL"), true);
     m_page_down.setResize(m_x+m_width2*0.35, m_y+m_height2*0.77, m_petit_button);
+    m_page_down.m_label = "<";
     m_page_up.setResize(m_x+m_width2*0.65, m_y+m_height2*0.77, m_petit_button);
+    m_page_up.m_label = ">";
+   
 }
 
 void SelectWidget::draw(){
@@ -41,7 +44,7 @@ void SelectWidget::draw(){
         for(size_t i = 0; i < m_buttons.size(); ++i){
             if(i/6 == m_page){
                 auto b = m_buttons[i];
-                if(((int)i) == m_selectButton->m_selectedValue){
+                if(((int)i) == m_selectButton->m_selectedValue && m_draw_selected){
                     drawButtonLabel2(*b, COLOR_CHECK);
                 } else {
                     drawButtonLabel2(*b);
@@ -49,15 +52,17 @@ void SelectWidget::draw(){
             }
         }
         
-        drawButtonValidate(m_ok);
-        drawButtonCancel(m_cancel);
+        if(m_draw_button){
+            drawButtonValidate(m_ok);
+            drawButtonCancel(m_cancel);
+        }
         
         if(m_pages_total>1){
             if(m_page+1 != m_pages_total){
-                drawButtonValidate(m_page_up);
+                drawButtonLabel2(m_page_up);
             }
             if(m_page != 0){
-                drawButtonValidate(m_page_down);
+                drawButtonLabel2(m_page_down);
             }
             QString s = QString::number(m_page+1)+"/"+QString::number(m_pages_total);
             drawQText(s, (m_page_down.m_x + m_page_up.m_x)/2, m_page_down.m_y, sizeText_medium, true);
@@ -66,12 +71,14 @@ void SelectWidget::draw(){
 }
 
 bool SelectWidget::onMouseSelect(int x, int y){
-    if(m_ok.isActive(x,y)){
-        m_close = true;
-        return true;
-    }
-    if(m_cancel.isActive(x,y)){
-        m_close = true;
+    if(m_draw_button){
+        if(m_ok.isActive(x,y)){
+            m_close = true;
+            return true;
+        }
+        if(m_cancel.isActive(x,y)){
+            m_close = true;
+        }
     }
     if(m_pages_total>1){
         if(m_page_up.isActive(x,y)){
@@ -106,10 +113,12 @@ void SelectWidget::setValueGuiKeyPad(SelectButtonGui * value){
     m_pages_total = 0;
     m_page = 0;
     
-    int y = m_height*0.25;
+    int inter = m_height2/10;
+    int y_begin = m_y+inter;
+    int y = y_begin;
     for(size_t i = 0; i < m_selectButton->m_values.size(); ++i){
         if(i%6 == 0){
-            y = m_height*0.25;
+            y = y_begin;
             m_pages_total++;
         }
         std::string l = m_selectButton->m_values[i];
@@ -117,7 +126,7 @@ void SelectWidget::setValueGuiKeyPad(SelectButtonGui * value){
         b->setResizeStd(m_x+m_width2*0.5, y, l, true, m_width2*0.5);
         b->m_labelInt = i;
         m_buttons.push_back(b);
-        y+= 60;
+        y+= inter;
         
     }
 };

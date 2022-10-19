@@ -22,6 +22,9 @@ class SelectWidget : public BaseWidget {
     std::vector<ButtonGui *> m_buttons;
 public:
     bool m_draw_rect = true;
+    bool m_draw_selected = true;
+    bool m_draw_button = true;
+    
     SelectButtonGui * m_selectButton = NULL;
     
     void setSize(int width, int height);

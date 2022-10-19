@@ -64,11 +64,21 @@ BaseWidget::BaseWidget(){
 
 
 void BaseWidget::setSize(int width, int height){
-    m_gros_button = 0.05*height;
+    m_gros_button = 0.045*height;
     m_petit_button = 0.035*height;
     m_gros_gros_button = 0.12*height;
     m_width = width;
     m_height = height;
+    
+    if(m_black_mode){
+        m_brush_background_1 = QBrush (QColor(60,60,60));
+        m_brushDarkGray = QBrush (QColor(80,80,80));
+        m_pen_black_inv = QPen(Qt::white);
+    } else {
+        m_brush_background_1 = QBrush (QColor(230,230,230));
+        m_brushDarkGray = QBrush (QColor(180,180,180));
+        m_pen_black_inv = QPen(Qt::black);
+    }
 }
 
 void BaseWidget::open(){
@@ -257,7 +267,7 @@ void BaseWidget::drawQText(const QString & s, int x, int y, SizeText size, bool 
     font.setBold(true);
     //textItem->setFont(font);
     if(white){
-        m_painter->setPen(Qt::white);
+        m_painter->setPen(m_pen_black_inv);
     }
     
     font.setPixelSize(s2);
@@ -318,8 +328,19 @@ void BaseWidget::drawQTexts(const QString & s, int x, int y, SizeText size, bool
 }
 
 QPixmap * BaseWidget::loadImage(const std::string & s){
+     std::string s2 = DirectoryManager::Instance().getSourceDirectory()+s;
+     QImage image2(QString::fromStdString(s2));
+    //image2.invertPixels();
+    QPixmap * res  = new QPixmap(QPixmap::fromImage(image2));
+    return res;
+}
+
+QPixmap * BaseWidget::loadImageInv(const std::string & s){
     std::string s2 = DirectoryManager::Instance().getSourceDirectory()+s;
     QImage image2(QString::fromStdString(s2));
+    if(!m_black_mode){
+        image2.invertPixels();
+    }
     QPixmap * res  = new QPixmap(QPixmap::fromImage(image2));
     return res;
 }
@@ -329,7 +350,7 @@ void BaseWidget::drawValueGuiKeyPad(ValueGui & value){
     m_painter->setPen(m_penBlack);
     m_painter->setBrush(m_brushGreenAlpha);
     m_painter->drawRect(value.m_x-40, value.m_y-15, 80, 30);
-    drawQText(s, value.m_x, value.m_y, sizeText_medium, true);
+    drawQText(s, value.m_x, value.m_y, sizeText_medium, true);    
 }
 
 
@@ -435,7 +456,7 @@ bool BaseWidget::onMouseKeyPad2(ValueGui & keypad, double x, double y, double in
 void BaseWidget::drawValueGuiKeyBoard(ValueGuiKeyBoard & value){
     m_painter->setPen(m_penBlack);
     m_painter->setBrush(m_brushGreenAlpha);
-    m_painter->drawRect(value.m_x-80, value.m_y-15, 160, 30);
+    m_painter->drawRect(value.m_x-value.m_width/2, value.m_y-15, value.m_width, 30);
     drawText(value.m_text, value.m_x, value.m_y, sizeText_medium, true);
 }
 

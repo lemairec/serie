@@ -94,6 +94,7 @@ class KeyBoardWidget : public BaseWidget {
     bool m_maj = true;
 public:
     KeyBoardWidget();
+    bool m_just_maj = false;
     
     void setSize(int width, int height);
     

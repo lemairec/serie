@@ -191,8 +191,9 @@ void KeyBoardWidget::myDrawButton(ButtonGui * b, QString s, int color){
 
 void KeyBoardWidget::draw(){
     m_painter->setPen(m_penBlack);
-    m_painter->setBrush(m_brushWhiteAlpha);
-    m_painter->drawRect(m_x, m_height*0.1, m_lg, m_height*0.8);
+    //m_painter->drawRect(0, 0, m_width, m_height);
+    m_painter->setBrush(m_brushWhite);
+    m_painter->drawRoundedRect(m_x, m_height*0.1, m_lg, m_height*0.8, RAYON_ROUNDED, RAYON_ROUNDED);
     
     QString s = "KeyBoard";
     drawQText(s, m_x+m_lg/2, 0.15*m_height, sizeText_big, true);
@@ -202,7 +203,9 @@ void KeyBoardWidget::draw(){
     
     if(m_maj){
         myDrawButton(&m_button_remove, "<-");
-        myDrawButton(&m_button_maj, "maj");
+        if(!m_just_maj){
+            myDrawButton(&m_button_maj, "maj");
+        }
         myDrawButton(&m_button1_et, "1");
         myDrawButton(&m_button2_home, "2");
         myDrawButton(&m_button3_virgule, "3");
@@ -251,8 +254,8 @@ void KeyBoardWidget::draw(){
         myDrawButton(&m_button6_tiret, "-");
         myDrawButton(&m_button7_point_virgule, ";");
         myDrawButton(&m_button8_tiret_bas, "_");
-        myDrawButton(&m_button9_tiret_bas, ".");
-        myDrawButton(&m_button0, "|");
+        myDrawButton(&m_button9_tiret_bas, "_");
+        myDrawButton(&m_button0, "0");
         myDrawButton(&m_buttonA, "a");
         myDrawButton(&m_buttonB, "b");
         myDrawButton(&m_buttonC, "c");
@@ -308,11 +311,13 @@ void KeyBoardWidget::removeLetter(){
 
 int KeyBoardWidget::onMouse(int x, int y){
     if(m_button_maj.isActive(x, y)){
-        m_maj = !m_maj;
+        if(!m_just_maj){
+            m_maj = !m_maj;
+        }
     } else if(m_button_remove.isActive(x, y)){
         removeLetter();
     } else if(m_button0.isActive(x, y)){
-        addLetter2("0", "|");
+        addLetter("0");
     } else if(m_button1_et.isActive(x, y)){
         addLetter2("1", "&");
     } else if(m_button2_home.isActive(x, y)){
@@ -330,7 +335,7 @@ int KeyBoardWidget::onMouse(int x, int y){
     } else if(m_button8_tiret_bas.isActive(x, y)){
         addLetter2("8", "_");
     } else if(m_button9_tiret_bas.isActive(x, y)){
-        addLetter2("9", ".");
+        addLetter2("9", "_");
     } else if(m_buttonA.isActive(x, y)){
         addLetter2("A", "a");
     } else if(m_buttonB.isActive(x, y)){

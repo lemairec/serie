@@ -185,10 +185,10 @@ void SelectButtonGui::setSelectedValue(int i){
     m_buttonOpen.m_label = QString::fromStdString(getValueString());
 }
 
-void ValueGuiKeyBoard::setResize(int x, int y){
+void ValueGuiKeyBoard::setResize(int x, int y, int width){
     m_x = x;
     m_y = y;
-    
+    m_width = width;
 }
 
 int ValueGuiKeyBoard::isActive(double x, double y){

@@ -74,12 +74,13 @@ struct ValueGui{
 struct ValueGuiKeyBoard{
     ValueGuiKeyBoard(){};
     
-    void setResize(int x, int y);
+    void setResize(int x, int y, int width = 160);
     
     int isActive(double x, double y);
     
-    double m_x = 0;
-    double m_y = 0;
+    int m_x = 0;
+    int m_y = 0;
+    int m_width = 160;
     std::string m_text;
 };
 
