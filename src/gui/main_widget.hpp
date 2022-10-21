@@ -29,7 +29,7 @@ public:
     QPixmap * m_imgMenu;
     
     
-    ButtonGui m_buttonMenu;
+    ButtonGui m_button_setting;
     ButtonGui m_buttonMenu2;
     ButtonGui m_buttonMenu3;
     ButtonGui m_buttonMenu4;

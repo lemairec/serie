@@ -10,23 +10,23 @@
 
 OptionWidget::OptionWidget(){
     
-    m_imgClose = loadImage("/images/ok.png");
-    m_imgPlus = loadImage("/images/plus.png");
-    m_imgMinus = loadImage("/images/minus.png");
-    m_imgSatBlanc = loadImage("/images/sat_blanc.png");
-    m_imgSatGris = loadImage("/images/sat_gris.png");
-    m_imgVolantBlanc = loadImage("/images/volant_blanc.png");
-    m_imgVolantGris = loadImage("/images/volant_gris.png");
-    m_imgOutilBlanc = loadImage("/images/outil_blanc.png");
-    m_imgOutilGris = loadImage("/images/outil_gris.png");
-    m_imgOptionBlanc = loadImage("/images/option_blanc.png");
-    m_imgOptionGris = loadImage("/images/option_gris.png");
-    m_imgImuBlanc = loadImage("/images/imu_blanc.png");
-    m_imgImuGris = loadImage("/images/imu_gris.png");
+    m_imgClose = loadImage("/gui/ok.png");
+    m_imgPlus = loadImage("/gui/plus.png");
+    m_imgMinus = loadImage("/gui/minus.png");
+    m_imgSatBlanc = loadImage("/gui/sat_blanc.png");
+    m_imgSatGris = loadImage("/gui/sat_gris.png");
+    m_imgVolantBlanc = loadImage("/gui/volant_blanc.png");
+    m_imgVolantGris = loadImage("/gui/volant_gris.png");
+    m_imgOutilBlanc = loadImage("/gui/outil_blanc.png");
+    m_imgOutilGris = loadImage("/gui/outil_gris.png");
+    m_imgOptionBlanc = loadImage("/gui/option_blanc.png");
+    m_imgOptionGris = loadImage("/gui/option_gris.png");
+    m_imgImuBlanc = loadImage("/gui/imu_blanc.png");
+    m_imgImuGris = loadImage("/gui/imu_gris.png");
     
     //m_close=false;
-    m_img_off = loadImage("/images/off.png");
-    m_img_return = loadImage("/images/return.png");
+    m_img_off = loadImage("/gui/off.png");
+    m_img_return = loadImage("/gui/return.png");
     //m_page =5;
     //addSerials();
 }

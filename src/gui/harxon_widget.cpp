@@ -2,7 +2,7 @@
 #include "../framework.hpp"
 
 BaseWidgetSerie::BaseWidgetSerie(){
-    m_imgClose = loadImage("/images/ok.png");
+    m_imgClose = loadImage("/gui/ok.png");
 };
 
 void BaseWidgetSerie::setSize(int width, int height){

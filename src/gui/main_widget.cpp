@@ -23,9 +23,9 @@ int l_bottom = 20;
 MainWidget::MainWidget()
 {
     
-    m_imgMenu = loadImage("/images/menu.png");
-    m_img_check_on = loadImage("/images/check_on.png");
-    m_img_check_off = loadImage("/images/check_off.png");
+    m_imgMenu = loadImage("/gui/menu.png");
+    m_img_check_on = loadImage("/gui/check_on.png");
+    m_img_check_off = loadImage("/gui/check_off.png");
 
     //m_widgets.push_back(&m_satWidget);
     m_widgets.push_back(&m_option_widget);
@@ -36,13 +36,16 @@ MainWidget::MainWidget()
 }
 
 void MainWidget::setSize(int width, int height){
-    {
-        BaseWidget::setSize(width, height);
-        int x_right = width-40;
-        int inter = 0.09*height;
-        int y = inter*0.8;
-        m_buttonMenu.setResize(x_right, y, m_gros_button);
-    }
+    BaseWidget::setSize(width, height);
+    
+    BaseWidget::setSize(width, height);
+    int x_right = width-m_gros_button*1.2;
+    //int x_left = m_gros_button*1.2;
+    int y_bas = height - m_gros_button*1.2;
+    int inter = m_gros_button*2.1;
+    int y = m_gros_button*1.2;
+    m_button_setting.setResize(x_right, y, m_gros_button);
+    y += inter*1.5;
     
     
     m_widthMax = m_width/2-50;
@@ -69,22 +72,23 @@ void MainWidget::setSize(int width, int height){
     
     m_buttonSaveLog.setResize(m_width-30, m_height-30, m_gros_button);
     
-    int y = m_height-180;
-    int y2 = y+20;
-    int inter = 16;
-    int i = 0;
-    
-    m_categories.clear();
-    for(auto c : Framework::Instance().m_categories){
-        (void)c;
-        ButtonGui * b = new ButtonGui();
-        b->setResize(20, y2, 8);
-        b->m_labelInt = i;
+    {
+        int y = m_height-180;
+        int y2 = y+20;
+        int inter = 16;
+        int i = 0;
         
-        ++i;
-        y2+= inter;
-        m_categories.push_back(b);
-        
+        m_categories.clear();
+        for(auto c : Framework::Instance().m_categories){
+            (void)c;
+            ButtonGui * b = new ButtonGui();
+            b->setResize(20, y2, 8);
+            b->m_labelInt = i;
+            
+            ++i;
+            y2+= inter;
+            m_categories.push_back(b);
+        }
     }
 }
 
@@ -207,7 +211,8 @@ void MainWidget::drawMenuRight(){
 }
 
 void MainWidget::drawButtons(){
-    drawButtonImage(m_buttonMenu, m_imgMenu);
+    drawButtonImageCarre(m_button_setting, m_imgMenu, 0.8);
+    
     drawButton(m_buttonMenu2);
     drawButton(m_buttonMenu3);
     drawButton(m_buttonMenu4);
@@ -240,7 +245,7 @@ int MainWidget::onMouse(int x, int y){
         };
     }
     
-    if(m_buttonMenu.isActive(x, y)){
+    if(m_button_setting.isActive(x, y)){
         m_option_widget.open();
     } else if(m_buttonMenu2.isActive(x, y)){
         m_harxon_widget.m_close = false;
