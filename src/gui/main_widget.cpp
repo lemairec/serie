@@ -41,7 +41,7 @@ void MainWidget::setSize(int width, int height){
     BaseWidget::setSize(width, height);
     int x_right = width-m_gros_button*1.2;
     //int x_left = m_gros_button*1.2;
-    int y_bas = height - m_gros_button*1.2;
+    //int y_bas = height - m_gros_button*1.2;
     int inter = m_gros_button*2.1;
     int y = m_gros_button*1.2;
     m_button_setting.setResize(x_right, y, m_gros_button);

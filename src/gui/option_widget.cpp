@@ -71,7 +71,7 @@ void OptionWidget::setSize(int width, int height){
     resizePage5();
     resizePage6();
     int x_right = width-m_gros_button*1.2;
-    int inter = m_gros_button*2.1;
+    //int inter = m_gros_button*2.1;
     int y = m_gros_button*1.2;
     m_button_close.setResize(x_right, y, m_gros_button);
     m_button_ok.setResize(x_right, m_height-m_gros_button*1.2, m_gros_button);
