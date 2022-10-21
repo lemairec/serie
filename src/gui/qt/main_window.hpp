@@ -34,7 +34,7 @@ class MainWindow : public QMainWindow
     explicit MainWindow(QWidget *parent = 0);
     
 public:
-    static MainWindow * instance();
+    static MainWindow * instancePtr();
     MyWidget * m_my_widget;
 
     ~MainWindow();

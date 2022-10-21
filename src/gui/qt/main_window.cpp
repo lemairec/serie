@@ -28,7 +28,7 @@ void MyWidget::mouseReleaseEvent ( QMouseEvent * event ){
 
 
 
-MainWindow * MainWindow::instance(){
+MainWindow * MainWindow::instancePtr(){
     static MainWindow gf;
     return &gf;
 }
@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-//    GpsFramework::Instance().removeObserver();
+    //GpsFramework::Instance().removeObserver();
 }
 
 void MainWindow::setupUi(){
