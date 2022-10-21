@@ -24,6 +24,17 @@ void MyWidget::mouseReleaseEvent ( QMouseEvent * event ){
     }
 }
 
+void MyWidget::paintEvent(QPaintEvent* e)
+{
+    QWidget::paintEvent(e); // effectue le comportement standard
+
+    QPainter painter(this); // construire
+    //painter.setRenderHint(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    if(m_main_widget){
+        m_main_widget->setPainter(&painter);
+        m_main_widget->draw();
+    }
+}
 
 
 

@@ -37,12 +37,10 @@ void OptionWidget::setSize(int width, int height){
     m_x2 = m_y2;
     m_width2 = m_width-2*m_y2-m_gros_button*2.4;
     m_height2 = m_height-2*m_y2;
-    
-    
+
     m_y_title = m_y2+m_height*0.08;
     m_y_inter = 0.08*m_height2;
     m_y_begin = m_y_title+4*m_y_inter;
-    
     
     m_width3 = m_width2+m_y2+m_y2;
     m_part_1_x = m_width3*0.04;
@@ -81,7 +79,8 @@ void OptionWidget::setSize(int width, int height){
 }
 
 void OptionWidget::draw(){
-    m_painter->setBrush(m_brushDarkGray);
+
+    m_painter->setBrush(m_brush_background_1);
     m_painter->drawRect(0 , 0, m_width, m_height);
     
     m_painter->setPen(m_penBlack);

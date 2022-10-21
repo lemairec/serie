@@ -4,22 +4,11 @@
 
 class MyWidget : public QWidget
 {
-  public:
+public:
     MainWidget * m_main_widget = NULL;
     MyWidget( QWidget *parent = 0 ) : QWidget( parent ) {}
 
-    void paintEvent(QPaintEvent* e)
-    {
-        QWidget::paintEvent(e); // effectue le comportement standard
-
-        QPainter painter(this); // construire
-        //painter.setRenderHint(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-        if(m_main_widget){
-            m_main_widget->setPainter(&painter);
-            m_main_widget->draw();
-        }
-
-    } // détruire
+    void paintEvent(QPaintEvent* e);
     
     void mouseReleaseEvent ( QMouseEvent * event );
 };
