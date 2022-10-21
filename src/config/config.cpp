@@ -10,12 +10,10 @@ Config::Config(){
 }
 
 void Config::save(){
-    std::string s = CONFIG_FILE;
+    std::string s = DirectoryManager::Instance().m_config_file;
     QString path = QString::fromStdString(s);
     QSettings settings(path, QSettings::IniFormat);
-    
-     
-    
+
     QString input_serial = QString::fromStdString(m_serial);
     settings.setValue("m_serial", input_serial);
     settings.setValue("m_baudrate", m_baudrate);
@@ -23,10 +21,10 @@ void Config::save(){
 }
 
 void Config::load(){
-    std::string s = CONFIG_FILE;
-    QString qpath = QString::fromStdString(s);
-    QSettings settings(qpath, QSettings::IniFormat);
-    
+    std::string s = DirectoryManager::Instance().m_config_file;
+    QString path = QString::fromStdString(s);
+    QSettings settings(path, QSettings::IniFormat);
+
     if(settings.contains("m_serial")){
         m_serial = settings.value("m_serial").toString().toUtf8().constData();
     }
