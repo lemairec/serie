@@ -40,6 +40,7 @@ public:
     std::list<std::string> m_messages_serial;
     void addSerialMessage(std::string s);
     std::string m_message = "";
+    void addSerialString(const std::string & s);
     void addSerialChar(char c);
     
     void sendMessages(const std::string & m);

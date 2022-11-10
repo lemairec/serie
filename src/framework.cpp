@@ -79,6 +79,13 @@ void Framework::changeSaveLog(){
     }
 }
 
+void Framework::addSerialString(const std::string & s){
+    for(int i = 0; i < (int)s.size(); ++i){
+        addSerialChar((char)(s[i]));
+    }
+    addSerialChar('\n');
+}
+
 void Framework::addSerialChar(char c){
     if(c == '\n'){
         std::string s =m_message;

@@ -1,5 +1,5 @@
-#ifndef OPTION_WIDGET_H
-#define OPTION_WIDGET_H
+#ifndef OPTION_WIDGET
+#define OPTION_WIDGET
 
 #include "base/base_widget.hpp"
 #include "base/select_widget.hpp"
