@@ -10,7 +10,7 @@ LogFile::LogFile(std::string path, Level levelMin)
 {
     m_logFile.open(path);
    if(m_logFile.fail()){
-       std::cerr << "open failure as expected: " << strerror(errno) << std::endl;
+       //std::cerr << "open failure as expected: " << strerror(errno) << std::endl;
        std::cerr << "Warning File fail " << path << std::endl;
        exit(1);
    }
