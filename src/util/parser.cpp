@@ -189,7 +189,7 @@ double Parser::readNegDouble(){
         neg = true;
         ++m_tempInd;
     }
-    int res  = readNegDouble();
+    int res  = readDouble();
     if(neg){
         return -res;
     } else {
