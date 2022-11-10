@@ -183,6 +183,20 @@ int Parser::readInt(){
     return res;
 }
 
+double Parser::readNegDouble(){
+    bool neg = false;
+    if(m_buffer[m_tempInd] == '-'){
+        neg = true;
+        ++m_tempInd;
+    }
+    int res  = readNegDouble();
+    if(neg){
+        return -res;
+    } else {
+        return res;
+    }
+}
+
 double Parser::readDouble(){
     double res = 0;
     double virgule_part = 1;

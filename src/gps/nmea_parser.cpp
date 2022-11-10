@@ -183,9 +183,9 @@ void NmeaParser::parseATT(){
 void NmeaParser::parseImuAcc(){
     ImuFrame_ptr imu_frame = ImuFrame_ptr(new ImuFrame());
     readUntilCommat();
-    imu_frame->m_ax = readDouble();
-    imu_frame->m_ay = readDouble();
-    imu_frame->m_az = readDouble();
+    imu_frame->m_ax = readNegDouble();
+    imu_frame->m_ay = readNegDouble();
+    imu_frame->m_az = readNegDouble();
     
     m_last_imu_acc_frame = imu_frame;
 }
@@ -193,9 +193,9 @@ void NmeaParser::parseImuAcc(){
 void NmeaParser::parseImuGyro(){
     ImuFrame_ptr imu_frame = ImuFrame_ptr(new ImuFrame());
     readUntilCommat();
-    imu_frame->m_ax = readDouble();
-    imu_frame->m_ay = readDouble();
-    imu_frame->m_az = readDouble();
+    imu_frame->m_ax = readNegDouble();
+    imu_frame->m_ay = readNegDouble();
+    imu_frame->m_az = readNegDouble();
     
     m_last_imu_gyro_frame = imu_frame;
 }
@@ -203,9 +203,9 @@ void NmeaParser::parseImuGyro(){
 void NmeaParser::parseImuAngle(){
     ImuFrame_ptr imu_frame = ImuFrame_ptr(new ImuFrame());
     readUntilCommat();
-    imu_frame->m_ax = readDouble();
-    imu_frame->m_ay = readDouble();
-    imu_frame->m_az = readDouble();
+    imu_frame->m_ax = readNegDouble();
+    imu_frame->m_ay = readNegDouble();
+    imu_frame->m_az = readNegDouble();
     
     m_last_imu_angle_frame = imu_frame;
 }
@@ -213,9 +213,9 @@ void NmeaParser::parseImuAngle(){
 void NmeaParser::parseImuMag(){
     ImuFrame_ptr imu_frame = ImuFrame_ptr(new ImuFrame());
     readUntilCommat();
-    imu_frame->m_ax = readDouble();
-    imu_frame->m_ay = readDouble();
-    imu_frame->m_az = readDouble();
+    imu_frame->m_ax = readNegDouble();
+    imu_frame->m_ay = readNegDouble();
+    imu_frame->m_az = readNegDouble();
     
     m_last_imu_mag_frame = imu_frame;
 }

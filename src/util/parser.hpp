@@ -30,6 +30,7 @@ protected:
     int getIntWithChar(char c);
     int readNegInt();
     int readInt();
+    double readNegDouble();
     double readDouble();
     double readDeg();
     
