@@ -121,7 +121,10 @@ public:
     RMCFrame_ptr m_last_rmc_frame;
     GGAFrame_ptr m_last_gga_frame;
     
+    ImuFrame_ptr m_last_imu_acc_frame;
     ImuFrame_ptr m_last_imu_gyro_frame;
+    ImuFrame_ptr m_last_imu_angle_frame;
+    ImuFrame_ptr m_last_imu_mag_frame;
 protected:
     int m_error_read = 0;
     void parseBuffer();
@@ -132,7 +135,10 @@ protected:
     void parseVTG();
     void parseATT();
     
+    void parseImuAcc();
     void parseImuGyro();
+    void parseImuAngle();
+    void parseImuMag();
 };
 
 #endif //GPS_H

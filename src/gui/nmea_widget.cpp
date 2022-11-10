@@ -41,10 +41,10 @@ void NMEAWidget::draw(){
     
     y = m_height*0.5;
     
+    int inter = 0.1*m_width;
+    int x = 0.06*m_width;
     if(f.m_nmea_parser.m_last_imu_gyro_frame){
         y = m_height*0.5;
-        int inter = 0.1*m_width;
-        int x = 0.1*m_width;
         
         m_painter->drawText(x, y, "Gyro");
         x+= inter;
@@ -53,6 +53,36 @@ void NMEAWidget::draw(){
         m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_imu_gyro_frame->m_ay));
         x+= inter;
         m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_imu_gyro_frame->m_az));
+        x+= inter;
+        m_painter->drawText(x, y, "°/s");
+       
+    }
+    if(f.m_nmea_parser.m_last_imu_acc_frame){
+        y = m_height*0.6;
+        
+        m_painter->drawText(x, y, "Acc");
+        x+= inter;
+        m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_imu_acc_frame->m_ax));
+        x+= inter;
+        m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_imu_acc_frame->m_ay));
+        x+= inter;
+        m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_imu_acc_frame->m_az));
+        x+= inter;
+        m_painter->drawText(x, y, "m/s^2");
+       
+    }
+    if(f.m_nmea_parser.m_last_imu_angle_frame){
+        y = m_height*0.7;
+        
+        m_painter->drawText(x, y, "Angle");
+        x+= inter;
+        m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_imu_angle_frame->m_ax));
+        x+= inter;
+        m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_imu_angle_frame->m_ay));
+        x+= inter;
+        m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_imu_angle_frame->m_az));
+        x+= inter;
+        m_painter->drawText(x, y, "°");
        
     }
     

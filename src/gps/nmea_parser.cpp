@@ -30,9 +30,16 @@ void NmeaParser::parseBuffer(){
             }
             m_last_csq = s;
         }
-        if(m_buffer[0] == 'I' && m_buffer[1] == 'M' && m_buffer[2] == 'U' && m_buffer[3] == '_')
+        if(m_buffer[0] == 'I' && m_buffer[1] == 'M' && m_buffer[2] == 'U' && m_buffer[3] == '_'){
+            if( m_buffer[4] == 'A' && m_buffer[5] == 'C'  && m_buffer[6] == 'C' ){
+                return parseImuAcc();
+            }
             if( m_buffer[4] == 'G' && m_buffer[5] == 'Y'  && m_buffer[6] == 'R'  && m_buffer[7] == 'O' ){
-            return parseImuGyro();
+                return parseImuGyro();
+            }
+            if( m_buffer[4] == 'A' && m_buffer[5] == 'N'  && m_buffer[6] == 'G'  && m_buffer[7] == 'L' ){
+                return parseImuAngle();
+            }
         }
     }
 }
@@ -173,6 +180,15 @@ void NmeaParser::parseATT(){
     //f.m_position_module.onATTFrame(att_frame);
 }
 
+void NmeaParser::parseImuAcc(){
+    ImuFrame_ptr imu_frame = ImuFrame_ptr(new ImuFrame());
+    readUntilCommat();
+    imu_frame->m_ax = readDouble();
+    imu_frame->m_ay = readDouble();
+    imu_frame->m_az = readDouble();
+    
+    m_last_imu_acc_frame = imu_frame;
+}
 
 void NmeaParser::parseImuGyro(){
     ImuFrame_ptr imu_frame = ImuFrame_ptr(new ImuFrame());
@@ -182,6 +198,25 @@ void NmeaParser::parseImuGyro(){
     imu_frame->m_az = readDouble();
     
     m_last_imu_gyro_frame = imu_frame;
-    
-    //f.m_position_module.onATTFrame(att_frame);
 }
+
+void NmeaParser::parseImuAngle(){
+    ImuFrame_ptr imu_frame = ImuFrame_ptr(new ImuFrame());
+    readUntilCommat();
+    imu_frame->m_ax = readDouble();
+    imu_frame->m_ay = readDouble();
+    imu_frame->m_az = readDouble();
+    
+    m_last_imu_angle_frame = imu_frame;
+}
+
+void NmeaParser::parseImuMag(){
+    ImuFrame_ptr imu_frame = ImuFrame_ptr(new ImuFrame());
+    readUntilCommat();
+    imu_frame->m_ax = readDouble();
+    imu_frame->m_ay = readDouble();
+    imu_frame->m_az = readDouble();
+    
+    m_last_imu_mag_frame = imu_frame;
+}
+
