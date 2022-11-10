@@ -128,6 +128,25 @@ void BaseWidget::drawButtonImageCarre(ButtonGui & button, QPixmap * pixmap, doub
     }
 }
 
+void BaseWidget::drawButtonLabelCarre(ButtonGui & button, std::string s, double scale, bool open){
+    int x = button.m_x-button.m_rayon;
+    int y = button.m_y-button.m_rayon;
+    int d = button.m_rayon*2;
+    m_painter->setPen(m_penBlack);
+    m_painter->setBrush(m_brushDarkGray);
+    m_painter->drawRoundedRect(x, y, d, d, 5, 5);
+    
+    drawText(s, button.m_x, button.m_y, sizeText_little, true, true);
+
+    if(open){
+        m_painter->setPen(m_penBlack);
+        m_painter->setBrush(m_brushWhiteAlpha);
+        
+        m_painter->drawRoundedRect(x, y, d, d, 5, 5);
+    }
+}
+
+
 void BaseWidget::drawMyImage(QPixmap & pixmap, int x, int y, double scale, bool center){
     double scale2 = 0.4*scale;
     

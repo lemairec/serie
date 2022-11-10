@@ -5,6 +5,7 @@
 #include "option_widget.hpp"
 #include "base/keyboard_widget.hpp"
 #include "harxon_widget.hpp"
+#include "nmea_widget.hpp"
 
 class MainWidget : public BaseWidget {
     MainWidget();
@@ -20,6 +21,7 @@ public:
     
     KeyPadWidget m_key_pad_widget;
     KeyBoardWidget m_key_board_widget;
+    NMEAWidget m_gps_widget;
     
     std::vector<ButtonGui *> m_categories;
     
@@ -30,6 +32,7 @@ public:
     
     
     ButtonGui m_button_setting;
+    ButtonGui m_button_gps;
     ButtonGui m_buttonMenu2;
     ButtonGui m_buttonMenu3;
     ButtonGui m_buttonMenu4;

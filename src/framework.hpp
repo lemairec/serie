@@ -3,6 +3,7 @@
 
 #include "gui/qt/my_qt_serial_port.hpp"
 #include "config/config.hpp"
+#include "gps/nmea_parser.hpp"
 #include <chrono>
 #include <QThread>
 #include <time.h>
@@ -28,6 +29,9 @@ class Framework {
     
     void saveInfoFile();
 public:
+    bool m_gps = false;
+    NmeaParser m_nmea_parser;
+    
     static Framework & Instance();
     ~Framework();
     void initOrLoadConfig();

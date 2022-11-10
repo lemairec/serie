@@ -46,7 +46,8 @@ void MainWidget::setSize(int width, int height){
     int y = m_gros_button*1.2;
     m_button_setting.setResize(x_right, y, m_gros_button);
     y += inter*1.5;
-    
+    m_button_gps.setResize(x_right, y, m_gros_button);
+   
     
     m_widthMax = m_width/2-50;
     m_heightMax = m_height/2-50;
@@ -57,7 +58,7 @@ void MainWidget::setSize(int width, int height){
     }
     m_key_pad_widget.setSize(m_width, m_height);
     m_key_board_widget.setSize(m_width, m_height);
-
+    m_gps_widget.setSize(m_width, m_height);
     
     int inter_x = m_petit_button*3;
     int x = inter_x;
@@ -104,6 +105,7 @@ void MainWidget::setPainter(QPainter * p){
         p2->setPainter(p);
     }
     m_key_board_widget.setPainter(p);
+    m_gps_widget.setPainter(p);
 }
 
 int max = 10000;
@@ -139,6 +141,10 @@ void MainWidget::draw_force(){
     
     if(!m_key_board_widget.m_close){
         m_key_board_widget.draw();
+    }
+    Framework & f = Framework::Instance();
+    if(f.m_gps){
+        m_gps_widget.draw();
     }
 }
 
@@ -211,13 +217,15 @@ void MainWidget::drawMenuRight(){
 }
 
 void MainWidget::drawButtons(){
+    Framework & f = Framework::Instance();
     drawButtonImageCarre(m_button_setting, m_imgMenu, 0.8);
+    
+    drawButtonLabelCarre(m_button_gps, "GPS", 0.8, f.m_gps);
     
     drawButton(m_buttonMenu2);
     drawButton(m_buttonMenu3);
     drawButton(m_buttonMenu4);
     
-    Framework & f = Framework::Instance();
     drawButton(m_buttonSaveLog);
     drawButtonCheck(m_buttonSaveLog, f.m_save_log);
     
@@ -267,6 +275,8 @@ int MainWidget::onMouse(int x, int y){
             std::string s = s2.toUtf8().constData();
             f.sendMessages(s);
         }
+    } else if(m_button_gps.isActive(x, y)){
+        f.m_gps = !f.m_gps;
     }
     return 0;
 }

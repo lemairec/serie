@@ -86,6 +86,7 @@ public:
     void drawButtonLabel2(ButtonGui & button, int color = 0);
     void drawButtonImage(ButtonGui & button, QPixmap * pixmap, double scale=1.0);
     void drawButtonImageCarre(ButtonGui & button, QPixmap * pixmap, double scale=1.0, bool open = false);
+    void drawButtonLabelCarre(ButtonGui & button, std::string s, double scale=1.0, bool open = false);
     void drawButtonValidate(ButtonGui & button);
     void drawButtonCancel(ButtonGui & button);
 

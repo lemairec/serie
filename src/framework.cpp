@@ -119,6 +119,9 @@ void Framework::addSerialChar(char c){
     if(m_save_log){
         m_logFile << c;
     }
+    if(m_gps){
+        m_nmea_parser.readChar(c);
+    }
 }
 
 void Framework::sendMessages(const std::string & s){
