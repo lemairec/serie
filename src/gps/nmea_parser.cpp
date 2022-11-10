@@ -30,6 +30,10 @@ void NmeaParser::parseBuffer(){
             }
             m_last_csq = s;
         }
+        if(m_buffer[0] == 'I' && m_buffer[1] == 'M' && m_buffer[2] == 'U' && m_buffer[3] == '_')
+            if( m_buffer[4] == 'G' && m_buffer[5] == 'Y'  && m_buffer[6] == 'R'  && m_buffer[7] == 'O' ){
+            return parseImuGyro();
+        }
     }
 }
 
@@ -165,6 +169,19 @@ void NmeaParser::parseATT(){
     att_frame->m_head = -readDouble();
     att_frame->m_pitch = readDouble();
     att_frame->m_roll = readDouble();
+    
+    //f.m_position_module.onATTFrame(att_frame);
+}
+
+
+void NmeaParser::parseImuGyro(){
+    ImuFrame_ptr imu_frame = ImuFrame_ptr(new ImuFrame());
+    readUntilCommat();
+    imu_frame->m_ax = readDouble();
+    imu_frame->m_ay = readDouble();
+    imu_frame->m_az = readDouble();
+    
+    m_last_imu_gyro_frame = imu_frame;
     
     //f.m_position_module.onATTFrame(att_frame);
 }
