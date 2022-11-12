@@ -3,6 +3,14 @@
 //#include "../framework.hpp"
 //#include "gps_module.hpp"
 
+NmeaParser::NmeaParser(){
+    m_last_imu_acc_frame = ImuFrame_ptr(new ImuFrame());
+    m_last_imu_gyro_frame = ImuFrame_ptr(new ImuFrame());
+    m_last_imu_mag_frame = ImuFrame_ptr(new ImuFrame());
+    m_last_imu_angle_frame = ImuFrame_ptr(new ImuFrame());
+    m_last_gga_frame = GGAFrame_ptr(new GGAFrame());
+    m_last_rmc_frame = RMCFrame_ptr(new RMCFrame());
+}
 void NmeaParser::parseBuffer(){
     if(m_bufferIndLast > 1){
         if(m_buffer[0] == 'G'){

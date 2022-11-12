@@ -125,6 +125,8 @@ public:
     ImuFrame_ptr m_last_imu_gyro_frame;
     ImuFrame_ptr m_last_imu_angle_frame;
     ImuFrame_ptr m_last_imu_mag_frame;
+    
+    NmeaParser();
 protected:
     int m_error_read = 0;
     void parseBuffer();
