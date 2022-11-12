@@ -49,7 +49,7 @@ void NmeaParser::parseBuffer(){
                 return parseImuAngle();
             }
             if( m_buffer[4] == 'M' && m_buffer[5] == 'A'  && m_buffer[6] == 'G' ){
-                return parseImuAngle();
+                return parseImuMag();
             }
         }
     }
