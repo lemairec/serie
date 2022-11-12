@@ -110,7 +110,7 @@ void NMEAWidget::draw(){
         m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_imu_mag_frame->m_az));
         x+= inter;
         
-        double angle = atan2(f.m_nmea_parser.m_last_imu_mag_frame->m_ax, f.m_nmea_parser.m_last_imu_mag_frame->m_ay);
+        double angle = atan2(-f.m_nmea_parser.m_last_imu_mag_frame->m_ay, f.m_nmea_parser.m_last_imu_mag_frame->m_ax);
         double angle_deg = angle/3.14*180;
         y += inter_y;
         x = 0.06*m_width;
