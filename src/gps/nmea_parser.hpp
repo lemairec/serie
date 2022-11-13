@@ -109,6 +109,21 @@ struct ImuFrame {
 
 typedef std::shared_ptr<ImuFrame> ImuFrame_ptr;
 
+struct JDCapVit {
+    double m_cap_deg;
+    double m_v_km_h;
+};
+
+struct JDPos {
+    double m_lat;
+    double m_lon;
+};
+
+struct JDImu {
+    double m_roll;
+    double m_pitch;
+    double m_yaw_acc;
+};
 
 class NmeaParser : public Parser {
 public:
@@ -126,6 +141,10 @@ public:
     ImuFrame_ptr m_last_imu_angle_frame;
     ImuFrame_ptr m_last_imu_mag_frame;
     
+    JDCapVit m_last_jd_cap_vit;
+    JDPos m_last_jd_pos;
+    JDImu m_last_jd_imu;
+    
     NmeaParser();
 protected:
     int m_error_read = 0;
@@ -141,6 +160,10 @@ protected:
     void parseImuGyro();
     void parseImuAngle();
     void parseImuMag();
+    
+    void parseJDCapVit();
+    void parseJDPos();
+    void parseJDImu();
 };
 
 #endif //GPS_H

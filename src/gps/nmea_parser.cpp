@@ -52,6 +52,17 @@ void NmeaParser::parseBuffer(){
                 return parseImuMag();
             }
         }
+        if(m_buffer[0] == 'J' && m_buffer[1] == 'D' && m_buffer[2] == '_'){
+            if( m_buffer[3] == 'P' && m_buffer[4] == 'O'  && m_buffer[5] == 'S' ){
+                return parseJDPos();
+            }
+            if( m_buffer[3] == 'I' && m_buffer[4] == 'M'  && m_buffer[5] == 'U' ){
+                return parseJDImu();
+            }
+            if( m_buffer[3] == 'C' && m_buffer[4] == 'A'  && m_buffer[5] == 'P' ){
+                return parseJDCapVit();
+            }
+        }
     }
 }
 
@@ -231,3 +242,21 @@ void NmeaParser::parseImuMag(){
     m_last_imu_mag_frame = imu_frame;
 }
 
+
+
+void NmeaParser::parseJDCapVit(){
+    readUntilCommat();
+    m_last_jd_cap_vit.m_cap_deg = readNegDouble();
+    m_last_jd_cap_vit.m_v_km_h = readNegDouble();
+}
+void NmeaParser::parseJDPos(){
+    readUntilCommat();
+    m_last_jd_pos.m_lat = readNegDouble();
+    m_last_jd_pos.m_lon = readNegDouble();
+}
+void NmeaParser::parseJDImu(){
+    readUntilCommat();
+    m_last_jd_imu.m_roll = readNegDouble();
+    m_last_jd_imu.m_pitch = readNegDouble();
+    m_last_jd_imu.m_yaw_acc = readNegDouble();
+}

@@ -120,6 +120,62 @@ void NMEAWidget::draw(){
         m_painter->drawText(x, y, "°");
     }
     
+    y = m_height*0.65;
+    if(true){
+        int x = 0.5*m_width;
+        m_painter->drawText(x, y, "JD_CAP");
+        x+= inter;
+        m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_jd_cap_vit.m_cap_deg));
+        x+= inter;
+        m_painter->drawText(x, y, "°");
+        x+= inter;
+        m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_jd_cap_vit.m_v_km_h));
+        x+= inter;
+        m_painter->drawText(x, y, "km/h");
+       
+    }
+    
+    y += inter_y;
+    if(true){
+        int x = 0.5*m_width;
+        m_painter->drawText(x, y, "JD_POS");
+        x+= inter;
+        m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_jd_pos.m_lat));
+        x+= inter;
+        x+= inter;
+        m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_jd_pos.m_lon));
+        
+       
+    }
+    y += inter_y;
+    if(true){
+        int x = 0.5*m_width;
+        m_painter->drawText(x, y, "");
+        x+= inter;
+        m_painter->drawText(x, y, "roll °");
+        x+= inter;
+        m_painter->drawText(x, y, "pitch °");
+        x+= inter;
+        m_painter->drawText(x, y, "yaw acc °/s");
+        x+= inter;
+       
+    }
+    y += inter_y;
+    if(true){
+        int x = 0.5*m_width;
+        m_painter->drawText(x, y, "JD_IMU");
+        x+= inter;
+        m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_jd_imu.m_roll));
+        x+= inter;
+        m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_jd_imu.m_pitch));
+        x+= inter;
+        m_painter->drawText(x, y, QString::number(f.m_nmea_parser.m_last_jd_imu.m_yaw_acc));
+        x+= inter;
+       
+    }
+    
+    
+    
 };
 int NMEAWidget::onMouse(int x, int y){
     return 0;
