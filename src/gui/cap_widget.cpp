@@ -113,6 +113,8 @@ public:
         m_new_v = vitesse_kmh*1000/3600;
         if(vitesse_kmh > 0.5){
             m_new_cap_deg = angle_deg;
+        } else {
+            m_new_cap_deg = m_old_cap_deg;
         }
         m_new_a_cap = -m_imu_a_yaw_z_deg;
         m_new_a_v = m_imu_a_y;
