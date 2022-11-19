@@ -212,7 +212,7 @@ void CapWidget::draw(){
         cap_rmc = f.m_nmea_parser.m_last_rmc_frame->m_cap_deg;
         auto rmc = f.m_nmea_parser.m_last_rmc_frame;
         
-        m_ekf_module.workRMC(rmc->m_latitude, rmc->m_longitude, 0, rmc->m_vitesse_kmh, rmc->m_cap_rad);
+        m_ekf_module.workRMC(rmc->m_latitude, rmc->m_longitude, 0, rmc->m_vitesse_kmh, rmc->m_cap_deg);
     }
     cap_jd = f.m_nmea_parser.m_last_jd_cap_vit.m_cap_deg;
     if(f.m_nmea_parser.m_last_imu_angle_frame){
@@ -227,7 +227,7 @@ void CapWidget::draw(){
     inter_y = 0.05*m_height;
     
     m_painter->drawEllipse(x_cercle-r_cercle, y_cercle-r_cercle, 2*r_cercle, 2*r_cercle);
-    drawAngle(cap_jd, "JD", Qt::green);
+    //drawAngle(cap_jd, "JD", Qt::green);
     drawAngle(m_ekf_module.m_old_cap_deg, "JD_calc", Qt::green);
     drawAngle(cap_rmc, "RMC", Qt::red);
     drawAngle(cap_imu, "IMU", Qt::blue);
