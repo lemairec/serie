@@ -140,7 +140,7 @@ public:
         m_calc_cap_deg = (atan2(-(m_old_x-m_new_x),-(m_old_y-m_new_y)))*180/M_PI;
         m_calc_a_v = (m_new_v-m_old_v)/d_t;
         m_calc_a_cap = (m_new_cap_deg-m_old_cap_deg)/d_t;
-        double diff_cap = (m_new_cap_deg-m_old_cap_deg);
+        double diff_cap = (m_new_imu_cap-m_old_imu_cap);
         normalizeDeg(diff_cap);
         
         m_old_x = m_old_x + sin(cap)*m_old_v*d_t;
