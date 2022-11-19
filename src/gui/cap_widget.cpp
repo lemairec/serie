@@ -5,7 +5,7 @@ class EkfModule {
 public:
     double m_lissage_gps_ekf_xy = 0.9;
     double m_lissage_gps_ekf_v = 0.9;
-    double m_lissage_gps_ekf_cap = 0.9;
+    double m_lissage_gps_ekf_cap = 0.99;
     double m_lissage_gps_ekf_s_s = 0.9;
     double m_h = 0;
 
@@ -143,8 +143,6 @@ public:
         double diff_cap = (m_new_cap_deg-m_old_cap_deg);
         normalizeDeg(diff_cap);
         
-        m_new_cap_deg = angle_deg;
-
         m_old_x = m_old_x + sin(cap)*m_old_v*d_t;
         m_old_y = m_old_y + cos(cap)*m_old_v*d_t;
         m_old_v = m_old_v + m_old_a_v*d_t;
