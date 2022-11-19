@@ -5,7 +5,7 @@ class EkfModule {
 public:
     double m_lissage_gps_ekf_xy = 0.9;
     double m_lissage_gps_ekf_v = 0.9;
-    double m_lissage_gps_ekf_cap = 0.99;
+    double m_lissage_gps_ekf_cap = 0.95;
     double m_lissage_gps_ekf_s_s = 0.9;
     double m_h = 0;
 
