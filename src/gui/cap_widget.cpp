@@ -5,7 +5,7 @@ class EkfModule {
 public:
     double m_lissage_gps_ekf_xy = 0.9;
     double m_lissage_gps_ekf_v = 0.9;
-    double m_lissage_gps_ekf_cap = 0.9;
+    double m_lissage_gps_ekf_cap = 0.95;
     double m_lissage_gps_ekf_s_s = 0.9;
     double m_h = 0;
 
@@ -14,7 +14,6 @@ public:
     double m_old_v;
     double m_old_cap_deg;
     double m_old_a_v;
-    double m_old_imu_cap;
     double m_old_a_cap;
 
     double m_new_x;
@@ -22,7 +21,7 @@ public:
     double m_new_v;
     double m_new_cap_deg;
     double m_new_a_v;
-    double m_new_imu_cap;
+    double m_new_a_cap;
     double m_new_pitch_y_deg;
 
     double m_calc_v;
@@ -112,12 +111,8 @@ public:
         m_new_y = y;
 
         m_new_v = vitesse_kmh*1000/3600;
-        if(vitesse_kmh>0.5){
-            m_new_cap_deg = angle_deg;
-        } else {
-            m_new_cap_deg = m_old_cap_deg;
-        }
-        m_new_imu_cap = -m_imu_yaw_z_deg;
+        m_new_cap_deg = angle_deg;
+        m_new_a_cap = m_imu_a_yaw_z_deg;
         m_new_a_v = m_imu_a_y;
         m_new_pitch_y_deg = m_imu_pitch_y_deg;
         //m_new_z = z;
@@ -140,14 +135,14 @@ public:
         m_calc_cap_deg = (atan2(-(m_old_x-m_new_x),-(m_old_y-m_new_y)))*180/M_PI;
         m_calc_a_v = (m_new_v-m_old_v)/d_t;
         m_calc_a_cap = (m_new_cap_deg-m_old_cap_deg)/d_t;
-        double diff_cap = (m_new_imu_cap-m_old_imu_cap);
-        normalizeDeg(diff_cap);
-        
+
+        m_new_cap_deg = angle_deg;
+
         m_old_x = m_old_x + sin(cap)*m_old_v*d_t;
         m_old_y = m_old_y + cos(cap)*m_old_v*d_t;
         m_old_v = m_old_v + m_old_a_v*d_t;
-        m_calc2_cap_deg =  m_old_cap_deg + diff_cap;
-        m_old_cap_deg = m_old_cap_deg + diff_cap;
+        m_calc2_cap_deg =  m_old_cap_deg + m_old_a_cap*d_t;
+        m_old_cap_deg = m_old_cap_deg + m_old_a_cap*d_t;
         normalizeDeg(m_old_cap_deg);
 
 
@@ -159,11 +154,10 @@ public:
         double diff = m_new_cap_deg-m_old_cap_deg;
         normalizeDeg(diff);
         m_old_cap_deg = m_old_cap_deg+(1.0-m_lissage_gps_ekf_cap)*(diff);
-        
         normalizeDeg(m_old_cap_deg);
 
         m_old_a_v = m_lissage_gps_ekf_s_s*m_old_a_v+(1.0-m_lissage_gps_ekf_s_s)*m_new_a_v;
-        m_old_imu_cap = m_new_imu_cap;
+        m_old_a_cap = m_lissage_gps_ekf_s_s*m_old_a_cap+(1.0-m_lissage_gps_ekf_s_s)*m_new_a_cap;
     }
 };
 
@@ -211,6 +205,7 @@ void CapWidget::draw(){
         auto rmc = f.m_nmea_parser.m_last_rmc_frame;
         
         m_ekf_module.onNewImuGyro(0, 0, f.m_nmea_parser.m_last_imu_angle_frame->m_az);
+        m_ekf_module.onNewImuAccAng(0, 0, f.m_nmea_parser.m_last_imu_gyro_frame->m_az);
         m_ekf_module.workRMC(rmc->m_latitude, rmc->m_longitude, 0, rmc->m_vitesse_kmh, rmc->m_cap_deg);
     }
     cap_jd = f.m_nmea_parser.m_last_jd_cap_vit.m_cap_deg;
@@ -227,10 +222,21 @@ void CapWidget::draw(){
     
     m_painter->drawEllipse(x_cercle-r_cercle, y_cercle-r_cercle, 2*r_cercle, 2*r_cercle);
     //drawAngle(cap_jd, "JD", Qt::green);
-    drawAngle(m_ekf_module.m_old_cap_deg, "JD_calc", Qt::green);
     drawAngle(cap_rmc, "RMC", Qt::red);
     drawAngle(cap_imu, "IMU", Qt::blue);
+    drawAngle(m_ekf_module.m_old_cap_deg, "JD_calc", Qt::green);
     
+    
+    m_painter->drawText(m_width*0.5, y, "acc imu Z");
+    m_painter->drawText(m_width*0.6, y, QString::number(m_ekf_module.m_old_a_cap));
+    m_painter->drawText(m_width*0.65, y, "°/s");
+    y+=inter_y;
+    
+    m_painter->drawText(m_width*0.5, y, "acc calc Z");
+    m_painter->drawText(m_width*0.6, y, QString::number(m_ekf_module.m_calc_a_cap));
+    m_painter->drawText(m_width*0.65, y, "°/s");
+    y+=inter_y;
+   
     
 };
 int CapWidget::onMouse(int x, int y){
