@@ -229,8 +229,8 @@ void MainWidget::drawButtons(){
     Framework & f = Framework::Instance();
     drawButtonImageCarre(m_button_setting, m_imgMenu, 0.8);
     
-    drawButtonLabelCarre(m_button_gps, "GPS", 0.8, f.m_gps);
-    drawButtonLabelCarre(m_button_cap, "CAP", 0.8, f.m_gps);
+    drawButtonLabelCarre(m_button_gps, "GPS", 0.8, m_gps_widget.isOpen());
+    drawButtonLabelCarre(m_button_cap, "CAP", 0.8, m_cap_widget.isOpen());
     
     drawButton(m_buttonMenu2);
     drawButton(m_buttonMenu3);
@@ -287,12 +287,17 @@ int MainWidget::onMouse(int x, int y){
         }
     } else if(m_button_gps.isActive(x, y)){
         f.m_gps = !f.m_gps;
+        m_gps_widget.m_close = true;
+        m_cap_widget.m_close = true;
+        if(f.m_gps){
+            m_gps_widget.open();
+        }
     } else if(m_button_cap.isActive(x, y)){
         f.m_gps = !f.m_gps;
+        m_gps_widget.m_close = true;
+        m_cap_widget.m_close = true;
         if(f.m_gps){
             m_cap_widget.open();
-        } else {
-            m_cap_widget.m_close = true;
         }
     }
     return 0;
