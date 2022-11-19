@@ -5,7 +5,7 @@ class EkfModule {
 public:
     double m_lissage_gps_ekf_xy = 0.9;
     double m_lissage_gps_ekf_v = 0.9;
-    double m_lissage_gps_ekf_cap = 0.99;
+    double m_lissage_gps_ekf_cap = 0.9;
     double m_lissage_gps_ekf_s_s = 0.9;
     double m_h = 0;
 
@@ -161,6 +161,7 @@ public:
         double diff = m_new_cap_deg-m_old_cap_deg;
         normalizeDeg(diff);
         m_old_cap_deg = m_old_cap_deg+(1.0-m_lissage_gps_ekf_cap)*(diff);
+        
         normalizeDeg(m_old_cap_deg);
 
         m_old_a_v = m_lissage_gps_ekf_s_s*m_old_a_v+(1.0-m_lissage_gps_ekf_s_s)*m_new_a_v;
@@ -226,7 +227,8 @@ void CapWidget::draw(){
     inter_y = 0.05*m_height;
     
     m_painter->drawEllipse(x_cercle-r_cercle, y_cercle-r_cercle, 2*r_cercle, 2*r_cercle);
-    drawAngle(m_ekf_module.m_old_cap_deg, "JD", Qt::green);
+    drawAngle(cap_jd, "JD", Qt::green);
+    drawAngle(m_ekf_module.m_old_cap_deg, "JD_calc", Qt::green);
     drawAngle(cap_rmc, "RMC", Qt::red);
     drawAngle(cap_imu, "IMU", Qt::blue);
     
