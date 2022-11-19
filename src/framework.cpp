@@ -67,14 +67,14 @@ std::ofstream m_logFile;
 void Framework::changeSaveLog(){
     m_save_log = !m_save_log;
     if(m_save_log){
-        std::string path = "logserial.txt";
+        std::string path = DirectoryManager::Instance().getDataDirectory() + "/logserial.txt";
         m_logFile.open(path);
         if(m_logFile.fail()){
             std::cerr << "open failure as expected: " << strerror(errno) << std::endl;
             std::cerr << "Warning File fail " << path << std::endl;
             exit(1);
         }
-        m_logFile << "### begin ###" << std::endl;
+        m_logFile << "### begin m_save_log ###" << std::endl;
         m_logFile << "#############" << std::endl;
     }
 }
