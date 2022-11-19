@@ -210,7 +210,7 @@ void CapWidget::draw(){
         cap_rmc = f.m_nmea_parser.m_last_rmc_frame->m_cap_deg;
         auto rmc = f.m_nmea_parser.m_last_rmc_frame;
         
-        m_ekf_module.onNewImuGyro(0, 0, -f.m_nmea_parser.m_last_imu_angle_frame->m_az);
+        m_ekf_module.onNewImuGyro(0, 0, f.m_nmea_parser.m_last_imu_angle_frame->m_az);
         m_ekf_module.workRMC(rmc->m_latitude, rmc->m_longitude, 0, rmc->m_vitesse_kmh, rmc->m_cap_deg);
     }
     cap_jd = f.m_nmea_parser.m_last_jd_cap_vit.m_cap_deg;
