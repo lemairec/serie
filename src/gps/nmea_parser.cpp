@@ -63,6 +63,17 @@ void NmeaParser::parseBuffer(){
                 return parseJDCapVit();
             }
         }
+        if(m_buffer[0] == 'L' && m_buffer[1] == 'E' && m_buffer[2] == 'M' && m_buffer[3] == 'C' && m_buffer[4] == 'A' ){
+            if(m_buffer[5] == '1' ){
+                return parseLemca1();
+            }
+            if(m_buffer[5] == '2' ){
+                return parseLemca2();
+            }
+            if(m_buffer[5] == '3' ){
+                return parseLemca3();
+            }
+        }
     }
 }
 
@@ -259,4 +270,25 @@ void NmeaParser::parseJDImu(){
     m_last_jd_imu.m_roll = readNegDouble();
     m_last_jd_imu.m_pitch = readNegDouble();
     m_last_jd_imu.m_yaw_acc = readNegDouble();
+}
+
+void NmeaParser::parseLemca1(){
+    readUntilCommat();
+    m_lemca_debug_1.m_value1 = readNegDouble();
+    m_lemca_debug_1.m_value2 = readNegDouble();
+    m_lemca_debug_1.m_value3 = readNegDouble();
+}
+
+void NmeaParser::parseLemca2(){
+    readUntilCommat();
+    m_lemca_debug_2.m_value1 = readNegDouble();
+    m_lemca_debug_2.m_value2 = readNegDouble();
+    m_lemca_debug_2.m_value3 = readNegDouble();
+}
+
+void NmeaParser::parseLemca3(){
+    readUntilCommat();
+    m_lemca_debug_3.m_value1 = readNegDouble();
+    m_lemca_debug_3.m_value2 = readNegDouble();
+    m_lemca_debug_3.m_value3 = readNegDouble();
 }

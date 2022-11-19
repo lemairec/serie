@@ -125,6 +125,13 @@ struct JDImu {
     double m_yaw_acc;
 };
 
+struct LemcaDebug {
+    double m_value1;
+    double m_value2;
+    double m_value3;
+};
+
+
 class NmeaParser : public Parser {
 public:
     std::string m_last_gga_str = "";
@@ -145,6 +152,10 @@ public:
     JDPos m_last_jd_pos;
     JDImu m_last_jd_imu;
     
+    LemcaDebug m_lemca_debug_1;
+    LemcaDebug m_lemca_debug_2;
+    LemcaDebug m_lemca_debug_3;
+    
     NmeaParser();
 protected:
     int m_error_read = 0;
@@ -164,6 +175,10 @@ protected:
     void parseJDCapVit();
     void parseJDPos();
     void parseJDImu();
+    
+    void parseLemca1();
+    void parseLemca2();
+    void parseLemca3();
 };
 
 #endif //GPS_H
