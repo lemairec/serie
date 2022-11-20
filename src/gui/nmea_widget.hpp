@@ -5,6 +5,7 @@
 #include "option_widget.hpp"
 #include "base/keyboard_widget.hpp"
 
+
 class NMEAWidget : public BaseWidget {
 public:
     NMEAWidget();

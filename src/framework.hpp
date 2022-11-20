@@ -2,6 +2,7 @@
 #define GPS_FRAMEWORK_H
 
 #include "gui/qt/my_qt_serial_port.hpp"
+#include "gui/qt/my_qt_file.hpp"
 #include "config/config.hpp"
 #include "gps/nmea_parser.hpp"
 #include <chrono>
@@ -32,6 +33,7 @@ public:
     bool m_gps = false;
     NmeaParser m_nmea_parser;
     
+    
     static Framework & Instance();
     ~Framework();
     void initOrLoadConfig();
@@ -54,6 +56,7 @@ public:
     void changeSaveLog();
     
     MyQTSerialPorts m_serial_port;
+    MyQTFile m_file;
 private:
     void readFile();
 };

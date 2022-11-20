@@ -195,9 +195,6 @@ void OptionWidget::resizePage1(){
     m_select_baudrates.clear();
     m_select_baudrates.addValueInt("9600", 9600);
     m_select_baudrates.addValueInt("115200", 115200);
-    
-    
-   
 };
 
 void OptionWidget::drawPage1(){
@@ -214,6 +211,8 @@ void OptionWidget::drawPage1(){
     }
     drawButtonLabel2(m_select_serial.m_buttonOpen);
     drawButtonLabel2(m_select_baudrates.m_buttonOpen);
+   
+    drawText(f.m_serial_port.m_last_error, m_part_2_x+m_part_2_w/2, m_select_serial.m_y, sizeText_medium, true);
    
     /*drawSelectButtonGuiClose(m_select_serial);
     drawSelectButtonGuiClose(m_select_baudrates);

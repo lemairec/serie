@@ -28,6 +28,7 @@ void MyQTSerialPorts::initOrLoad(Config & config){
         if(m_serial == config.m_serial && m_serialPort.isOpen()){
             INFO("gps port already open");
         } else {
+            m_last_error = "";
             if(m_serialPort.isOpen()){
                 m_serialPort.close();
             }
@@ -46,8 +47,10 @@ void MyQTSerialPorts::initOrLoad(Config & config){
                 std::ostringstream oss;
                 oss << "Failed error:" << m_serialPort.errorString().toUtf8().constData();
                 std::string s = oss.str();
+                m_last_error = s;
                 f.addSerialString(s);
             } else {
+                m_last_error = "opened";
                 f.addSerialString("opened");
             }
         }

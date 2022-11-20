@@ -22,12 +22,14 @@ class MyQTSerialPorts : public QObject{
     std::string m_serial;
     QSerialPort m_serialPort;
     
+    
     std::vector<std::string> m_serials;
     std::map<std::string, SerialSearch *> m_serial_searchs;
     
     int m_pilot_langage = 0;
 public:
     int m_serial_searchs_i = 0;
+    std::string m_last_error = "";
     
     MyQTSerialPorts();
     
