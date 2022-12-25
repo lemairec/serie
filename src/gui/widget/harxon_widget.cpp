@@ -1,5 +1,5 @@
 #include "harxon_widget.hpp"
-#include "../framework.hpp"
+#include "../../framework.hpp"
 
 BaseWidgetSerie::BaseWidgetSerie(){
     m_imgClose = loadImage("/gui/ok.png");

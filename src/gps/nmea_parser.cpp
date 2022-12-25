@@ -13,7 +13,9 @@ NmeaParser::NmeaParser(){
 }
 void NmeaParser::parseBuffer(){
     if(m_bufferIndLast > 1){
-        if(m_buffer[0] == 'G'){
+        if(m_buffer[0] == 'V'){
+            parseVersion();
+        } else if(m_buffer[0] == 'G'){
             if(m_buffer[1] == 'N' || m_buffer[1] == 'P'){
                 if(m_buffer[2] == 'G' && m_buffer[3] == 'G' && m_buffer[4] == 'A'){
                     if(checkBuffer()){
@@ -27,18 +29,15 @@ void NmeaParser::parseBuffer(){
                     return parseVTG();
                 }
             }
-        }
-        if(m_buffer[0] == 'P' && m_buffer[1] == 'A' && m_buffer[2] == 'T' && m_buffer[2] == 'T'){
+        } else if(m_buffer[0] == 'P' && m_buffer[1] == 'A' && m_buffer[2] == 'T' && m_buffer[2] == 'T'){
             return parseATT();
-        }
-        if(m_buffer[0] == 'C' && m_buffer[1] == 'S' && m_buffer[2] == 'Q'){
+        } else if(m_buffer[0] == 'C' && m_buffer[1] == 'S' && m_buffer[2] == 'Q'){
             std::string s = "";
             for(size_t i =0; i < m_bufferIndLast; ++i){
                 s += m_buffer[i];
             }
             m_last_csq = s;
-        }
-        if(m_buffer[0] == 'I' && m_buffer[1] == 'M' && m_buffer[2] == 'U' && m_buffer[3] == '_'){
+        } else if(m_buffer[0] == 'I' && m_buffer[1] == 'M' && m_buffer[2] == 'U' && m_buffer[3] == '_'){
             if( m_buffer[4] == 'A' && m_buffer[5] == 'C'  && m_buffer[6] == 'C' ){
                 return parseImuAcc();
             }
@@ -51,8 +50,7 @@ void NmeaParser::parseBuffer(){
             if( m_buffer[4] == 'M' && m_buffer[5] == 'A'  && m_buffer[6] == 'G' ){
                 return parseImuMag();
             }
-        }
-        if(m_buffer[0] == 'J' && m_buffer[1] == 'D' && m_buffer[2] == '_'){
+        } else if(m_buffer[0] == 'J' && m_buffer[1] == 'D' && m_buffer[2] == '_'){
             if( m_buffer[3] == 'P' && m_buffer[4] == 'O'  && m_buffer[5] == 'S' ){
                 return parseJDPos();
             }
@@ -62,8 +60,7 @@ void NmeaParser::parseBuffer(){
             if( m_buffer[3] == 'C' && m_buffer[4] == 'A'  && m_buffer[5] == 'P' ){
                 return parseJDCapVit();
             }
-        }
-        if(m_buffer[0] == 'L' && m_buffer[1] == 'E' && m_buffer[2] == 'M' && m_buffer[3] == 'C' && m_buffer[4] == 'A' ){
+        } else if(m_buffer[0] == 'L' && m_buffer[1] == 'E' && m_buffer[2] == 'M' && m_buffer[3] == 'C' && m_buffer[4] == 'A' ){
             if(m_buffer[5] == '1' ){
                 return parseLemca1();
             }
@@ -73,6 +70,12 @@ void NmeaParser::parseBuffer(){
             if(m_buffer[5] == '3' ){
                 return parseLemca3();
             }
+        } else if(m_buffer[0] == 'C' && m_buffer[1] == 'F' && m_buffer[2] == 'G' && m_buffer[3] == '_'){
+            if(m_buffer[4] == 'E' && m_buffer[5] == 'K' && m_buffer[6] == 'F'){
+                return parseCfgEkf();
+            }
+        }  else {
+            error();
         }
     }
 }
@@ -268,7 +271,6 @@ void NmeaParser::parseJDPos(){
 void NmeaParser::parseJDImu(){
     readUntilCommat();
     m_last_jd_imu.m_roll = readNegDouble();
-    m_last_jd_imu.m_pitch = readNegDouble();
     m_last_jd_imu.m_yaw_acc = readNegDouble();
 }
 
@@ -291,4 +293,28 @@ void NmeaParser::parseLemca3(){
     m_lemca_debug_3.m_value1 = readNegDouble();
     m_lemca_debug_3.m_value2 = readNegDouble();
     m_lemca_debug_3.m_value3 = readNegDouble();
+}
+
+void NmeaParser::parseVersion(){
+    std::string s = "";
+    for(size_t i =0; i < m_bufferIndLast; ++i){
+        s += m_buffer[i];
+    }
+    m_version = s;
+}
+
+void NmeaParser::parseCfgEkf(){
+    std::string s = "";
+    for(size_t i =0; i < m_bufferIndLast; ++i){
+        s += m_buffer[i];
+    }
+    m_last_cfg_ekf = s;
+    
+    readUntilCommat();
+    m_cfg_ekf.m_lissage_ekf_xy = readDouble();
+    m_cfg_ekf.m_lissage_ekf_cap = readDouble();
+    m_cfg_ekf.m_lissage_ekf_a_cap = readDouble();
+    m_cfg_ekf.m_lissage_ekf_v = readDouble();
+    m_cfg_ekf.m_lissage_ekf_a_v = readDouble();
+    m_cfg_ekf.m_lissage_ekf_roll = readDouble();
 }

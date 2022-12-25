@@ -1,9 +1,9 @@
 #ifndef CAP_WIDGET_H
 #define CAP_WIDGET_H
 
-#include "base/base_widget.hpp"
-#include "option_widget.hpp"
-#include "base/keyboard_widget.hpp"
+#include "../base/base_widget.hpp"
+#include "../option_widget.hpp"
+#include "../base/keyboard_widget.hpp"
 
 class CapWidget : public BaseWidget {
 public:

@@ -1,5 +1,5 @@
 #include "nmea_widget.hpp"
-#include "../framework.hpp"
+#include "../../framework.hpp"
 
 
 NMEAWidget::NMEAWidget(){

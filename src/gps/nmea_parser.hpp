@@ -131,6 +131,15 @@ struct LemcaDebug {
     double m_value3;
 };
 
+struct CfgEkf {
+    double m_lissage_ekf_xy;
+    double m_lissage_ekf_cap;
+    double m_lissage_ekf_a_cap;
+    double m_lissage_ekf_v;
+    double m_lissage_ekf_a_v;
+    double m_lissage_ekf_roll;
+};
+
 
 class NmeaParser : public Parser {
 public:
@@ -156,7 +165,12 @@ public:
     LemcaDebug m_lemca_debug_2;
     LemcaDebug m_lemca_debug_3;
     
+    std::string m_version = "";
+    
     NmeaParser();
+    
+    std::string m_last_cfg_ekf = "";
+    CfgEkf m_cfg_ekf;
 protected:
     int m_error_read = 0;
     void parseBuffer();
@@ -179,6 +193,9 @@ protected:
     void parseLemca1();
     void parseLemca2();
     void parseLemca3();
+    
+    void parseVersion();
+    void parseCfgEkf();
 };
 
 #endif //GPS_H

@@ -145,4 +145,5 @@ void Framework::initOrLoadConfig(){
     m_config.save();
     
     m_serial_port.initOrLoad(m_config);
+    m_file.initOrLoad(m_config);
 }

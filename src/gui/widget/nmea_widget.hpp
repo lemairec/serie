@@ -1,9 +1,9 @@
 #ifndef NMEA_WIDGET_H
 #define NMEA_WIDGET_H
 
-#include "base/base_widget.hpp"
-#include "option_widget.hpp"
-#include "base/keyboard_widget.hpp"
+#include "../base/base_widget.hpp"
+#include "../option_widget.hpp"
+#include "../base/keyboard_widget.hpp"
 
 
 class NMEAWidget : public BaseWidget {

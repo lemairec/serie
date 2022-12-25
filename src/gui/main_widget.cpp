@@ -49,7 +49,9 @@ void MainWidget::setSize(int width, int height){
     m_button_gps.setResize(x_right, y, m_gros_button);
     y += inter;
     m_button_cap.setResize(x_right, y, m_gros_button);
-   
+    y += inter;
+    m_button_cfg.setResize(x_right, y, m_gros_button);
+    
     
     m_widthMax = m_width/2-50;
     m_heightMax = m_height/2-50;
@@ -62,6 +64,7 @@ void MainWidget::setSize(int width, int height){
     m_key_board_widget.setSize(m_width, m_height);
     m_gps_widget.setSize(m_width, m_height);
     m_cap_widget.setSize(m_width, m_height);
+    m_cfg_widget.setSize(m_width, m_height);
     
     int inter_x = m_petit_button*3;
     int x = inter_x;
@@ -110,6 +113,7 @@ void MainWidget::setPainter(QPainter * p){
     m_key_board_widget.setPainter(p);
     m_gps_widget.setPainter(p);
     m_cap_widget.setPainter(p);
+    m_cfg_widget.setPainter(p);
 }
 
 int max = 10000;
@@ -150,8 +154,10 @@ void MainWidget::draw_force(){
     if(f.m_gps){
         if(m_cap_widget.isOpen()){
             m_cap_widget.draw();
-        } else {
+        } else if(m_gps_widget.isOpen()){
             m_gps_widget.draw();
+        } else if(m_cfg_widget.isOpen()){
+            m_cfg_widget.draw();
         }
     }
     
@@ -231,6 +237,7 @@ void MainWidget::drawButtons(){
     
     drawButtonLabelCarre(m_button_gps, "GPS", 0.8, m_gps_widget.isOpen());
     drawButtonLabelCarre(m_button_cap, "CAP", 0.8, m_cap_widget.isOpen());
+    drawButtonLabelCarre(m_button_cfg, "CFG", 0.8, m_cfg_widget.isOpen());
     
     drawButton(m_buttonMenu2);
     drawButton(m_buttonMenu3);
@@ -298,6 +305,20 @@ int MainWidget::onMouse(int x, int y){
         m_cap_widget.m_close = true;
         if(f.m_gps){
             m_cap_widget.open();
+        }
+    } else if(m_button_cfg.isActive(x, y)){
+        f.m_gps = !f.m_gps;
+        m_gps_widget.m_close = true;
+        m_cap_widget.m_close = true;
+        m_cfg_widget.m_close = true;
+        if(f.m_gps){
+            m_cfg_widget.open();
+        }
+    }
+    
+    if(f.m_gps){
+        if(m_cfg_widget.isOpen()){
+            m_cfg_widget.onMouse(x, y);
         }
     }
     return 0;

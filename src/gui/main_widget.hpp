@@ -4,9 +4,10 @@
 #include "base/base_widget.hpp"
 #include "option_widget.hpp"
 #include "base/keyboard_widget.hpp"
-#include "harxon_widget.hpp"
-#include "nmea_widget.hpp"
-#include "cap_widget.hpp"
+#include "widget/harxon_widget.hpp"
+#include "widget/nmea_widget.hpp"
+#include "widget/cap_widget.hpp"
+#include "widget/cfg_widget.hpp"
 
 class MainWidget : public BaseWidget {
     MainWidget();
@@ -24,6 +25,7 @@ public:
     KeyBoardWidget m_key_board_widget;
     NMEAWidget m_gps_widget;
     CapWidget m_cap_widget;
+    CfgWidget m_cfg_widget;
     
     std::vector<ButtonGui *> m_categories;
     
@@ -36,6 +38,7 @@ public:
     ButtonGui m_button_setting;
     ButtonGui m_button_gps;
     ButtonGui m_button_cap;
+    ButtonGui m_button_cfg;
     ButtonGui m_buttonMenu2;
     ButtonGui m_buttonMenu3;
     ButtonGui m_buttonMenu4;
