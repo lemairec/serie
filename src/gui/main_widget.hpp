@@ -8,6 +8,7 @@
 #include "widget/nmea_widget.hpp"
 #include "widget/cap_widget.hpp"
 #include "widget/cfg_widget.hpp"
+#include "widget/can_widget.hpp"
 
 class MainWidget : public BaseWidget {
     MainWidget();
@@ -26,8 +27,8 @@ public:
     NMEAWidget m_gps_widget;
     CapWidget m_cap_widget;
     CfgWidget m_cfg_widget;
+    CanWidget m_can_widget;
     
-    std::vector<ButtonGui *> m_categories;
     
     int m_widthMax;
     int m_heightMax;
@@ -37,6 +38,7 @@ public:
     
     ButtonGui m_button_setting;
     ButtonGui m_button_gps;
+    ButtonGui m_button_can;
     ButtonGui m_button_cap;
     ButtonGui m_button_cfg;
     ButtonGui m_buttonMenu2;

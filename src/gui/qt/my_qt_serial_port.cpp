@@ -18,6 +18,20 @@ MyQTSerialPorts::MyQTSerialPorts(){
     connect(&m_timerPilot, SIGNAL(timeout()), this, SLOT(handlePilot()));
       
 }
+
+double convertToDeg(double d){
+    int h = d/100.0;
+    double minu = (d-(h*100.0));
+    return h + minu/60.0;
+}
+
+double convertToDec(double d){
+    int h = d;
+    double minu = (d-(h));
+    return h*100 + minu*60.0/100*100;
+}
+
+
 void MyQTSerialPorts::initOrLoad(Config & config){
     DEBUG("begin");
 
@@ -58,6 +72,31 @@ void MyQTSerialPorts::initOrLoad(Config & config){
     /*m_timerPilot.stop();
     m_timerPilot.start(1000/config.m_pilot_frequence);*/
     DEBUG("end");
+    
+    double lat = 4937.6041777;
+    double lon = 401.3406431;
+    double gga_latitude = convertToDeg(lat);
+    double gga_longitude = convertToDeg(lon);
+    double res_la = convertToDec(gga_latitude);
+    double res_lo = convertToDec(gga_longitude);
+    
+    INFO((int64_t)(lat*10000000) << " " << (int64_t)(lon*10000000))
+    INFO((int64_t)(res_la*10000000) << " " << (int64_t)(res_lo*10000000))
+    
+    uint32_t u0 = round((gga_latitude + 210.0) * 10000000);
+    uint32_t u1 = round((gga_longitude + 210.0) * 10000000);
+    double res_la1 = u0;
+    double res_lo1 = u1;
+    res_la1 = res_la1/10000000.0-210.0;
+    res_lo1 = res_lo1/10000000.0-210.0;
+    double res_la2 = convertToDec(res_la1);
+    double res_lo2 = convertToDec(res_lo1);
+    INFO((int64_t)(res_la2*10000000) << " " << (int64_t)(res_lo2*10000000))
+    
+    //49376041777 4013406431
+    //49376041719 4013406400
+    //49376041777 4013406431
+    //49376041780 4013406459
 };
 
 void MyQTSerialPorts::closeAll(){
@@ -108,6 +147,7 @@ void MyQTSerialPorts::handleErrorImu(QSerialPort::SerialPortError error){
 
 void MyQTSerialPorts::writeGpsSerialS(const std::string & l){
     if(m_serialPort.isOpen()){
+        INFO("open");   
         QByteArray b;
         b.append(l.c_str());
         m_serialPort.write(b);

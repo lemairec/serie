@@ -43,24 +43,10 @@ Framework::Framework(){
     makedir("/line");
     
     m_config.load();
-    
-    addCategorie("$GPGGA");
-    addCategorie("$GPVTG");
-    addCategorie("$GPRMC");
-    addCategorie("$GPZDA");
-    addCategorie("CSQ");
-    
 }
 
 void Framework::addSerialMessage(std::string s){
     m_messages_serial.push_front(s);
-}
-
-void Framework::addCategorie(std::string s){
-    Categorie *c = new Categorie();
-    c->m_begin = s;
-    m_categories.push_back(c);
-    
 }
 
 std::ofstream m_logFile;
@@ -88,31 +74,8 @@ void Framework::addSerialString(const std::string & s){
 
 void Framework::addSerialChar(char c){
     if(c == '\n'){
-        std::string s =m_message;
+        m_messages_serial.push_front(m_message);
         m_message="";
-        for(auto c : m_categories){
-            bool same = true;
-            for(int i = 0; i<c->m_begin.size(); ++i){
-                if(i<s.size()){
-                    if(c->m_begin[i] != s[i]){
-                        same = false;
-                    }
-                } else {
-                    same = false;
-                }
-            }
-            if(same){
-                c->m_count++;
-                c->m_last = s;
-                if(!c->m_enable){
-                    return;
-                }
-                
-            }
-            
-        }
-        m_messages_serial.push_front(s);
-        
     } else {
         m_message+=c;
     }

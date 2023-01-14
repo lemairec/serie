@@ -51,6 +51,8 @@ void MainWidget::setSize(int width, int height){
     m_button_cap.setResize(x_right, y, m_gros_button);
     y += inter;
     m_button_cfg.setResize(x_right, y, m_gros_button);
+    y += inter;
+    m_button_can.setResize(x_right, y, m_gros_button);
     
     
     m_widthMax = m_width/2-50;
@@ -65,7 +67,9 @@ void MainWidget::setSize(int width, int height){
     m_gps_widget.setSize(m_width, m_height);
     m_cap_widget.setSize(m_width, m_height);
     m_cfg_widget.setSize(m_width, m_height);
+    m_can_widget.setSize(m_width, m_height);
     
+
     int inter_x = m_petit_button*3;
     int x = inter_x;
     x += inter_x;
@@ -84,18 +88,6 @@ void MainWidget::setSize(int width, int height){
         int y2 = y+20;
         int inter = 16;
         int i = 0;
-        
-        m_categories.clear();
-        for(auto c : Framework::Instance().m_categories){
-            (void)c;
-            ButtonGui * b = new ButtonGui();
-            b->setResize(20, y2, 8);
-            b->m_labelInt = i;
-            
-            ++i;
-            y2+= inter;
-            m_categories.push_back(b);
-        }
     }
 }
 
@@ -114,6 +106,7 @@ void MainWidget::setPainter(QPainter * p){
     m_gps_widget.setPainter(p);
     m_cap_widget.setPainter(p);
     m_cfg_widget.setPainter(p);
+    m_can_widget.setPainter(p);
 }
 
 int max = 10000;
@@ -138,7 +131,6 @@ void MainWidget::draw_force(){
     drawMenuRight();
     m_painter->setPen(m_penBlack);
     drawMessages();
-    drawCategories();
     drawButtons();
     
     for(auto p : m_widgets){
@@ -151,14 +143,15 @@ void MainWidget::draw_force(){
         m_key_board_widget.draw();
     }
     Framework & f = Framework::Instance();
-    if(f.m_gps){
-        if(m_cap_widget.isOpen()){
-            m_cap_widget.draw();
-        } else if(m_gps_widget.isOpen()){
-            m_gps_widget.draw();
-        } else if(m_cfg_widget.isOpen()){
-            m_cfg_widget.draw();
-        }
+    
+    if(m_cap_widget.isOpen()){
+        m_cap_widget.draw();
+    } else if(m_gps_widget.isOpen()){
+        m_gps_widget.draw();
+    } else if(m_cfg_widget.isOpen()){
+        m_cfg_widget.draw();
+    } else if(m_can_widget.isOpen()){
+        m_can_widget.draw();
     }
     
 }
@@ -169,7 +162,7 @@ void MainWidget::drawMessages(){
     int x = 10;
     int w = m_width-200;
     int y = 60;
-    int h = m_height-60-20-180;
+    int h = m_height-60-60-20;
     m_painter->drawRect(x, y, w, h);
     
     int y2 = y-10+h;
@@ -189,40 +182,6 @@ void MainWidget::drawMessages(){
     
 }
 
-void MainWidget::drawCategories(){
-    m_painter->setBrush(m_brushWhite);
-    
-    int x = 10;
-    int w = m_width-200;
-    int y = m_height-180;
-    int h = 100;
-    m_painter->drawRect(x, y, w, h);
-    
-    int y2 = y+20;
-    int inter = 16;
-    
-    Framework & f = Framework::Instance();
-    int i = 0;
-    for(auto b : m_categories){
-        auto c = f.m_categories[b->m_labelInt];
-        if(c->m_enable){
-            drawButton(*b, COLOR_CHECK);
-        } else {
-            drawButton(*b, COLOR_OTHER);
-        }
-    }
-    for(auto s : f.m_categories){
-        drawText(s->m_begin, x+20, y2);
-        drawQText(QString::number(s->m_count), x+100, y2);
-        drawText(s->m_last, x+140, y2);
-        y2 += inter;
-        ++i;
-        if(y2 > y+h){
-            break;
-        }
-    }
-    
-}
 
 void MainWidget::drawMenuRight(){
     m_painter->setPen(m_penNo);
@@ -238,6 +197,7 @@ void MainWidget::drawButtons(){
     drawButtonLabelCarre(m_button_gps, "GPS", 0.8, m_gps_widget.isOpen());
     drawButtonLabelCarre(m_button_cap, "CAP", 0.8, m_cap_widget.isOpen());
     drawButtonLabelCarre(m_button_cfg, "CFG", 0.8, m_cfg_widget.isOpen());
+    drawButtonLabelCarre(m_button_can, "CAN", 0.8, m_can_widget.isOpen());
     
     drawButton(m_buttonMenu2);
     drawButton(m_buttonMenu3);
@@ -261,13 +221,6 @@ int MainWidget::onMouse(int x, int y){
             p->onMouse(x, y);
             return 0;
         }
-    }
-    
-    for(auto b : m_categories){
-        if(b->isActive(x, y)){
-            auto c = f.m_categories[b->m_labelInt];
-            c->m_enable = !c->m_enable;
-        };
     }
     
     if(m_button_setting.isActive(x, y)){
@@ -294,6 +247,8 @@ int MainWidget::onMouse(int x, int y){
         }
     } else if(m_button_gps.isActive(x, y)){
         f.m_gps = !f.m_gps;
+        f.m_can = false;
+        m_can_widget.m_close = true;
         m_gps_widget.m_close = true;
         m_cap_widget.m_close = true;
         if(f.m_gps){
@@ -301,12 +256,24 @@ int MainWidget::onMouse(int x, int y){
         }
     } else if(m_button_cap.isActive(x, y)){
         f.m_gps = !f.m_gps;
+        f.m_can = false;
+        m_can_widget.m_close = true;
         m_gps_widget.m_close = true;
         m_cap_widget.m_close = true;
         if(f.m_gps){
             m_cap_widget.open();
         }
+    } else if(m_button_can.isActive(x, y)){
+        f.m_gps = false;
+        f.m_can = !f.m_can;
+        m_gps_widget.m_close = true;
+        m_cap_widget.m_close = true;
+        m_can_widget.m_close = true;
+        if(f.m_can){
+            m_can_widget.open();
+        }
     } else if(m_button_cfg.isActive(x, y)){
+        f.m_can = false;
         f.m_gps = !f.m_gps;
         m_gps_widget.m_close = true;
         m_cap_widget.m_close = true;
@@ -320,6 +287,9 @@ int MainWidget::onMouse(int x, int y){
         if(m_cfg_widget.isOpen()){
             m_cfg_widget.onMouse(x, y);
         }
+    }
+    if(m_can_widget.isOpen()){
+        m_can_widget.onMouse(x, y);
     }
     return 0;
 }
