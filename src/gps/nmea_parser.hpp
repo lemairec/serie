@@ -140,6 +140,15 @@ struct CfgEkf {
     double m_lissage_ekf_roll;
 };
 
+struct CanFrame {
+    int m_can_id;
+    int m_png;
+    
+    short m_data[8];
+    std::string m_message;
+};
+typedef std::shared_ptr<CanFrame> CanFrame_ptr;
+
 
 class NmeaParser : public Parser {
 public:
@@ -164,6 +173,8 @@ public:
     LemcaDebug m_lemca_debug_1;
     LemcaDebug m_lemca_debug_2;
     LemcaDebug m_lemca_debug_3;
+    
+    CanFrame_ptr m_last_can_frame;
     
     std::string m_version = "";
     
@@ -196,6 +207,8 @@ protected:
     
     void parseVersion();
     void parseCfgEkf();
+    
+    void parseCan();
 };
 
 #endif //GPS_H

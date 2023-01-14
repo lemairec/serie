@@ -9,38 +9,20 @@ CanWidget::CanWidget(){
     m_img_moins = loadImage("/gui/moins.png");
 };
 
+void CanWidget::setPainter(QPainter * painter){
+    BaseWidget::setPainter(painter);
+    m_keypad_hexa_widget.setPainter(painter);
+}
 void CanWidget::setSize(int width, int height){
     BaseWidget::setSize(width, height);
     
-    int x = m_width*0.3;
-    int y = m_height*0.3;
-    int inter = 0.05*m_width;
-    
-    m_lissage_ekf_xy.setResize(x, y, m_gros_button);
-    y+=inter;
-    m_lissage_ekf_cap.setResize(x, y, m_gros_button);
-    y+=inter;
-    m_lissage_ekf_a_cap.setResize(x, y, m_gros_button);
-    y+=inter;
-    m_lissage_ekf_v.setResize(x, y, m_gros_button);
-    y+=inter;
-    m_lissage_ekf_a_v.setResize(x, y, m_gros_button);
-    y+=inter;
-    m_lissage_ekf_roll.setResize(x, y, m_gros_button);
-    y+=inter*1.2;
-    m_button_send.setResize(x, y, "Send", true, 120, 40);
+    m_button_filtre_hexa.setResizeStd(m_width*0.75, m_height*0.7, "Hexa");
+    m_keypad_hexa_widget.setSize(width, height);
 };
 
 void CanWidget::draw(){
     Framework & f = Framework::Instance();
-    if(m_lissage_ekf_xy.m_value == 0){
-        m_lissage_ekf_xy.m_value = f.m_nmea_parser.m_cfg_ekf.m_lissage_ekf_xy;
-        m_lissage_ekf_cap.m_value = f.m_nmea_parser.m_cfg_ekf.m_lissage_ekf_cap;
-        m_lissage_ekf_a_cap.m_value = f.m_nmea_parser.m_cfg_ekf.m_lissage_ekf_a_cap;
-        m_lissage_ekf_v.m_value = f.m_nmea_parser.m_cfg_ekf.m_lissage_ekf_v;
-        m_lissage_ekf_a_v.m_value = f.m_nmea_parser.m_cfg_ekf.m_lissage_ekf_a_v;
-        m_lissage_ekf_roll.m_value = f.m_nmea_parser.m_cfg_ekf.m_lissage_ekf_roll;
-    }
+    
     
     
     m_painter->setPen(m_penBlack);
@@ -49,74 +31,81 @@ void CanWidget::draw(){
     
     
     int y = m_height*0.2;
+    int inter = m_height*0.05;
     
     y = m_height*0.2;
     {
-        std::string s = "Version : " + f.m_nmea_parser.m_version;
-        drawText(s, m_width*0.1, y);
+        drawQText( "filtre hexa :", m_width*0.75, y);
     }
-    y = m_height*0.25;
+    y += inter;
     {
-        std::string s = "cfg_ekf : " + f.m_nmea_parser.m_last_cfg_ekf;
-        drawText(s, m_width*0.1, y);
+        char s[100];
+        sprintf(s, "%4.4X", f.m_frame_filter);
+        
+        QString s2 = QString(s);;
+        drawQText(s2, m_width*0.75, y);
+    }
+    y += inter;
+    {
+        drawQText( " int :", m_width*0.75, y);
+    }
+    y += inter;
+    {
+        QString s = QString::number(f.m_frame_filter);
+        drawQText(s, m_width*0.75, y);
     }
     
-    drawValueGui(m_lissage_ekf_xy, "ekf_xy", f.m_nmea_parser.m_cfg_ekf.m_lissage_ekf_xy);
-    drawValueGui(m_lissage_ekf_cap, "ekf_cap", f.m_nmea_parser.m_cfg_ekf.m_lissage_ekf_cap);
-    drawValueGui(m_lissage_ekf_a_cap, "ekf_a_cap", f.m_nmea_parser.m_cfg_ekf.m_lissage_ekf_a_cap);
-    drawValueGui(m_lissage_ekf_v, "ekf_v", f.m_nmea_parser.m_cfg_ekf.m_lissage_ekf_v);
-    drawValueGui(m_lissage_ekf_a_v, "ekf_a_v", f.m_nmea_parser.m_cfg_ekf.m_lissage_ekf_a_v);
-    drawValueGui(m_lissage_ekf_roll, "ekf_roll", f.m_nmea_parser.m_cfg_ekf.m_lissage_ekf_roll);
+    drawMessagesCan();
+    drawButtonLabel2(m_button_filtre_hexa);
     
-    drawButtonLabel2(m_button_send);
+    if(m_keypad_hexa_widget.isOpen()){
+        m_keypad_hexa_widget.draw();
+    }
 };
 
-void CanWidget::drawValueGui(ValueGui & value_gui, std::string s, double value){
-    int x1 = m_width*0.1;
-    int x3 = m_width*0.45;
+void CanWidget::drawMessagesCan(){
+    m_painter->setBrush(m_brushWhite);
     
-    drawValueGuiKeyPad2(value_gui);
-    drawText(s, x1, value_gui.m_y);
-    if(value_gui.m_value != 0 && value_gui.m_value == value){
-        drawText("ok", x3, value_gui.m_y);
+    int x = m_width*0.1;
+    int w = m_width*0.6;
+    int y = m_height*0.15;
+    int h = m_height*0.7;
+    m_painter->drawRect(x, y, w, h);
+    
+    int y2 = y-10+h;
+    int inter = 16;
+    
+    Framework & f = Framework::Instance();
+    int i = 0;
+    for(auto s : f.m_messages_can){
+        if(y2 < y){
+            break;
+        }
+        drawText(s, x+10, y2);
+        y2+= -inter;
+        ++i;
+        
     }
+    
 }
 
 
-void CanWidget::onMouse(ValueGui & keypad, double x, double y, double pas){
-    if(keypad.m_button_plus.isActive(x, y)){
-        keypad.m_value += pas;
-    }
-    if(keypad.m_button_moins.isActive(x, y)){
-        keypad.m_value -= pas;
-    }
-       
-    /*if(isActiveValueGuiKeyPad(keypad,x, y)){
-        m_keypad_widget.m_close = false;
-        m_keypad_widget.setValueGuiKeyPad(&keypad);
-    }*/
-}
 
 int CanWidget::onMouse(int x, int y){
-    onMouse(m_lissage_ekf_xy, x, y, 0.01);
-    onMouse(m_lissage_ekf_cap, x, y, 0.01);
-    onMouse(m_lissage_ekf_a_cap, x, y, 0.01);
-    onMouse(m_lissage_ekf_v, x, y, 0.01);
-    onMouse(m_lissage_ekf_a_v, x, y, 0.01);
-    onMouse(m_lissage_ekf_roll, x, y, 0.01);
-    
-    if(m_button_send.isActive(x, y)){
-        std::string s = "$CFG_EKF,";
-        s = s + std::to_string(m_lissage_ekf_xy.m_value) + ",";
-        s = s + std::to_string(m_lissage_ekf_cap.m_value) + ",";
-        s = s + std::to_string(m_lissage_ekf_a_cap.m_value) + ",";
-        s = s + std::to_string(m_lissage_ekf_v.m_value) + ",";
-        s = s + std::to_string(m_lissage_ekf_a_v.m_value) + ",";
-        s = s + std::to_string(m_lissage_ekf_roll.m_value) + ",*\n";
-        
-        Framework & f = Framework::Instance();
-        f.m_serial_port.writeGpsSerialS(s);
-        INFO(s);
+    if(m_keypad_hexa_widget.isOpen()){
+        if(m_keypad_hexa_widget.onMouse(x, y)){
+            Framework & f = Framework::Instance();
+            char s[100];
+            sprintf(s, "--- new fiter png %4.4X %i", m_keypad_hexa_widget.m_res_int, m_keypad_hexa_widget.m_res_int);
+            std::string s2(s);
+            
+            f.m_messages_can.push_front(s2);
+            f.m_frame_filter = m_keypad_hexa_widget.m_res_int;
+        };
+    } else {
+        if(m_button_filtre_hexa.isActive(x, y)){
+            m_keypad_hexa_widget.open();
+        }
     }
     return 0;
     

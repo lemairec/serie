@@ -48,6 +48,11 @@ public:
     
     MyQTSerialPorts m_serial_port;
     MyQTFile m_file;
+    
+    void onCanMessage(CanFrame_ptr m_canFrame);
+    int m_frame_filter = 0;
+    std::list<std::string> m_messages_can;
+    
 private:
     void readFile();
 };

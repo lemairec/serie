@@ -6,27 +6,17 @@
 #include "../base/keyboard_widget.hpp"
 
 class CanWidget : public BaseWidget {
-    ValueGui m_lissage_ekf_xy;
-    ValueGui m_lissage_ekf_cap;
-    ValueGui m_lissage_ekf_a_cap;
-    ValueGui m_lissage_ekf_v;
-    ValueGui m_lissage_ekf_a_v;
-    ValueGui m_lissage_ekf_roll;
-    
-    ButtonGui m_button_send;
+    ButtonGui m_button_filtre_hexa;
+    KeyPadHexaWidget m_keypad_hexa_widget;
 public:
     CanWidget();
 
     void setSize(int width, int height);
+    void setPainter(QPainter * painter);
     
-    void add(double x, double y, std::string label, std::string m_command);
-    
-    void drawAngle(double angle, const QString & s, const QColor &color);
+    void drawMessagesCan();
     virtual void draw();
     virtual int onMouse(int x, int y);
-    
-    void drawValueGui(ValueGui & value_gui, std::string s, double value);
-    void onMouse(ValueGui & keypad, double x, double y, double pas);
 };
 
 #endif // GPS_WIDGET_H

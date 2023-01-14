@@ -82,7 +82,7 @@ void Framework::addSerialChar(char c){
     if(m_save_log){
         m_logFile << c;
     }
-    if(m_gps){
+    if(m_gps || m_can){
         m_nmea_parser.readChar(c);
     }
 }
@@ -91,6 +91,12 @@ void Framework::sendMessages(const std::string & s){
     m_serial_port.writeGpsSerialS(s);
     std::string s2 = "===> " + s;
     addSerialMessage(s2);
+}
+
+void Framework::onCanMessage(CanFrame_ptr m_canFrame){
+    if(m_frame_filter == 0 || m_frame_filter == m_canFrame->m_png){
+        m_messages_can.push_front(m_canFrame->m_message);
+    }
 }
 
 

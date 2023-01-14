@@ -1,6 +1,6 @@
 #include "nmea_parser.hpp"
 #include "../util/util.hpp"
-//#include "../framework.hpp"
+#include "../framework.hpp"
 //#include "gps_module.hpp"
 
 NmeaParser::NmeaParser(){
@@ -10,6 +10,7 @@ NmeaParser::NmeaParser(){
     m_last_imu_angle_frame = ImuFrame_ptr(new ImuFrame());
     m_last_gga_frame = GGAFrame_ptr(new GGAFrame());
     m_last_rmc_frame = RMCFrame_ptr(new RMCFrame());
+    m_last_can_frame = CanFrame_ptr(new CanFrame());
 }
 void NmeaParser::parseBuffer(){
     if(m_bufferIndLast > 1){
@@ -74,6 +75,8 @@ void NmeaParser::parseBuffer(){
             if(m_buffer[4] == 'E' && m_buffer[5] == 'K' && m_buffer[6] == 'F'){
                 return parseCfgEkf();
             }
+        } else if(m_buffer[0] == 'C' && m_buffer[1] == 'A' && m_buffer[2] == 'N'){
+            return parseCan();
         }  else {
             error();
         }
@@ -317,4 +320,24 @@ void NmeaParser::parseCfgEkf(){
     m_cfg_ekf.m_lissage_ekf_v = readDouble();
     m_cfg_ekf.m_lissage_ekf_a_v = readDouble();
     m_cfg_ekf.m_lissage_ekf_roll = readDouble();
+}
+
+void NmeaParser::parseCan(){
+    std::string s = "";
+    for(size_t i =0; i < m_bufferIndLast; ++i){
+        s += m_buffer[i];
+    }
+    
+    readUntilCommat();
+    m_last_can_frame->m_can_id = readHexaInt();
+    for(int i =0; i< 8; ++i){
+        m_last_can_frame->m_data[i] = readHexaInt();
+    }
+    m_last_can_frame->m_png = readHexaInt();
+    m_last_can_frame->m_message = s;
+    
+    Framework & f = Framework::Instance();
+    f.onCanMessage(m_last_can_frame);
+    
+    
 }

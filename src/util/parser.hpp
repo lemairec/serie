@@ -28,8 +28,10 @@ protected:
     char readNextCharAndCommat();
     int getOneInt();
     int getIntWithChar(char c);
+    int getHexaIntWithChar(char c);
     int readNegInt();
     int readInt();
+    int readHexaInt();
     double readNegDouble();
     double readDouble();
     double readDeg();

@@ -101,6 +101,136 @@ void KeyPadWidget::addChiffre(QString s){
 }
 
 
+
+void KeyPadHexaWidget::setSize(int width, int height){
+    BaseWidget::setSize(width, height);
+    
+    m_x = m_width*0.35;
+    m_lg = m_width*0.3;
+    
+    int inter = m_width*0.07;
+    int x = m_x+m_lg/2;
+    int rayon = m_gros_button;
+    
+    int y = m_height*0.55- 2*inter;
+    m_buttonF.setResizeStd(x-1.5*inter, y, "F", true, 2*rayon, 2*rayon);
+    m_buttonE.setResizeStd(x-0.5*inter, y, "E", true, 2*rayon, 2*rayon);
+    m_buttonD.setResizeStd(x+0.5*inter, y, "D", true, 2*rayon, 2*rayon);
+    m_buttonC.setResizeStd(x+1.5*inter, y, "C", true, 2*rayon, 2*rayon);
+    
+    y = y + inter;
+    m_button8.setResizeStd(x-1.5*inter, y, "8", true, 2*rayon, 2*rayon);
+    m_button9.setResizeStd(x-0.5*inter, y, "9", true, 2*rayon, 2*rayon);
+    m_buttonA.setResizeStd(x+0.5*inter, y, "A", true, 2*rayon, 2*rayon);
+    m_buttonB.setResizeStd(x+1.5*inter, y, "B", true, 2*rayon, 2*rayon);
+    
+    y = y + inter;
+    m_button4.setResizeStd(x-1.5*inter, y, "4", true, 2*rayon, 2*rayon);
+    m_button5.setResizeStd(x-0.5*inter, y, "5", true, 2*rayon, 2*rayon);
+    m_button6.setResizeStd(x+0.5*inter, y, "6", true, 2*rayon, 2*rayon);
+    m_button7.setResizeStd(x+1.5*inter, y, "7", true, 2*rayon, 2*rayon);
+    
+    y = y + inter;
+    m_button0.setResizeStd(x-1.5*inter, y, "0", true, 2*rayon, 2*rayon);
+    m_button1.setResizeStd(x-0.5*inter, y, "1", true, 2*rayon, 2*rayon);
+    m_button2.setResizeStd(x+0.5*inter, y, "2", true, 2*rayon, 2*rayon);
+    m_button3.setResizeStd(x+1.5*inter, y, "3", true, 2*rayon, 2*rayon);
+    
+    y = y + inter;
+    m_button_ok.setResizeStd(x+inter, y, "OK", true, 2*rayon, 2*rayon);
+    
+}
+
+void KeyPadHexaWidget::open(){
+    BaseWidget::open();
+    m_res.clear();
+    m_res_int = 0;
+}
+
+void KeyPadHexaWidget::myDrawButton(ButtonGui * b, QString s){
+    drawButton(*b);
+    drawQText(s, b->m_x, b->m_y, sizeText_medium, true);
+}
+
+
+void KeyPadHexaWidget::draw(){
+    m_painter->setPen(m_penBlack);
+    m_painter->setBrush(m_brushWhiteAlpha);
+    m_painter->drawRoundedRect(m_x, m_height*0.1, m_width*0.3, m_height*0.8, RAYON_ROUNDED, RAYON_ROUNDED);
+    
+    drawQText(m_title, m_x+m_lg/2, 0.15*m_height, sizeText_big, true);
+    
+    QString s = m_res;
+    drawQText(s, m_x+m_lg/2, 0.2*m_height, sizeText_big, true);
+
+    drawButtonLabel2(m_button0, COLOR_WHITE);
+    drawButtonLabel2(m_button1, COLOR_WHITE);
+    drawButtonLabel2(m_button2, COLOR_WHITE);
+    drawButtonLabel2(m_button3, COLOR_WHITE);
+    drawButtonLabel2(m_button4, COLOR_WHITE);
+    drawButtonLabel2(m_button5, COLOR_WHITE);
+    drawButtonLabel2(m_button6, COLOR_WHITE);
+    drawButtonLabel2(m_button7, COLOR_WHITE);
+    drawButtonLabel2(m_button8, COLOR_WHITE);
+    drawButtonLabel2(m_button9, COLOR_WHITE);
+    drawButtonLabel2(m_buttonA, COLOR_WHITE);
+    drawButtonLabel2(m_buttonB, COLOR_WHITE);
+    drawButtonLabel2(m_buttonC, COLOR_WHITE);
+    drawButtonLabel2(m_buttonD, COLOR_WHITE);
+    drawButtonLabel2(m_buttonE, COLOR_WHITE);
+    drawButtonLabel2(m_buttonF, COLOR_WHITE);
+    drawButtonLabel2(m_button_ok, COLOR_VALIDATE);
+}
+
+int KeyPadHexaWidget::onMouse(int x, int y){
+    if(m_button0.isActive(x, y)){
+        addChiffre("0", 0);
+    } else if(m_button1.isActive(x, y)){
+        addChiffre("1", 1);
+    } else if(m_button2.isActive(x, y)){
+        addChiffre("2", 2);
+    } else if(m_button3.isActive(x, y)){
+        addChiffre("3", 3);
+    } else if(m_button4.isActive(x, y)){
+        addChiffre("4", 4);
+    } else if(m_button5.isActive(x, y)){
+        addChiffre("5", 5);
+    } else if(m_button6.isActive(x, y)){
+        addChiffre("6", 6);
+    } else if(m_button7.isActive(x, y)){
+        addChiffre("7", 7);
+    } else if(m_button8.isActive(x, y)){
+        addChiffre("8", 8);
+    } else if(m_button9.isActive(x, y)){
+        addChiffre("9", 9);
+    } else if(m_buttonA.isActive(x, y)){
+        addChiffre("A", 10);
+    } else if(m_buttonB.isActive(x, y)){
+        addChiffre("B", 11);
+    } else if(m_buttonC.isActive(x, y)){
+        addChiffre("C", 12);
+    } else if(m_buttonD.isActive(x, y)){
+        addChiffre("D", 13);
+    } else if(m_buttonE.isActive(x, y)){
+        addChiffre("E", 14);
+    } else if(m_buttonF.isActive(x, y)){
+        addChiffre("F", 15);
+    } else if(m_button_ok.isActive(x, y)){
+        if(m_value){
+            m_value->m_value = m_res_int;
+        }
+        m_close = true;
+        return 1;
+    }
+    return 0;
+};
+
+void KeyPadHexaWidget::addChiffre(QString s, int i){
+    m_res = m_res + s;
+    m_res_int = m_res_int*16+i;
+}
+
+
 /*if(m_buttonA.isActive(x, y)){
  addLetter("A");
  } else if(m_buttonB.isActive(x, y)){
