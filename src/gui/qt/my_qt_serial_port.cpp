@@ -8,6 +8,10 @@
 
 #include "environnement.hpp"
 #include "../../util/directory_manager.hpp"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
 #include "../../framework.hpp"
 
 MyQTSerialPorts::MyQTSerialPorts(){

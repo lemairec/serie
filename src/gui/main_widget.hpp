@@ -9,6 +9,8 @@
 #include "widget/cap_widget.hpp"
 #include "widget/cfg_widget.hpp"
 #include "widget/can_widget.hpp"
+#include "widget/search_widget.hpp"
+#include "widget/log_widget.hpp"
 
 class MainWidget : public BaseWidget {
     MainWidget();
@@ -28,6 +30,8 @@ public:
     CapWidget m_cap_widget;
     CfgWidget m_cfg_widget;
     CanWidget m_can_widget;
+    SearchWidget m_search_widget;
+    LogWidget m_log_widget;
     
     
     int m_widthMax;
@@ -39,6 +43,8 @@ public:
     ButtonGui m_button_setting;
     ButtonGui m_button_gps;
     ButtonGui m_button_can;
+    ButtonGui m_button_search;
+    ButtonGui m_button_log;
     ButtonGui m_button_cap;
     ButtonGui m_button_cfg;
     ButtonGui m_buttonMenu2;

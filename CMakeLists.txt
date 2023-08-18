@@ -3,8 +3,8 @@ project(serie)
 
 # The version number.
 set (PROJECT_VERSION_MAJOR 23)
-set (PROJECT_VERSION_MINOR 01)
-set (PROJECT_VERSION_PATCH 01)
+set (PROJECT_VERSION_MINOR 09)
+set (PROJECT_VERSION_PATCH 03)
 
 configure_file (
     "${PROJECT_SOURCE_DIR}/src/environnement.hpp.in"

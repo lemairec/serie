@@ -42,6 +42,7 @@ Framework::Framework(){
     makedir("/parcelle");
     makedir("/line");
     
+    m_log_module.initOrLoad();
     m_config.load();
 }
 
@@ -49,19 +50,10 @@ void Framework::addSerialMessage(std::string s){
     m_messages_serial.push_front(s);
 }
 
-std::ofstream m_logFile;
 void Framework::changeSaveLog(){
     m_save_log = !m_save_log;
     if(m_save_log){
-        std::string path = DirectoryManager::Instance().getDataDirectory() + "/logserial.txt";
-        m_logFile.open(path);
-        if(m_logFile.fail()){
-            std::cerr << "open failure as expected: " << strerror(errno) << std::endl;
-            std::cerr << "Warning File fail " << path << std::endl;
-            exit(1);
-        }
-        m_logFile << "### begin m_save_log ###" << std::endl;
-        m_logFile << "#############" << std::endl;
+        m_log_module.changeLog();
     }
 }
 
@@ -79,9 +71,7 @@ void Framework::addSerialChar(char c){
     } else {
         m_message+=c;
     }
-    if(m_save_log){
-        m_logFile << c;
-    }
+    m_log_module.onChar(c);
     if(m_gps || m_can){
         m_nmea_parser.readChar(c);
     }

@@ -29,6 +29,8 @@ MainWidget::MainWidget()
 
     //m_widgets.push_back(&m_satWidget);
     m_widgets.push_back(&m_option_widget);
+    m_widgets.push_back(&m_search_widget);
+    m_widgets.push_back(&m_log_widget);
     m_widgets.push_back(&m_key_pad_widget);
     m_widgets.push_back(&m_harxon_widget);
     m_widgets.push_back(&m_motor_widget);
@@ -53,6 +55,11 @@ void MainWidget::setSize(int width, int height){
     m_button_cfg.setResize(x_right, y, m_gros_button);
     y += inter;
     m_button_can.setResize(x_right, y, m_gros_button);
+    y += inter;
+    m_button_search.setResize(x_right, y, m_gros_button);
+    y += inter;
+    m_button_log.setResize(x_right, y, m_gros_button);
+    
     
     
     m_widthMax = m_width/2-50;
@@ -107,6 +114,7 @@ void MainWidget::setPainter(QPainter * p){
     m_cap_widget.setPainter(p);
     m_cfg_widget.setPainter(p);
     m_can_widget.setPainter(p);
+    m_log_widget.m_select_widget.setPainter(p);
 }
 
 int max = 10000;
@@ -198,6 +206,8 @@ void MainWidget::drawButtons(){
     drawButtonLabelCarre(m_button_cap, "CAP", 0.8, m_cap_widget.isOpen());
     drawButtonLabelCarre(m_button_cfg, "CFG", 0.8, m_cfg_widget.isOpen());
     drawButtonLabelCarre(m_button_can, "CAN", 0.8, m_can_widget.isOpen());
+    drawButtonLabelCarre(m_button_search, "SEARCH", 0.8, m_search_widget.isOpen());
+    drawButtonLabelCarre(m_button_log, "LOG", 0.8, m_log_widget.isOpen());
     
     drawButton(m_buttonMenu2);
     drawButton(m_buttonMenu3);
@@ -281,6 +291,25 @@ int MainWidget::onMouse(int x, int y){
         if(f.m_gps){
             m_cfg_widget.open();
         }
+    } else if(m_button_search.isActive(x, y)){
+        for(auto w : m_widgets){
+            w->m_close = true;
+        }
+        if(m_search_widget.m_close){
+            m_search_widget.open();
+        } else {
+            m_search_widget.m_close = true;
+        }
+    } else if(m_button_log.isActive(x, y)){
+        for(auto w : m_widgets){
+            w->m_close = true;
+        }
+        if(m_log_widget.m_close){
+            m_log_widget.open();
+        } else {
+            m_log_widget.m_close = true;
+        }
+        
     }
     
     if(f.m_gps){
