@@ -5,7 +5,7 @@
 #include <fstream>
 #include <sstream>
 
-#include <Qfile>
+#include <QFile>
 #include <QDateTime>
 #include <QTextStream>
 
