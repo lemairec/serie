@@ -120,7 +120,7 @@ int LogWidget::onMouse(int x, int y){
             f.m_log_module.openLog(s);
         }
        
-        return;
+        return 0;
     }
     return 0;
     
