@@ -73,8 +73,8 @@ void MyQTSerialPorts::initOrLoad(Config & config){
             }
         }
     }
-    /*m_timerPilot.stop();
-    m_timerPilot.start(1000/config.m_pilot_frequence);*/
+    m_timerPilot.stop();
+    m_timerPilot.start(1000/40);
     DEBUG("end");
     
     double lat = 4937.6041777;
@@ -310,6 +310,11 @@ std::vector<std::string> & MyQTSerialPorts::getAvailablePorts(){
 
 void MyQTSerialPorts::handlePilot(){
     DEBUG("begin");
+    
+    if(Framework::Instance().m_position){
+        writeGpsSerialS("$P,*\n");
+    }
+    
     //INFO("coucou je suis ici");
     
     if(m_pilot_langage == 0){

@@ -88,14 +88,7 @@ void MainWidget::setSize(int width, int height){
     m_buttonMenu4.setResize(x, m_height-30, m_petit_button);
     m_buttonSendMessage.setResize(m_width-100, 0.5*m_height, m_gros_button);
     
-    m_buttonSaveLog.setResize(m_width-30, m_height-30, m_gros_button);
-    
-    {
-        int y = m_height-180;
-        int y2 = y+20;
-        int inter = 16;
-        int i = 0;
-    }
+    m_buttonPosition.setResize(m_width-30, m_height-30, m_gros_button);
 }
 
 MainWidget * MainWidget::instance(){
@@ -150,8 +143,7 @@ void MainWidget::draw_force(){
     if(!m_key_board_widget.m_close){
         m_key_board_widget.draw();
     }
-    Framework & f = Framework::Instance();
-    
+
     if(m_cap_widget.isOpen()){
         m_cap_widget.draw();
     } else if(m_gps_widget.isOpen()){
@@ -213,8 +205,8 @@ void MainWidget::drawButtons(){
     drawButton(m_buttonMenu3);
     drawButton(m_buttonMenu4);
     
-    drawButton(m_buttonSaveLog);
-    drawButtonCheck(m_buttonSaveLog, f.m_save_log);
+    drawButton(m_buttonPosition);
+    drawButtonCheck(m_buttonPosition, f.m_position);
     
     drawButton(m_buttonSendMessage);
     drawText("envoyer message", m_buttonSendMessage.m_x, m_buttonSendMessage.m_y, sizeText_little, true);
@@ -241,8 +233,8 @@ int MainWidget::onMouse(int x, int y){
         m_motor_widget.m_close = false;
     } else if(m_buttonMenu4.isActive(x, y)){
         m_bineuse_widget.m_close = false;
-    } else if(m_buttonSaveLog.isActive(x, y)){
-        f.changeSaveLog();
+    } else if(m_buttonPosition.isActive(x, y)){
+        f.m_position= !f.m_position;
     } else if(m_buttonSendMessage.isActive(x, y)){
         m_key_board_widget.m_close = false;
         

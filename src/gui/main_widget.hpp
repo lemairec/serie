@@ -51,7 +51,7 @@ public:
     ButtonGui m_buttonMenu3;
     ButtonGui m_buttonMenu4;
     ButtonGui m_buttonSendMessage;
-    ButtonGui m_buttonSaveLog;
+    ButtonGui m_buttonPosition;
     
     bool m_debug = false;
     

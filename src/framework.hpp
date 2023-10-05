@@ -48,6 +48,8 @@ public:
     bool m_save_log;
     void changeSaveLog();
     
+    bool m_position = false;
+    
     MyQTSerialPorts m_serial_port;
     MyQTFile m_file;
     
