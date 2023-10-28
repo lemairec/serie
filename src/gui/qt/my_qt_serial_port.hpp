@@ -14,6 +14,7 @@ QT_USE_NAMESPACE
 struct SerialSearch {
     QSerialPort m_serial_port;
     std::string m_serial_s;
+    std::string m_data_s;
 };
 
 class MyQTSerialPorts : public QObject{
@@ -24,11 +25,12 @@ class MyQTSerialPorts : public QObject{
     
     
     std::vector<std::string> m_serials;
-    std::map<std::string, SerialSearch *> m_serial_searchs;
     
     int m_pilot_langage = 0;
 public:
     int m_serial_searchs_i = 0;
+    std::map<std::string, SerialSearch *> m_serial_searchs;
+    
     std::string m_last_error = "";
     
     MyQTSerialPorts();
@@ -45,7 +47,7 @@ public:
     
     bool imuIsOpen(){return m_serialPort.isOpen();};
     
-    void rechercheAuto();
+    void searchBegin();
     void setRecherche();
     void ecrireRecherche();
     void analyseRecherche();
@@ -64,9 +66,11 @@ private slots:
 
 private:
     QTimer m_timerPilot;
+    QTimer m_timer100ms;
 private slots:
     
     void handlePilot();
+    void handle100Ms();
 };
 
 

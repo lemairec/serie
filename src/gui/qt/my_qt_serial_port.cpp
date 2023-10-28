@@ -20,7 +20,8 @@ MyQTSerialPorts::MyQTSerialPorts(){
             this, &MyQTSerialPorts::handleErrorGps);
     
     connect(&m_timerPilot, SIGNAL(timeout()), this, SLOT(handlePilot()));
-      
+    connect(&m_timer100ms, SIGNAL(timeout()), this, SLOT(handle100Ms()));
+    
 }
 
 double convertToDeg(double d){
@@ -75,6 +76,8 @@ void MyQTSerialPorts::initOrLoad(Config & config){
     }
     m_timerPilot.stop();
     m_timerPilot.start(1000/40);
+    m_timer100ms.stop();
+    m_timer100ms.start(1000/40);
     DEBUG("end");
     
     double lat = 4937.6041777;
@@ -182,13 +185,7 @@ void MyQTSerialPorts::writePilotSerialDAndWait(std::vector<unsigned char> & l){
 
 #include <QThread>
 int i = 0;
-void MyQTSerialPorts::rechercheAuto(){
-    setRecherche();
-//    GCVBHÙDÈ
-    
-}
-
-void MyQTSerialPorts::setRecherche(){
+void MyQTSerialPorts::searchBegin(){
     INFO("##0 open");
     closeAll();
     //TODOGpsFramework & f = GpsFramework::Instance();
@@ -238,6 +235,7 @@ void MyQTSerialPorts::analyseRecherche(){
         QByteArray b = serial_search->m_serial_port.readAll();
         QString hex(b);
         std::string data_s = hex.toUtf8().constData();
+        serial_search->m_data_s = data_s;
         if(data_s.size()>2){
             if(data_s.find("$GNGGA") !=std::string::npos){
                 gps_port = serial_search->m_serial_s;
@@ -307,6 +305,22 @@ std::vector<std::string> & MyQTSerialPorts::getAvailablePorts(){
     return m_serials;
 }
 
+void MyQTSerialPorts::handle100Ms(){
+    INFO("la " << m_serial_searchs_i);
+    if(m_serial_searchs_i > 0){
+        m_serial_searchs_i++;
+        INFO(m_serial_searchs_i);
+        if(m_serial_searchs_i == 10){
+            ecrireRecherche();
+        }
+        if(m_serial_searchs_i > 20){
+            analyseRecherche();
+            //MainWidget::instance()->m_menuWidget.m_close = true;
+            m_serial_searchs_i = 0;
+            
+        }
+    }
+}
 
 void MyQTSerialPorts::handlePilot(){
     DEBUG("begin");
@@ -324,18 +338,4 @@ void MyQTSerialPorts::handlePilot(){
         //TODOGpsFramework::Instance().m_pilotModule.handleArduino();
     }
     DEBUG("end");
-    
-    if(m_serial_searchs_i > 0){
-        m_serial_searchs_i++;
-        INFO(m_serial_searchs_i);
-        if(m_serial_searchs_i == 500){
-            ecrireRecherche();
-        }
-        if(m_serial_searchs_i > 1000){
-            analyseRecherche();
-            //MainWidget::instance()->m_menuWidget.m_close = true;
-            m_serial_searchs_i = 0;
-            
-        }
-    }
 }

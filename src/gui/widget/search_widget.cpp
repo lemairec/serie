@@ -16,7 +16,7 @@ void SearchWidget::setSize(int width, int height){
     BaseWidget::setSize(width, height);
     
     m_button_close.setResizeStd(m_width*0.75, m_height*0.7, "Close");
-    m_button_search.setResizeStd(m_width*0.25, m_height*0.7, "Search");
+    m_button_search.setResizeStd(m_width*0.75, m_height*0.3, "Search");
 };
 
 void SearchWidget::draw(){
@@ -31,28 +31,6 @@ void SearchWidget::draw(){
     
     int y = m_height*0.2;
     int inter = m_height*0.05;
-    
-    y = m_height*0.2;
-    {
-        drawQText( "filtre hexa :", m_width*0.75, y);
-    }
-    y += inter;
-    {
-        char s[100];
-        sprintf(s, "%4.4X", f.m_frame_filter);
-        
-        QString s2 = QString(s);;
-        drawQText(s2, m_width*0.75, y);
-    }
-    y += inter;
-    {
-        drawQText( " int :", m_width*0.75, y);
-    }
-    y += inter;
-    {
-        QString s = QString::number(f.m_frame_filter);
-        drawQText(s, m_width*0.75, y);
-    }
     
     drawMessagesCan();
     drawButtonLabel2(m_button_search);
@@ -73,11 +51,11 @@ void SearchWidget::drawMessagesCan(){
     
     Framework & f = Framework::Instance();
     int i = 0;
-    for(auto s : f.m_messages_can){
-        if(y2 < y){
-            break;
-        }
-        drawText(s, x+10, y2);
+    for(auto serial : f.m_serial_port.m_serial_searchs){
+        SerialSearch * serial_p = serial.second;
+        drawText(serial_p->m_serial_s, x+10, y2);
+        y2+= -inter;
+        drawText(serial_p->m_data_s, x+10, y2);
         y2+= -inter;
         ++i;
         
@@ -89,7 +67,7 @@ void SearchWidget::drawMessagesCan(){
 
 int SearchWidget::onMouse(int x, int y){
     if(m_button_search.isActive(x, y)){
-        //m_keypad_hexa_widget.open();
+        Framework::Instance().m_serial_port.searchBegin();
     }
     if(m_button_close.isActive(x, y)){
         m_close = true;
