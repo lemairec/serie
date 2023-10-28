@@ -53,9 +53,10 @@ void SearchWidget::drawMessagesCan(){
     int i = 0;
     for(auto serial : f.m_serial_port.m_serial_searchs){
         SerialSearch * serial_p = serial.second;
+        drawText(serial_p->m_data_s, x+10, y2);
+        y2+= -inter;
         drawText(serial_p->m_serial_s, x+10, y2);
         y2+= -inter;
-        drawText(serial_p->m_data_s, x+10, y2);
         y2+= -inter;
         ++i;
         
