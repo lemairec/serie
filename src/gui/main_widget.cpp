@@ -201,7 +201,7 @@ void MainWidget::drawButtons(){
         drawButtonImageCarre(m_button_cap, m_imgMenu, 0.8*0.4, false, "CAP");
         drawButtonImageCarre(m_button_cfg, m_imgMenu, 0.8*0.4, false, "CFG");
         drawButtonImageCarre(m_button_can, m_imgMenu, 0.8*0.4, false, "CAN");
-        drawButtonImageCarre(m_button_search,m_imgMenu, 0.8*0.4, false, "SEARCH");
+        drawButtonImageCarre(m_button_search,m_imgMenu, 0.8*0.4, !m_search_widget.m_close, "SEARCH");
         drawButtonImageCarre(m_button_log, m_imgMenu, 0.8*0.4, false, "LOG");
     }
     

@@ -15,22 +15,20 @@ void SearchWidget::setPainter(QPainter * painter){
 void SearchWidget::setSize(int width, int height){
     BaseWidget::setSize(width, height);
     
+    m_x = 10;
+    m_y = 10;
+    m_width2 = 0.85*width;
+    m_height2 = 1*height-20;
+    
     m_button_close.setResizeStd(m_width*0.75, m_height*0.7, "Close");
     m_button_search.setResizeStd(m_width*0.75, m_height*0.3, "Search");
 };
 
 void SearchWidget::draw(){
-    Framework & f = Framework::Instance();
-    
-    
-    
     m_painter->setPen(m_pen_black);
     m_painter->setBrush(m_brush_white);
-    m_painter->drawRoundedRect(m_width*0.05, m_height*0.1, m_width*0.9, m_height*0.8, RAYON_ROUNDED, RAYON_ROUNDED);
+    m_painter->drawRoundedRect(m_x, m_y, m_width2, m_height2, RAYON_ROUNDED, RAYON_ROUNDED);
     
-    
-    int y = m_height*0.2;
-    int inter = m_height*0.05;
     
     drawMessagesCan();
     drawButtonLabel2(m_button_search);
@@ -40,10 +38,10 @@ void SearchWidget::draw(){
 void SearchWidget::drawMessagesCan(){
     m_painter->setBrush(m_brush_white);
     
-    int x = m_width*0.1;
+    int x = 20;
     int w = m_width*0.6;
-    int y = m_height*0.15;
-    int h = m_height*0.7;
+    int y = x;
+    int h = m_height*1.0-2*y;
     m_painter->drawRect(x, y, w, h);
     
     int y2 = y-10+h;
@@ -53,10 +51,13 @@ void SearchWidget::drawMessagesCan(){
     int i = 0;
     for(auto serial : f.m_serial_port.m_serial_searchs){
         SerialSearch * serial_p = serial.second;
+        drawText("-----", x+10, y2);
+        y2+= -inter;
         drawText(serial_p->m_data_s, x+10, y2);
         y2+= -inter;
         drawText(serial_p->m_serial_s, x+10, y2);
         y2+= -inter;
+        drawText("-----", x+10, y2);
         y2+= -inter;
         ++i;
         

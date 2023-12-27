@@ -9,6 +9,7 @@ class SearchWidget : public BaseWidget {
     ButtonGui m_button_search;
     ButtonGui m_button_close;
 public:
+    int m_x, m_y, m_width2, m_height2;
     SearchWidget();
 
     void setSize(int width, int height);
