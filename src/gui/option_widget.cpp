@@ -1,12 +1,20 @@
 #include "option_widget.hpp"
-
-#include "main_widget.hpp"
-#include "environnement.hpp"
-#include "qt/main_window.hpp"
+#include "../util/directory_manager.hpp"
+#include <sstream>
+#include <fstream>
+#include <string>
 
 #include "../framework.hpp"
+#include "qt/main_window.hpp"
+#include "main_widget.hpp"
+#include "../config/langage.hpp"
+//#include <QMediaPlayer>
 
-#define PETIT_RAYON2 0.025
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <boost/algorithm/string.hpp>
 
 OptionWidget::OptionWidget(){
     //m_close=false;
@@ -47,16 +55,15 @@ void OptionWidget::setSize(int width, int height){
     m_width3 = m_width2+m_y2+m_y2;
     m_part_1_x = m_width3*0.04;
     m_part_1_w = m_width3*0.44;
-    //m_part_1_m = m_part_1_x+0.5*m_width3*0.44;
+    m_part_1_m = m_part_1_x+0.5*m_width3*0.44;
     m_part_1_x2 = m_part_1_x+0.1*m_width3*0.44;
     m_part_1_x3 = m_part_1_x+0.8*m_width3*0.44;
     m_part_2_x = m_width3*0.52;
     m_part_2_w = m_width3*0.44;
-    //m_part_2_m = m_part_2_x+0.5*m_width3*0.44;
+    m_part_2_m = m_part_2_x+0.5*m_width3*0.44;
     m_part_2_x2 = m_part_2_x+0.1*m_width3*0.44;
     m_part_2_x3 = m_part_2_x+0.8*m_width3*0.44;
     
-    m_button_close.setResizeStd(0.75*m_width, m_y2+0.9*m_height2, "CLOSE");
     m_select_widget.setSize(width, height);
     
     m_button_p1.setResize(0.1*m_width, 0.20*m_height, m_gros_button);
@@ -72,85 +79,77 @@ void OptionWidget::setSize(int width, int height){
     resizePage4();
     resizePage5();
     resizePage6();
-    int x_right = width-m_gros_button*1.2;
-    //int inter = m_gros_button*2.1;
-    int y = m_gros_button*1.2;
+    int x_right = width-m_gros_button-20;
+    int inter = m_gros_button*2.1;
+    int y = m_gros_button*1.2+10;
     m_button_close.setResize(x_right, y, m_gros_button);
-    m_button_ok.setResize(x_right, m_height-m_gros_button*1.2, m_gros_button);
+    y += 1.5*inter;
+    m_button_p1.setResize(x_right, y, m_gros_button);
+    y += inter;
+    m_button_p2.setResize(x_right, y, m_gros_button);
+    y += inter;
+    m_button_p3.setResize(x_right, y, m_gros_button);
+    y += inter;
+    m_button_p4.setResize(x_right, y, m_gros_button);
+    y += inter;
+    m_button_p5.setResize(x_right, y, m_gros_button);
+    y += inter;
+    m_button_p6.setResize(x_right, y, m_gros_button);
+    y += inter;
     
+    m_button_return.setResize(x_right, m_height-m_gros_button*1.2-10, m_gros_button);
+}
+
+void OptionWidget::drawButtons(){
+    {
+        int h = m_height-20;
+        int w = m_gros_button*2+20;
+        
+        m_painter->setBrush(m_brush_background_2);
+        m_painter->setPen(m_pen_no);
+        
+        m_painter->drawRoundedRect(m_width-w-10, 10, w, h, 10, 10);
+        
+    }
+    
+    drawButtonImageCarre(m_button_close, m_img_off, 0.3, false, "CLOSE");
+    drawButtonImageCarre(m_button_return, m_img_return, 0.3, false, "RETURN");
 }
 
 void OptionWidget::draw(){
-
+    m_painter->setPen(m_pen_no);
     m_painter->setBrush(m_brush_background_1);
     m_painter->drawRect(0 , 0, m_width, m_height);
     
-    m_painter->setPen(m_pen_black);
-    m_painter->setBrush(m_brush_white);
-    m_painter->drawRoundedRect(m_x2, m_y2, m_width2, m_height2, RAYON_ROUNDED, RAYON_ROUNDED);
-    
-    drawButtonOption(m_button_ok, m_img_return, false, 0.3);
-    
-    drawButtonOption(m_button_close, m_img_off, false, 0.3);
+    drawButtons();
     
     if(m_page == 1){
-        drawButtonImage(m_button_p1, m_imgOptionBlanc);
         drawPage1();
-    } else {
-        drawButtonImage(m_button_p1, m_imgOptionGris);
-    }
-    
-    if(m_page == 2){
-        drawButtonImage(m_button_p2, m_imgSatBlanc);
+    } else if(m_page == 2){
         drawPage2();
-    } else {
-        drawButtonImage(m_button_p2, m_imgSatGris);
-        
-    }
-    
-    if(m_page == 3){
-        drawButtonImage(m_button_p3, m_imgImuBlanc, 0.5);
+    } else if(m_page == 3){
         drawPage3();
-    } else {
-        drawButtonImage(m_button_p3, m_imgImuGris, 0.5);
-        
-    }
-    
-    if(m_page == 4){
-        drawButtonImage(m_button_p4, m_imgVolantBlanc);
+    } else if(m_page == 4){
         drawPage4();
-    } else {
-        drawButtonImage(m_button_p4, m_imgVolantGris);
-    }
-    
-    //GpsFramework & f = GpsFramework::Instance();
-    
-    if(m_page == 5){
-        drawButtonImage(m_button_p5, m_imgVolantBlanc);
+    } else if(m_page == 5){
         drawPage5();
-    } else {
-        drawButtonImage(m_button_p5, m_imgVolantGris);
-    }
-    
-    if(m_page == 6){
-        drawButtonImage(m_button_p6, m_imgVolantBlanc);
+    } else if(m_page == 6){
         drawPage6();
-    } else {
-        drawButtonImage(m_button_p6, m_imgVolantGris);
     }
-    
     if(!m_select_widget.m_close){
         m_select_widget.draw();
     }
 }
 
 int OptionWidget::onMouse(int x, int y){
-    
-    if(m_button_ok.isActive(x,y)){
+    if(m_button_return.isActive(x,y)){
         m_close = true;
-    } else if(m_button_close.isActive(x,y)){
+    }
+    if(m_button_close.isActive(x, y)){
         exit(0);
-    } else  if(m_button_p1.isActive(x,y)){
+    }
+    
+    if(m_button_p1.isActive(x,y)){
         m_page = 1;
     } else if(m_button_p2.isActive(x,y)){
         m_page = 2;

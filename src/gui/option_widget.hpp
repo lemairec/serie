@@ -25,7 +25,7 @@ class OptionWidget : public BaseWidget {
     
     
     ButtonGui m_button_close;
-    ButtonGui m_button_ok;
+    ButtonGui m_button_return;
     
     ButtonGui m_button_p1;
     ButtonGui m_button_p2;
@@ -46,6 +46,7 @@ class OptionWidget : public BaseWidget {
     int m_x2, m_y2, m_width2, m_height2;
     int m_width3, m_y_title, m_y_begin, m_y_inter;
     int m_part_1_x, m_part_1_w, m_part_1_x2, m_part_1_x3, m_part_2_x, m_part_2_w, m_part_2_x2, m_part_2_x3;
+    int m_part_1_m, m_part_2_m;
     
     SelectWidget m_select_widget;
 public:
@@ -55,6 +56,7 @@ public:
     
     void setSize(int width, int height);
     
+    void drawButtons();
     virtual void draw();
     virtual int onMouse(int x, int y);
     
