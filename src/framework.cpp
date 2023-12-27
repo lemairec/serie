@@ -18,7 +18,7 @@ std::ofstream file_debug_stream;
 std::string date_str;
 
 void makedir(std::string dir2){
-    std::string dir = DirectoryManager::Instance().getSourceDirectory() + dir2;
+    std::string dir = DirectoryManager::instance().getSourceDirectory() + dir2;
     std::string s2 = "mkdir -p "+ dir + ";";
     INFO(s2);
     if(system( s2.c_str() )){

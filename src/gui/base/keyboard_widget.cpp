@@ -32,33 +32,38 @@ void KeyPadWidget::setSize(int width, int height){
     
 }
 
-void KeyPadWidget::myDrawButton(ButtonGui * b, QString s){
-    drawButton(*b);
-    drawQText(s, b->m_x, b->m_y, sizeText_medium, true);
-}
-
 
 void KeyPadWidget::draw(){
-    m_painter->setPen(m_penBlack);
-    m_painter->setBrush(m_brushWhiteAlpha);
+    m_painter->setPen(m_pen_black);
+    m_painter->setBrush(m_brush_background_1);
     m_painter->drawRoundedRect(m_x, m_height*0.1, m_width*0.3, m_height*0.8, RAYON_ROUNDED, RAYON_ROUNDED);
     
     drawQText(m_title, m_x+m_lg/2, 0.15*m_height, sizeText_big, true);
     
+    
+    m_painter->setPen(m_pen_no);
+    if(m_black_mode){
+        m_painter->setBrush(m_brush_background_3);
+    } else {
+        m_painter->setBrush(m_brush_background_2);
+    }
+    m_painter->drawRoundedRect(m_x+m_width*0.05, m_height*0.2, m_width*0.2, m_height*0.1, 10, 10);
     QString s = m_res;
+    m_painter->setPen(m_pen_black_inv);
     drawQText(s, m_x+m_lg/2, 0.25*m_height, sizeText_big, true);
-
-    drawButtonLabel2(m_button1, COLOR_WHITE);
-    drawButtonLabel2(m_button2, COLOR_WHITE);
-    drawButtonLabel2(m_button3, COLOR_WHITE);
-    drawButtonLabel2(m_button4, COLOR_WHITE);
-    drawButtonLabel2(m_button5, COLOR_WHITE);
-    drawButtonLabel2(m_button6, COLOR_WHITE);
-    drawButtonLabel2(m_button7, COLOR_WHITE);
-    drawButtonLabel2(m_button8, COLOR_WHITE);
-    drawButtonLabel2(m_button9, COLOR_WHITE);
-    drawButtonLabel2(m_button0, COLOR_WHITE);
-    drawButtonLabel2(m_button_point, COLOR_WHITE);
+    
+    
+    drawButtonLabel2(m_button1);
+    drawButtonLabel2(m_button2);
+    drawButtonLabel2(m_button3);
+    drawButtonLabel2(m_button4);
+    drawButtonLabel2(m_button5);
+    drawButtonLabel2(m_button6);
+    drawButtonLabel2(m_button7);
+    drawButtonLabel2(m_button8);
+    drawButtonLabel2(m_button9);
+    drawButtonLabel2(m_button0);
+    drawButtonLabel2(m_button_point);
     drawButtonLabel2(m_button_ok, COLOR_VALIDATE);
 }
 
@@ -148,14 +153,14 @@ void KeyPadHexaWidget::open(){
 }
 
 void KeyPadHexaWidget::myDrawButton(ButtonGui * b, QString s){
-    drawButton(*b);
+    drawButtonLabel2(*b);
     drawQText(s, b->m_x, b->m_y, sizeText_medium, true);
 }
 
 
 void KeyPadHexaWidget::draw(){
-    m_painter->setPen(m_penBlack);
-    m_painter->setBrush(m_brushWhiteAlpha);
+    m_painter->setPen(m_pen_black);
+    m_painter->setBrush(m_brush_whiteAlpha);
     m_painter->drawRoundedRect(m_x, m_height*0.1, m_width*0.3, m_height*0.8, RAYON_ROUNDED, RAYON_ROUNDED);
     
     drawQText(m_title, m_x+m_lg/2, 0.15*m_height, sizeText_big, true);
@@ -240,8 +245,8 @@ void KeyPadHexaWidget::addChiffre(QString s, int i){
 void KeyBoardWidget::setSize(int width, int height){
     BaseWidget::setSize(width, height);
     
-    m_x = m_width*0.05;
-    m_lg = m_width*0.9;
+    m_x = 20;
+    m_lg = m_width*0.88;
     
     int inter = m_width*0.07;
     int rayon = m_gros_button;
@@ -314,22 +319,30 @@ KeyBoardWidget::KeyBoardWidget(){
 
 
 void KeyBoardWidget::myDrawButton(ButtonGui * b, QString s, int color){
-    drawButtonCarre(*b, color);
-    drawQText(s, b->m_x, b->m_y, sizeText_medium, true);
+    b->m_label = s;
+    drawButtonLabel2(*b, color);
 }
 
 
 void KeyBoardWidget::draw(){
-    m_painter->setPen(m_penBlack);
-    //m_painter->drawRect(0, 0, m_width, m_height);
-    m_painter->setBrush(m_brushWhite);
+    m_painter->setPen(m_pen_black_inv);
+    m_painter->setBrush(m_brush_background_1);
     m_painter->drawRoundedRect(m_x, m_height*0.1, m_lg, m_height*0.8, RAYON_ROUNDED, RAYON_ROUNDED);
     
-    QString s = "KeyBoard";
-    drawQText(s, m_x+m_lg/2, 0.15*m_height, sizeText_big, true);
+    drawQText("KeyBoard", m_x+m_lg/2, 0.15*m_height, sizeText_big, true);
     
-    s = m_res;
-    drawQText(s, m_x+m_lg/2, 0.25*m_height, sizeText_big, true);
+    
+    m_painter->setPen(m_pen_no);
+    if(m_black_mode){
+        m_painter->setBrush(m_brush_background_3);
+    } else {
+        m_painter->setBrush(m_brush_background_2);
+    }
+    m_painter->drawRoundedRect(m_x+m_lg/2-m_width*0.1, m_height*0.2, m_width*0.2, m_height*0.1, 10, 10);
+    
+    m_painter->setPen(m_pen_black_inv);
+    drawQText(m_res, m_x+m_lg/2, 0.25*m_height, sizeText_big, true);
+    
     
     if(m_maj){
         myDrawButton(&m_button_remove, "<-");

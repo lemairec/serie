@@ -14,7 +14,7 @@ class DirectoryManager {
     std::string m_data_dir;
     std::string m_source_dir;
 public:
-    static DirectoryManager & Instance();
+    static DirectoryManager & instance();
     ~DirectoryManager();
     
     std::string m_log_file;

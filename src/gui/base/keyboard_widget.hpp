@@ -22,8 +22,6 @@ class KeyPadWidget : public BaseWidget {
     ButtonGui m_button_point;
     ButtonGui m_button_ok;
     
-    void myDrawButton(ButtonGui *, QString s);
-    
     ValueGui * m_value = NULL;
 public:
     void setSize(int width, int height);
@@ -146,9 +144,13 @@ public:
     void draw();
     int onMouse(int x, int y);
     
+    
     void setValueGuiKeyBoard(ValueGuiKeyBoard * value){
-        m_value = value;
-        m_res = QString();
+         m_value = value;
+         m_res = QString();
+         if(value){
+             m_res = QString::fromStdString(value->m_text);
+        }
     }
     
     void addLetter(QString se);

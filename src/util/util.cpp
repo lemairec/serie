@@ -3,7 +3,7 @@
 #include <math.h>
 
 std::string execute2(std::string cmd){
-    std::string file = DirectoryManager::Instance().getDataDirectory() + "/tmp_cmd";
+    std::string file = DirectoryManager::instance().getDataDirectory() + "/tmp_cmd";
     std::string cmd2 = cmd + " > " + file;
     system(cmd2.c_str());
     std::ifstream infile(file);
@@ -64,19 +64,19 @@ double my_angle(double x1, double y1, double x2, double y2){
     return angle2-angle1;
 }
 
-double angleBetweenPI2(double a){
+double angleBetweenMDemiPiDemiPi(double a){
     double angle = a;
-    if(a>3.14/2){
-        angle = angle-3.14;
+    if(a>c_pi/2){
+        angle = angle-c_pi;
     }
-    if(angle>3.14/2){
-        angle = angle-3.14;
+    if(angle>c_pi/2){
+        angle = angle-c_pi;
     }
-    if(angle < -3.14/2){
-        angle = angle+3.14;
+    if(angle < -c_pi/2){
+        angle = angle+c_pi;
     }
-    if(angle < -3.14/2){
-        angle = angle+3.14;
+    if(angle < -c_pi/2){
+        angle = angle+c_pi;
     }
     return angle;
 }
@@ -95,6 +95,45 @@ std::wstring string_to_w (const std::string& str) {
 std::string w_to_string (const std::wstring& str) {
     std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
     return myconv.to_bytes(str);
+}
+
+char getHex(int a){
+    switch(a){
+        case 0:
+            return '0';
+        case 1:
+            return '1';
+        case 2:
+            return '2';
+        case 3:
+            return '3';
+        case 4:
+            return '4';
+        case 5:
+            return '5';
+        case 6:
+            return '6';
+        case 7:
+            return '7';
+        case 8:
+            return '8';
+        case 9:
+            return '9';
+        case 10:
+            return 'A';
+        case 11:
+            return 'B';
+        case 12:
+            return 'C';
+        case 13:
+            return 'D';
+        case 14:
+            return 'E';
+        case 15:
+            return 'F';
+        default:
+            return 'X';
+    }
 }
 
 

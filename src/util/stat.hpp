@@ -19,8 +19,8 @@ public:
         auto begin = std::chrono::system_clock::now();
         std::chrono::duration<double> diff = begin - m_last_time_received;
 
-        double seconds = diff.count()*1000;
-        addNewValue(seconds);
+        double millis = diff.count()*1000;
+        addNewValue(millis);
         m_last_time_received = begin;
     }
     
@@ -64,13 +64,17 @@ public:
 
 
 class ValueStat{
-    std::list<double> m_values;
 public:
+    std::list<double> m_values;
+    size_t m_size_max;
+
     double m_moy;
     double m_moy_carre;
     double m_et;
     
+    ValueStat();
     void addNewValue(double value);
+    void addNewValueDeg(double value);
     void clear(){m_values.clear();};
 };
 

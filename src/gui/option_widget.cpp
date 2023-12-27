@@ -83,8 +83,8 @@ void OptionWidget::draw(){
     m_painter->setBrush(m_brush_background_1);
     m_painter->drawRect(0 , 0, m_width, m_height);
     
-    m_painter->setPen(m_penBlack);
-    m_painter->setBrush(m_brushWhite);
+    m_painter->setPen(m_pen_black);
+    m_painter->setBrush(m_brush_white);
     m_painter->drawRoundedRect(m_x2, m_y2, m_width2, m_height2, RAYON_ROUNDED, RAYON_ROUNDED);
     
     drawButtonOption(m_button_ok, m_img_return, false, 0.3);

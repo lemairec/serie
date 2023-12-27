@@ -272,7 +272,7 @@ void MyQTSerialPorts::analyseRecherche(){
 #include <sstream>
 
 std::string execute3(std::string cmd){
-    std::string file = DirectoryManager::Instance().getDataDirectory() + "/tmp_cmd";
+    std::string file = DirectoryManager::instance().getDataDirectory() + "/tmp_cmd";
     std::string cmd2 = cmd + " > " + file;
     system(cmd2.c_str());
     std::ifstream infile(file);

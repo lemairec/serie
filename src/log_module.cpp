@@ -13,7 +13,7 @@ LogModule::LogModule(){
 }
 
 void LogModule::initOrLoad(){
-    std::string path = DirectoryManager::Instance().getDataDirectory() + "/logs";
+    std::string path = DirectoryManager::instance().getDataDirectory() + "/logs";
     std::string s2 = "mkdir -p "+ path + ";";
     std::cout << s2 << std::endl;;
     if(system( s2.c_str() )){
@@ -23,7 +23,7 @@ void LogModule::initOrLoad(){
 }
 
 void LogModule::load(){
-    std::string path = DirectoryManager::Instance().getDataDirectory() + "/logs/logs.txt";
+    std::string path = DirectoryManager::instance().getDataDirectory() + "/logs/logs.txt";
     QString fileName = QString::fromStdString(path);
     QFile inputFile(fileName);
     m_logs.clear();
@@ -42,7 +42,7 @@ void LogModule::load(){
 }
 
 void LogModule::save(){
-    std::string path = DirectoryManager::Instance().getDataDirectory() + "/logs/logs.txt";
+    std::string path = DirectoryManager::instance().getDataDirectory() + "/logs/logs.txt";
     QString fileName = QString::fromStdString(path);
     QFile qFile(fileName);
     if (qFile.open(QIODevice::WriteOnly)) {
@@ -62,7 +62,7 @@ void LogModule::changeLog(){
     save();
     m_log = true;
     
-    std::string path = DirectoryManager::Instance().getDataDirectory() + "/logs/" + formattedTime.toUtf8().constData() + ".txt";
+    std::string path = DirectoryManager::instance().getDataDirectory() + "/logs/" + formattedTime.toUtf8().constData() + ".txt";
     m_logFile.open(path);
     if(m_logFile.fail()){
         std::cerr << "open failure as expected: " << strerror(errno) << std::endl;
@@ -80,7 +80,7 @@ void LogModule::onChar(char c){
 }
 
 void LogModule::clearAll(){
-    std::string path = DirectoryManager::Instance().getDataDirectory() + "/logs";
+    std::string path = DirectoryManager::instance().getDataDirectory() + "/logs";
     std::string s2 = "rm -rf "+ path + ";";
     std::cout << s2 << std::endl;;
     if(system( s2.c_str() )){
@@ -90,7 +90,7 @@ void LogModule::clearAll(){
 }
 
 void LogModule::openLog(const std::string & f){
-    std::string path = DirectoryManager::Instance().getDataDirectory() + "/logs/" + f + ".txt";
+    std::string path = DirectoryManager::instance().getDataDirectory() + "/logs/" + f + ".txt";
     std::string s2 = "gedit "+ path + ";";
     std::cout << s2 << std::endl;;
     if(system( s2.c_str() )){

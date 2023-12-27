@@ -123,14 +123,14 @@ void MainWidget::draw(){
 
 
 void MainWidget::draw_force(){
-    m_painter->setPen(m_penBlack);
-    m_painter->setBrush(m_brushDarkGray);
+    m_painter->setPen(m_pen_black);
+    m_painter->setBrush(m_brush_background_1);
     
     m_painter->drawRect(0, 0, m_width, 40);
     m_painter->drawRect(0, m_height-60, m_width, 60);
     
     drawMenuRight();
-    m_painter->setPen(m_penBlack);
+    m_painter->setPen(m_pen_black);
     drawMessages();
     drawButtons();
     
@@ -157,7 +157,7 @@ void MainWidget::draw_force(){
 }
 
 void MainWidget::drawMessages(){
-    m_painter->setBrush(m_brushWhite);
+    m_painter->setBrush(m_brush_white);
     
     int x = 10;
     int w = m_width-200;
@@ -184,8 +184,8 @@ void MainWidget::drawMessages(){
 
 
 void MainWidget::drawMenuRight(){
-    m_painter->setPen(m_penNo);
-    m_painter->setBrush(m_brushDarkGray);
+    m_painter->setPen(m_pen_no);
+    m_painter->setBrush(m_brush_gray);
     
     m_painter->drawRect(m_width-80, 0, 80, m_height);
 }

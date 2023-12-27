@@ -14,15 +14,15 @@ void BaseWidgetSerie::setSize(int width, int height){
 };
 
 void BaseWidgetSerie::draw(){
-    m_painter->setPen(m_penBlack);
-    m_painter->setBrush(m_brushWhiteAlpha);
+    m_painter->setPen(m_pen_black);
+    m_painter->setBrush(m_brush_whiteAlpha);
     m_painter->drawRect(m_width*0.05, m_height*0.1, m_width*0.9, m_height*0.8);
-    m_painter->setBrush(m_brushDarkGray);
+    m_painter->setBrush(m_brush_gray);
     m_painter->drawRect(m_width*0.05, m_height*0.1, m_width*0.1, m_height*0.8);
     
     drawButtonImage(m_button_close, m_imgClose);
     for(auto c : m_buttons){
-        drawButton(c->m_button);
+        drawButtonLabel2(c->m_button);
         drawText(c->m_label,c->m_x*m_width +50, c->m_y*m_height);
     }
     

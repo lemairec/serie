@@ -1,5 +1,6 @@
 #include "parser.hpp"
 #include "../util/log.hpp"
+#include "../util/util.hpp"
 #include "environnement.hpp"
 
 
@@ -30,7 +31,7 @@ void Parser::readChar(char c){
         parseBuffer();
         resetBuffer();
     } else {
-        if(m_bufferIndLast > 190){
+        if(m_bufferIndLast > BUFFER_SIZE){
             resetBuffer();
         }
         this->m_buffer[m_bufferIndLast] = c;
@@ -39,17 +40,34 @@ void Parser::readChar(char c){
 }
 
 
-/**
- * Parsing
- **/
 
-//$GPGGA,114608.00,4905.46094,N,00332.09303,E,2,07,1.46,87.8,M,46.3,M,,0000*6B
-
+bool Parser::checkBuffer(){
+    int checksum = 0;
+    for(size_t i =0; i < m_bufferIndLast; ++i){
+        const char c = m_buffer[i];
+        if (c == '*'){
+            if(i < m_bufferIndLast+2){
+                char c1 = m_buffer[i+1];
+                char c2 = m_buffer[i+2];
+                
+                int i = getHexIntWithChar(c1)*16+getHexIntWithChar(c2);
+                if(i == checksum){
+                    return true;
+                }
+            }
+            break;
+        }
+        checksum = checksum ^ c;
+    }
+    m_nb_error_check++;
+    return false;
+}
 
 
 void Parser::resetBuffer(){
     m_bufferIndLast = 0;
     m_tempInd = 0;
+    m_has_error = false;
     //for(size_t i = 0; i < 200; ++i){
     //  m_buffer[i] = ' ';
     //}
@@ -57,7 +75,9 @@ void Parser::resetBuffer(){
 
 
 void Parser::error(){
+    m_nbr_error++;
     printBuffer();
+    m_has_error = true;
     WARN("error");
 }
 
@@ -155,44 +175,54 @@ int Parser::getIntWithChar(char c){
 }
 
 int Parser::getHexaIntWithChar(char c){
-    if(c =='0'){
-        return 0;
-    } else if(c =='1'){
-        return 1;
-    } else if(c =='2'){
-        return 2;
-    } else if(c =='3'){
-        return 3;
-    } else if(c =='4'){
-        return 4;
-    } else if(c =='5'){
-        return 5;
-    } else if(c =='6'){
-        return 6;
-    } else if(c =='7'){
-        return 7;
-    } else if(c =='8'){
-        return 8;
-    } else if(c =='9'){
-        return 9;
-    } else if(c =='A'){
-        return 10;
-    } else if(c =='B'){
-        return 11;
-    } else if(c =='C'){
-        return 12;
-    } else if(c =='D'){
-        return 13;
-    } else if(c =='E'){
-        return 14;
-    } else if(c =='F'){
-        return 15;
-    } else {
-        error();
-        INFO("'" << c << "'" << (int)c);
-        return 0;
+    if(c == '0'){
+        return 0x0;
+    } else if(c == '1'){
+        return 0x1;
+    } else if(c == '2'){
+        return 0x2;
+    } else if(c == '3'){
+        return 0x3;
+    } else if(c == '4'){
+        return 0x4;
+    } else if(c == '5'){
+        return 0x5;
+    } else if(c == '6'){
+        return 0x6;
+    } else if(c == '7'){
+        return 0x7;
+    } else if(c == '8'){
+        return 0x8;
+    } else if(c == '9'){
+        return 0x9;
+    } else if(c == 'a'){
+        return 0xA;
+    } else if(c == 'A'){
+        return 0xA;
+    } else if(c == 'b'){
+        return 0xB;
+    } else if(c == 'B'){
+        return 0xB;
+    } else if(c == 'c'){
+        return 0xC;
+    } else if(c == 'C'){
+        return 0xC;
+    } else if(c == 'd'){
+        return 0xD;
+    } else if(c == 'D'){
+        return 0xD;
+    } else if(c == 'e'){
+        return 0xE;
+    } else if(c == 'E'){
+        return 0xE;
+    } else if(c == 'f'){
+        return 0xF;
+    } else if(c == 'F'){
+        return 0xF;
     }
+    return 0;
 }
+
 
 int Parser::readNegInt(){
     bool neg = false;
@@ -206,6 +236,22 @@ int Parser::readNegInt(){
     } else {
         return res;
     }
+}
+
+int Parser::readIntHexa(){
+    int res = 0;
+    
+    while(m_tempInd < m_bufferIndLast){
+        char c = m_buffer[m_tempInd];
+        if(c == ',' || c == ';'){
+            ++m_tempInd;
+            return res;
+        } else {
+            res = res*16 + getHexaIntWithChar(c);
+            ++m_tempInd;
+        }
+    }
+    return res;
 }
 
 int Parser::readInt(){
@@ -238,20 +284,6 @@ int Parser::readHexaInt(){
     return res;
 }
 
-double Parser::readNegDouble(){
-    bool neg = false;
-    if(m_buffer[m_tempInd] == '-'){
-        neg = true;
-        ++m_tempInd;
-    }
-    double res  = readDouble();
-    if(neg){
-        return -res;
-    } else {
-        return res;
-    }
-}
-
 double Parser::readDouble(){
     double res = 0;
     double virgule_part = 1;
@@ -277,6 +309,20 @@ double Parser::readDouble(){
     }
     error();
     return 0.0;
+}
+
+double Parser::readNegDouble(){
+    bool neg = false;
+    if(m_buffer[m_tempInd] == '-'){
+        neg = true;
+        ++m_tempInd;
+    }
+    double res = readDouble();
+    if(neg){
+        return -res;
+    } else {
+        return res;
+    }
 }
 
 double Parser::readDeg()

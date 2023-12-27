@@ -10,8 +10,8 @@ void NMEAWidget::setSize(int width, int height){
 };
 
 void NMEAWidget::draw(){
-    m_painter->setPen(m_penBlack);
-    m_painter->setBrush(m_brushWhite);
+    m_painter->setPen(m_pen_black);
+    m_painter->setBrush(m_brush_white);
     m_painter->drawRoundedRect(m_width*0.05, m_height*0.1, m_width*0.9, m_height*0.8, RAYON_ROUNDED, RAYON_ROUNDED);
     
     Framework & f = Framework::Instance();

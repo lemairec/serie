@@ -1,7 +1,9 @@
 #ifndef PARSER_H
 #define PARSER_H
-#include <string>
-#include <memory>
+
+#include "include.hpp"
+
+#define BUFFER_SIZE 300
 
 class Parser {
 public:
@@ -14,12 +16,18 @@ public:
     void readChar(char c);
 
     void resetBuffer();
+    
+    int m_nbr_error = 0;
+    bool m_has_error = false;
+    void error();
+    
+    int m_nb_error_check = 0;
+    bool checkBuffer();
 protected:
     size_t m_bufferIndLast = 0;
-    char m_buffer[200];
+    char m_buffer[BUFFER_SIZE];
     size_t m_tempInd = 0;
     
-    void error();
     void debug();
     
     virtual void parseBuffer() = 0;
@@ -32,8 +40,9 @@ protected:
     int readNegInt();
     int readInt();
     int readHexaInt();
-    double readNegDouble();
+    int readIntHexa();
     double readDouble();
+    double readNegDouble();
     double readDeg();
     
     double getTimeHour(double d);

@@ -1,5 +1,5 @@
 #include "select_widget.hpp"
-//#include "../../config/langage.hpp"
+#include "../../config/langage.hpp"
 
 void SelectWidget::setSize(int width, int height){
     BaseWidget::setSize(width, height);
@@ -18,8 +18,8 @@ void SelectWidget::setSizePart(int x, int y, int width, int height, int width_to
     m_x = x;
     m_y = y;
     //m_close = false;
-    m_ok.setResizeStd(m_x+m_width2*0.25, m_y+m_height2*0.9, ("OK"), true);
-    m_cancel.setResizeStd(m_x+m_width2*0.75, m_y+m_height2*0.9, ("CANCEL"), true);
+    m_ok.setResizeStd(m_x+m_width2*0.25, m_y+m_height2*0.9, Langage::getKey("OK"), true);
+    m_cancel.setResizeStd(m_x+m_width2*0.75, m_y+m_height2*0.9, Langage::getKey("CANCEL"), true);
     m_page_down.setResize(m_x+m_width2*0.35, m_y+m_height2*0.77, m_petit_button);
     m_page_down.m_label = "<";
     m_page_up.setResize(m_x+m_width2*0.65, m_y+m_height2*0.77, m_petit_button);
@@ -32,9 +32,9 @@ void SelectWidget::draw(){
     int m_open = true;
     
     if(m_open){
-        m_painter->setPen(m_penBlack);
+        m_painter->setPen(m_pen_black);
         //m_painter->drawRect(0, 0, m_width, m_height);
-        m_painter->setBrush(m_brushWhite);
+        m_painter->setBrush(m_brush_white);
         if(m_draw_rect){
             m_painter->drawRoundedRect(m_x, m_y, m_width2, m_height2, RAYON_ROUNDED, RAYON_ROUNDED);
         }
@@ -53,8 +53,8 @@ void SelectWidget::draw(){
         }
         
         if(m_draw_button){
-            drawButtonValidate(m_ok);
-            drawButtonCancel(m_cancel);
+            drawButtonLabel2(m_ok, COLOR_VALIDATE);
+            drawButtonLabel2(m_cancel, COLOR_CANCEL);
         }
         
         if(m_pages_total>1){

@@ -18,6 +18,7 @@ class KeyPadWidget;
 class KeyBoardWidget;
 
 enum SizeText{
+    sizeText_logo,
     sizeText_little,
     sizeText_medium,
     sizeText_big,

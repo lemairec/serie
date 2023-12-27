@@ -1,11 +1,8 @@
 #ifndef LOG_H
 #define LOG_H
 
+#include "include.hpp"
 #include "mytime.hpp"
-#include <sstream>
-#include <fstream>
-#include <string>
-#include <QMutex>
 
 #if WIN32
 #define CLASS_METHOD __FUNCTION__

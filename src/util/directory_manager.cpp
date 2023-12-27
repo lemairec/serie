@@ -7,7 +7,7 @@
 #include "util.hpp"
 using namespace std;
 
-DirectoryManager & DirectoryManager::Instance(){
+DirectoryManager & DirectoryManager::instance(){
     static DirectoryManager gf;
     return gf;
 }
@@ -81,7 +81,7 @@ const std::string & DirectoryManager::getSourceDirectory(){
 }
 
 void DirectoryManager::makeRelativeDir(std::string dir2){
-    std::string dir = DirectoryManager::Instance().getDataDirectory() + dir2;
+    std::string dir = DirectoryManager::instance().getDataDirectory() + dir2;
     std::string s2 = "mkdir -p "+ dir + ";";
     INFO(s2);
     if(system( s2.c_str() )){
@@ -90,7 +90,7 @@ void DirectoryManager::makeRelativeDir(std::string dir2){
 }
 
 void DirectoryManager::removeRelativeDir(std::string dir2){
-    std::string dir = DirectoryManager::Instance().getDataDirectory() + dir2;
+    std::string dir = DirectoryManager::instance().getDataDirectory() + dir2;
     std::string s2 = "rm -rf "+ dir + ";";
     INFO(s2);
     if(system( s2.c_str() )){
