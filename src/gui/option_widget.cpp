@@ -9,7 +9,12 @@
 #define PETIT_RAYON2 0.025
 
 OptionWidget::OptionWidget(){
-    
+    //m_close=false;
+    //m_page =5;
+    //addSerials();
+}
+
+void OptionWidget::loadImages(){
     m_imgClose = loadImage("/gui/ok.png");
     m_imgPlus = loadImage("/gui/plus.png");
     m_imgMinus = loadImage("/gui/minus.png");
@@ -24,11 +29,8 @@ OptionWidget::OptionWidget(){
     m_imgImuBlanc = loadImage("/gui/imu_blanc.png");
     m_imgImuGris = loadImage("/gui/imu_gris.png");
     
-    //m_close=false;
     m_img_off = loadImage("/gui/off.png");
     m_img_return = loadImage("/gui/return.png");
-    //m_page =5;
-    //addSerials();
 }
 
 void OptionWidget::setSize(int width, int height){

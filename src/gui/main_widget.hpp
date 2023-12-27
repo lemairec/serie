@@ -57,10 +57,11 @@ public:
     
     void setPainter(QPainter * s);
     
+    void loadImages();
+    
     void draw();
     void draw_force();
     void drawButtons();
-    void drawMenuRight();
     void drawMessages();
     void drawCategories();
 

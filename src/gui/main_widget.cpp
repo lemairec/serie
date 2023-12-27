@@ -23,10 +23,7 @@ int l_bottom = 20;
 MainWidget::MainWidget()
 {
     
-    m_imgMenu = loadImage("/gui/menu.png");
-    m_img_check_on = loadImage("/gui/check_on.png");
-    m_img_check_off = loadImage("/gui/check_off.png");
-
+    
     //m_widgets.push_back(&m_satWidget);
     m_widgets.push_back(&m_option_widget);
     m_widgets.push_back(&m_search_widget);
@@ -37,17 +34,20 @@ MainWidget::MainWidget()
     m_widgets.push_back(&m_bineuse_widget);
 }
 
-void MainWidget::setSize(int width, int height){
-    BaseWidget::setSize(width, height);
-    
-    BaseWidget::setSize(width, height);
-    int x_right = width-m_gros_button*1.2;
-    //int x_left = m_gros_button*1.2;
-    //int y_bas = height - m_gros_button*1.2;
+void MainWidget::loadImages(){
+    m_imgMenu = loadImage("/gui/menu.png", true);
+    m_img_check_on = loadImage("/gui/check_on.png");
+    m_img_check_off = loadImage("/gui/check_off.png");
+
+}
+
+
+void MainWidget::setSize(int width, int height){ BaseWidget::setSize(width, height);
+    int x_right = width-m_gros_button-20;
     int inter = m_gros_button*2.1;
-    int y = m_gros_button*1.2;
+    int y = m_gros_button*1.2+10;
     m_button_setting.setResize(x_right, y, m_gros_button);
-    y += inter*1.5;
+    y += inter;
     m_button_gps.setResize(x_right, y, m_gros_button);
     y += inter;
     m_button_cap.setResize(x_right, y, m_gros_button);
@@ -86,9 +86,11 @@ void MainWidget::setSize(int width, int height){
     m_buttonMenu3.setResize(x, m_height-30, m_petit_button);
     x += inter_x;
     m_buttonMenu4.setResize(x, m_height-30, m_petit_button);
-    m_buttonSendMessage.setResize(m_width-100, 0.5*m_height, m_gros_button);
     
-    m_buttonPosition.setResize(m_width-30, m_height-30, m_gros_button);
+    y = 0.5*m_height;
+    m_buttonSendMessage.setResizeStd(m_width*0.77, y, "");
+    y += inter;
+    m_buttonPosition.setResize(m_width*0.77+10, y, m_gros_button);
 }
 
 MainWidget * MainWidget::instance(){
@@ -126,10 +128,7 @@ void MainWidget::draw_force(){
     m_painter->setPen(m_pen_black);
     m_painter->setBrush(m_brush_background_1);
     
-    m_painter->drawRect(0, 0, m_width, 40);
-    m_painter->drawRect(0, m_height-60, m_width, 60);
     
-    drawMenuRight();
     m_painter->setPen(m_pen_black);
     drawMessages();
     drawButtons();
@@ -183,32 +182,37 @@ void MainWidget::drawMessages(){
 }
 
 
-void MainWidget::drawMenuRight(){
-    m_painter->setPen(m_pen_no);
-    m_painter->setBrush(m_brush_gray);
-    
-    m_painter->drawRect(m_width-80, 0, 80, m_height);
-}
-
 void MainWidget::drawButtons(){
     Framework & f = Framework::Instance();
-    drawButtonImageCarre(m_button_setting, m_imgMenu, 0.8);
+    if(true){
+        {
+            int h = m_height-20;
+            int w = m_gros_button*2+20;
+            
+            m_painter->setBrush(m_brush_background_2);
+            m_painter->setPen(m_pen_no);
+            
+            m_painter->drawRoundedRect(m_width-w-10, 10, w, h, 10, 10);
+            
+        }
+        drawButtonImageCarre(m_button_setting, m_imgMenu, 0.8*0.4);
+        
+        drawButtonImageCarre(m_button_gps, m_imgMenu, 0.8*0.4, false, "GPS");
+        drawButtonImageCarre(m_button_cap, m_imgMenu, 0.8*0.4, false, "CAP");
+        drawButtonImageCarre(m_button_cfg, m_imgMenu, 0.8*0.4, false, "CFG");
+        drawButtonImageCarre(m_button_can, m_imgMenu, 0.8*0.4, false, "CAN");
+        drawButtonImageCarre(m_button_search,m_imgMenu, 0.8*0.4, false, "SEARCH");
+        drawButtonImageCarre(m_button_log, m_imgMenu, 0.8*0.4, false, "LOG");
+    }
     
-    drawButtonLabelCarre(m_button_gps, "GPS", 0.8, m_gps_widget.isOpen());
-    drawButtonLabelCarre(m_button_cap, "CAP", 0.8, m_cap_widget.isOpen());
-    drawButtonLabelCarre(m_button_cfg, "CFG", 0.8, m_cfg_widget.isOpen());
-    drawButtonLabelCarre(m_button_can, "CAN", 0.8, m_can_widget.isOpen());
-    drawButtonLabelCarre(m_button_search, "SEARCH", 0.8, m_search_widget.isOpen());
-    drawButtonLabelCarre(m_button_log, "LOG", 0.8, m_log_widget.isOpen());
+    drawButtonLabel2(m_buttonMenu2);
+    drawButtonLabel2(m_buttonMenu3);
+    drawButtonLabel2(m_buttonMenu4);
     
-    drawButton(m_buttonMenu2);
-    drawButton(m_buttonMenu3);
-    drawButton(m_buttonMenu4);
+    //todo drawButton(m_buttonPosition);
+    drawButtonCheck(m_buttonPosition, f.m_position, "$P");
     
-    drawButton(m_buttonPosition);
-    drawButtonCheck(m_buttonPosition, f.m_position);
-    
-    drawButton(m_buttonSendMessage);
+    drawButtonLabel2(m_buttonSendMessage);
     drawText("envoyer message", m_buttonSendMessage.m_x, m_buttonSendMessage.m_y, sizeText_little, true);
 }
 

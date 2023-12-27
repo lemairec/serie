@@ -51,6 +51,8 @@ class OptionWidget : public BaseWidget {
 public:
     OptionWidget();
     
+    void loadImages();
+    
     void setSize(int width, int height);
     
     virtual void draw();
