@@ -6,7 +6,7 @@
 #include "base/keyboard_widget.hpp"
 #include "widget/harxon_widget.hpp"
 #include "widget/nmea_widget.hpp"
-#include "widget/cap_widget.hpp"
+#include "widget/gcode_widget.hpp"
 #include "widget/cfg_widget.hpp"
 #include "widget/can_widget.hpp"
 #include "widget/search_widget.hpp"
@@ -27,7 +27,7 @@ public:
     KeyPadWidget m_key_pad_widget;
     KeyBoardWidget m_key_board_widget;
     NMEAWidget m_gps_widget;
-    CapWidget m_cap_widget;
+    GcodeWidget m_gcode_widget;
     CfgWidget m_cfg_widget;
     CanWidget m_can_widget;
     SearchWidget m_search_widget;
@@ -45,7 +45,7 @@ public:
     ButtonGui m_button_can;
     ButtonGui m_button_search;
     ButtonGui m_button_log;
-    ButtonGui m_button_cap;
+    ButtonGui m_button_gcode;
     ButtonGui m_button_cfg;
     ButtonGui m_buttonMenu2;
     ButtonGui m_buttonMenu3;

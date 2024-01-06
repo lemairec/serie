@@ -4,7 +4,7 @@ project(serie)
 # The version number.
 set (PROJECT_VERSION_MAJOR 24)
 set (PROJECT_VERSION_MINOR 01)
-set (PROJECT_VERSION_PATCH 01)
+set (PROJECT_VERSION_PATCH 04)
 
 configure_file (
     "${PROJECT_SOURCE_DIR}/src/environnement.hpp.in"
@@ -39,7 +39,7 @@ set(sources ${src_hpp} ${src_cpp} ${PROJECT_BINARY_DIR}/environnement.hpp src/en
 
 FIND_PACKAGE(Qt5Core)
 add_executable(serie ${sources})
-qt5_use_modules(serie Widgets SerialPort)
+qt5_use_modules(serie Widgets SerialPort Multimedia)
 
 target_link_libraries(serie ${Boost_LIBRARIES})
 

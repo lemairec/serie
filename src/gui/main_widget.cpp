@@ -50,7 +50,7 @@ void MainWidget::setSize(int width, int height){ BaseWidget::setSize(width, heig
     y += inter;
     m_button_gps.setResize(x_right, y, m_gros_button);
     y += inter;
-    m_button_cap.setResize(x_right, y, m_gros_button);
+    m_button_gcode.setResize(x_right, y, m_gros_button);
     y += inter;
     m_button_cfg.setResize(x_right, y, m_gros_button);
     y += inter;
@@ -72,7 +72,7 @@ void MainWidget::setSize(int width, int height){ BaseWidget::setSize(width, heig
     m_key_pad_widget.setSize(m_width, m_height);
     m_key_board_widget.setSize(m_width, m_height);
     m_gps_widget.setSize(m_width, m_height);
-    m_cap_widget.setSize(m_width, m_height);
+    m_gcode_widget.setSize(m_width, m_height);
     m_cfg_widget.setSize(m_width, m_height);
     m_can_widget.setSize(m_width, m_height);
     
@@ -106,7 +106,7 @@ void MainWidget::setPainter(QPainter * p){
     }
     m_key_board_widget.setPainter(p);
     m_gps_widget.setPainter(p);
-    m_cap_widget.setPainter(p);
+    m_gcode_widget.setPainter(p);
     m_cfg_widget.setPainter(p);
     m_can_widget.setPainter(p);
     m_log_widget.m_select_widget.setPainter(p);
@@ -143,8 +143,8 @@ void MainWidget::draw_force(){
         m_key_board_widget.draw();
     }
 
-    if(m_cap_widget.isOpen()){
-        m_cap_widget.draw();
+    if(m_gcode_widget.isOpen()){
+        m_gcode_widget.draw();
     } else if(m_gps_widget.isOpen()){
         m_gps_widget.draw();
     } else if(m_cfg_widget.isOpen()){
@@ -198,7 +198,7 @@ void MainWidget::drawButtons(){
         drawButtonImageCarre(m_button_setting, m_imgMenu, 0.8*0.4);
         
         drawButtonImageCarre(m_button_gps, m_imgMenu, 0.8*0.4, false, "GPS");
-        drawButtonImageCarre(m_button_cap, m_imgMenu, 0.8*0.4, false, "CAP");
+        drawButtonImageCarre(m_button_gcode, m_imgMenu, 0.8*0.4, false, "gcode");
         drawButtonImageCarre(m_button_cfg, m_imgMenu, 0.8*0.4, false, "CFG");
         drawButtonImageCarre(m_button_can, m_imgMenu, 0.8*0.4, false, "CAN");
         drawButtonImageCarre(m_button_search,m_imgMenu, 0.8*0.4, !m_search_widget.m_close, "SEARCH");
@@ -256,24 +256,24 @@ int MainWidget::onMouse(int x, int y){
         f.m_can = false;
         m_can_widget.m_close = true;
         m_gps_widget.m_close = true;
-        m_cap_widget.m_close = true;
+        m_gcode_widget.m_close = true;
         if(f.m_gps){
             m_gps_widget.open();
         }
-    } else if(m_button_cap.isActive(x, y)){
+    } else if(m_button_gcode.isActive(x, y)){
         f.m_gps = !f.m_gps;
         f.m_can = false;
         m_can_widget.m_close = true;
         m_gps_widget.m_close = true;
-        m_cap_widget.m_close = true;
+        m_gcode_widget.m_close = true;
         if(f.m_gps){
-            m_cap_widget.open();
+            m_gcode_widget.open();
         }
     } else if(m_button_can.isActive(x, y)){
         f.m_gps = false;
         f.m_can = !f.m_can;
         m_gps_widget.m_close = true;
-        m_cap_widget.m_close = true;
+        m_gcode_widget.m_close = true;
         m_can_widget.m_close = true;
         if(f.m_can){
             m_can_widget.open();
@@ -282,7 +282,7 @@ int MainWidget::onMouse(int x, int y){
         f.m_can = false;
         f.m_gps = !f.m_gps;
         m_gps_widget.m_close = true;
-        m_cap_widget.m_close = true;
+        m_gcode_widget.m_close = true;
         m_cfg_widget.m_close = true;
         if(f.m_gps){
             m_cfg_widget.open();
@@ -313,7 +313,10 @@ int MainWidget::onMouse(int x, int y){
             m_cfg_widget.onMouse(x, y);
         }
     }
-    if(m_can_widget.isOpen()){
+    
+    if(m_gcode_widget.isOpen()){
+        m_gcode_widget.onMouse(x, y);
+    } else if(m_can_widget.isOpen()){
         m_can_widget.onMouse(x, y);
     }
     return 0;

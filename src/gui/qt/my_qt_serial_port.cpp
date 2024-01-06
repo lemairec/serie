@@ -306,7 +306,7 @@ std::vector<std::string> & MyQTSerialPorts::getAvailablePorts(){
 }
 
 void MyQTSerialPorts::handle100Ms(){
-    INFO("la " << m_serial_searchs_i);
+    //INFO("la " << m_serial_searchs_i);
     if(m_serial_searchs_i > 0){
         m_serial_searchs_i++;
         INFO(m_serial_searchs_i);
