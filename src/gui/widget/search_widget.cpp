@@ -17,11 +17,11 @@ void SearchWidget::setSize(int width, int height){
     
     m_x = 10;
     m_y = 10;
-    m_width2 = 0.85*width;
+    m_width2 = 0.88*width;
     m_height2 = 1*height-20;
     
-    m_button_close.setResizeStd(m_width*0.75, m_height*0.7, "Close");
-    m_button_search.setResizeStd(m_width*0.75, m_height*0.3, "Search");
+    m_button_close.setResizeStd(m_width*0.65, m_height*0.7, "Close");
+    m_button_search.setResizeStd(m_width*0.65, m_height*0.3, "Search");
 };
 
 void SearchWidget::draw(){

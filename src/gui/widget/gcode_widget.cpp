@@ -11,8 +11,8 @@ void GcodeWidget::setSize(int width, int height){
     BaseWidget::setSize(width, height);
     m_x2 = 10;
     m_y2 = 10;
-    m_width2 = m_width*0.9;
-    m_height2 = height-20;
+    m_width2 = 0.88*width;
+    m_height2 = 1*height-20;
     
     m_go_home.setResizeStd(m_x2+m_width2*0.3, m_y2+m_height2*0.2, "HOME");
     m_stop.setResizeStd(m_x2+m_width2*0.6, m_y2+m_height2*0.2, "STOP");
@@ -27,7 +27,7 @@ void GcodeWidget::setSize(int width, int height){
 void GcodeWidget::draw(){
     m_painter->setPen(m_pen_black);
     m_painter->setBrush(m_brush_white);
-    m_painter->drawRoundedRect(10, m_y2, m_width2, m_height2, RAYON_ROUNDED, RAYON_ROUNDED);
+    m_painter->drawRoundedRect(m_x2, m_y2, m_width2, m_height2, RAYON_ROUNDED, RAYON_ROUNDED);
     
     drawButtonLabel2(m_go_home);
     drawButtonLabel2(m_charger_outil);

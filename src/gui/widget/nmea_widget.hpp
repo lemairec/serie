@@ -11,6 +11,7 @@ public:
     NMEAWidget();
 
     void setSize(int width, int height);
+    int m_x, m_y, m_width2, m_height2;
     
     void add(double x, double y, std::string label, std::string m_command);
     virtual void draw();

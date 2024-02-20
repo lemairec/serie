@@ -10,7 +10,8 @@ class CanWidget : public BaseWidget {
     KeyPadHexaWidget m_keypad_hexa_widget;
 public:
     CanWidget();
-
+    int m_x, m_y, m_width2, m_height2;
+    
     void setSize(int width, int height);
     void setPainter(QPainter * painter);
     

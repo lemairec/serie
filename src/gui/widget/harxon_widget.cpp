@@ -7,6 +7,11 @@ BaseWidgetSerie::BaseWidgetSerie(){
 
 void BaseWidgetSerie::setSize(int width, int height){
     BaseWidget::setSize(width, height);
+    m_x2 = 10;
+    m_y2 = 10;
+    m_width2 = 0.88*width;
+    m_height2 = 1*height-20;
+    
     m_button_close.setResize(0.75*m_width, 0.83*m_height, m_gros_button);
     for(auto c : m_buttons){
         c->m_button.setResize(c->m_x*m_width, c->m_y*m_height,m_gros_button);
@@ -15,14 +20,16 @@ void BaseWidgetSerie::setSize(int width, int height){
 
 void BaseWidgetSerie::draw(){
     m_painter->setPen(m_pen_black);
-    m_painter->setBrush(m_brush_whiteAlpha);
-    m_painter->drawRect(m_width*0.05, m_height*0.1, m_width*0.9, m_height*0.8);
-    m_painter->setBrush(m_brush_gray);
-    m_painter->drawRect(m_width*0.05, m_height*0.1, m_width*0.1, m_height*0.8);
+    m_painter->setBrush(m_brush_white);
+    m_painter->drawRoundedRect(m_x2, m_y2, m_width2, m_height2, RAYON_ROUNDED, RAYON_ROUNDED);
     
+    m_painter->setPen(m_pen_black);
+    m_painter->setBrush(m_brush_whiteAlpha);
     drawButtonImage(m_button_close, m_imgClose);
     for(auto c : m_buttons){
         drawButtonLabel2(c->m_button);
+        m_painter->setPen(m_pen_black);
+        m_painter->setBrush(m_brush_whiteAlpha);
         drawText(c->m_label,c->m_x*m_width +50, c->m_y*m_height);
     }
     

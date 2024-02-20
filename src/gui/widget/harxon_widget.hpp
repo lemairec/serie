@@ -19,7 +19,8 @@ class BaseWidgetSerie : public BaseWidget {
     std::vector<SerieButton*> m_buttons;
 public:
     BaseWidgetSerie();
-
+    int m_x2, m_y2, m_width2, m_height2;
+    
     void setSize(int width, int height);
     
     void add(double x, double y, std::string label, std::string m_command);

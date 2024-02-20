@@ -16,7 +16,8 @@ class CfgWidget : public BaseWidget {
     ButtonGui m_button_send;
 public:
     CfgWidget();
-
+    int m_x, m_y, m_width2, m_height2;
+    
     void setSize(int width, int height);
     
     void add(double x, double y, std::string label, std::string m_command);

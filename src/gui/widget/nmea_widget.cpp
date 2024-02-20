@@ -7,12 +7,17 @@ NMEAWidget::NMEAWidget(){
 
 void NMEAWidget::setSize(int width, int height){
     BaseWidget::setSize(width, height);
+    
+    m_x = 10;
+    m_y = 10;
+    m_width2 = 0.88*width;
+    m_height2 = 1*height-20;
 };
 
 void NMEAWidget::draw(){
     m_painter->setPen(m_pen_black);
     m_painter->setBrush(m_brush_white);
-    m_painter->drawRoundedRect(m_width*0.05, m_height*0.1, m_width*0.9, m_height*0.8, RAYON_ROUNDED, RAYON_ROUNDED);
+    m_painter->drawRoundedRect(m_x, m_y, m_width2, m_height2, RAYON_ROUNDED, RAYON_ROUNDED);
     
     Framework & f = Framework::Instance();
     
