@@ -231,6 +231,7 @@ void OptionWidget::onMousePage1(int x, int y){
         if(m_select_widget.onMouseSelect(x, y)){
             std::string s = m_select_widget.m_selectButton->getValueString();
             f.m_config.m_serial = m_select_serial.getValueString();
+            f.m_config.m_baudrate = m_select_baudrates.getValueInt();
             f.initOrLoadConfig();
         }
        
@@ -241,13 +242,10 @@ void OptionWidget::onMousePage1(int x, int y){
         m_select_widget.open();
         m_select_widget.setValueGuiKeyPad(&m_select_serial);
     }
-    /*if(onMouseSelectButton(m_select_serial, x, y)){
-        f.m_config.m_serial = m_select_serial.getValueString();
-        f.initOrLoadConfig();
-    } else if(onMouseSelectButton(m_select_baudrates, x, y)){
-        f.m_config.m_baudrate = m_select_baudrates.getValueInt();
-        f.initOrLoadConfig();
-    }*/
+    if(m_select_baudrates.m_buttonOpen.isActive(x, y)){
+        m_select_widget.open();
+        m_select_widget.setValueGuiKeyPad(&m_select_baudrates);
+    }
 }
 
 
