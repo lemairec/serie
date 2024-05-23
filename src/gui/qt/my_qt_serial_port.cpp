@@ -301,6 +301,7 @@ std::vector<std::string> & MyQTSerialPorts::getAvailablePorts(){
     addSerialPorts("ls /dev/ttymxc*");
     addSerialPorts("ls /dev/ttyUSB*");
     addSerialPorts("ls /dev/ttyS*");
+    addSerialPorts("ls /dev/sda*");
 
     return m_serials;
 }
