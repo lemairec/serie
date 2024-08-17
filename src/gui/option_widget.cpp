@@ -39,6 +39,10 @@ void OptionWidget::loadImages(){
     
     m_img_off = loadImage("/gui/off.png");
     m_img_return = loadImage("/gui/return.png");
+    
+    m_img_check_on = loadImage("/gui/check_on.png");
+    m_img_check_off = loadImage("/gui/check_off.png");
+
 }
 
 void OptionWidget::setSize(int width, int height){
@@ -196,6 +200,9 @@ void OptionWidget::resizePage1(){
     m_select_baudrates.clear();
     m_select_baudrates.addValueInt("9600", 9600);
     m_select_baudrates.addValueInt("115200", 115200);
+    
+    y+= inter;
+    m_all_tty.setResize(m_part_1_x+m_part_1_w/2, y, "BAUDRATES", true, m_part_1_w/2);
 };
 
 void OptionWidget::drawPage1(){
@@ -215,6 +222,7 @@ void OptionWidget::drawPage1(){
    
     drawText(f.m_serial_port.m_last_error, m_part_2_x+m_part_2_w/2, m_select_serial.m_y, sizeText_medium, true);
    
+    drawButtonCheck(m_all_tty, f.m_config.m_all_tty, "ALL TTY");
     /*drawSelectButtonGuiClose(m_select_serial);
     drawSelectButtonGuiClose(m_select_baudrates);
     
@@ -241,6 +249,9 @@ void OptionWidget::onMousePage1(int x, int y){
     if(m_select_serial.m_buttonOpen.isActive(x, y)){
         m_select_widget.open();
         m_select_widget.setValueGuiKeyPad(&m_select_serial);
+    }
+    if(m_all_tty.isActive(x, y)){
+        f.m_config.m_all_tty = !f.m_config.m_all_tty;
     }
     if(m_select_baudrates.m_buttonOpen.isActive(x, y)){
         m_select_widget.open();
@@ -358,7 +369,7 @@ void OptionWidget::addSerials(){
     
     std::vector<std::string> serials;
     serials.push_back("none");
-    std::vector<std::string> & s2 = f.m_serial_port.getAvailablePorts();
+    std::vector<std::string> & s2 = f.m_serial_port.getAvailablePorts(f.m_config.m_all_tty);
     for(auto s : s2){
         serials.push_back(s);
     }

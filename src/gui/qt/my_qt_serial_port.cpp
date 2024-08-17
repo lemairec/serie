@@ -192,7 +192,7 @@ void MyQTSerialPorts::searchBegin(){
     //TODOf.m_config.m_input_gps = "none";
     //TODOf.m_config.m_inputPilot = "none";
     //TODOf.initOrLoadConfig();
-    auto serials = getAvailablePorts();
+    auto serials = getAvailablePorts(false);
     m_serial_searchs.clear();
     for(auto s : serials){
         INFO("##0 " << s);
@@ -294,14 +294,18 @@ void MyQTSerialPorts::addSerialPorts(std::string s){
     }
 }
 
-std::vector<std::string> & MyQTSerialPorts::getAvailablePorts(){
+std::vector<std::string> & MyQTSerialPorts::getAvailablePorts(bool all_tty){
     m_serials.clear();
     addSerialPorts("ls /dev/cu.*");
-    addSerialPorts("ls /dev/ttyACM*");
-    addSerialPorts("ls /dev/ttymxc*");
-    addSerialPorts("ls /dev/ttyUSB*");
-    addSerialPorts("ls /dev/ttyS*");
     addSerialPorts("ls /dev/sda*");
+    if(all_tty){
+        addSerialPorts("ls /dev/tty*");
+    } else {
+        addSerialPorts("ls /dev/ttyACM*");
+        addSerialPorts("ls /dev/ttymxc*");
+        addSerialPorts("ls /dev/ttyUSB*");
+        addSerialPorts("ls /dev/ttyS*");
+    }
 
     return m_serials;
 }

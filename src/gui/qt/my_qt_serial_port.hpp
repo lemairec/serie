@@ -53,7 +53,7 @@ public:
     void analyseRecherche();
     
     void addSerialPorts(std::string s);
-    std::vector<std::string> & getAvailablePorts();
+    std::vector<std::string> & getAvailablePorts(bool all_tty);
 private slots:
     void handleReadyReadGps();
     void handleErrorGps(QSerialPort::SerialPortError error);

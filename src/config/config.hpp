@@ -27,6 +27,8 @@ public:
     std::string m_serial;
     int m_baudrate = 115200;
     bool m_fullscreen = true;
+    
+    bool m_all_tty = false;
 
     Config();
     

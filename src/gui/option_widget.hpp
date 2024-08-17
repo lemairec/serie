@@ -69,6 +69,9 @@ public:
     SelectButtonGui m_select_serial;
     SelectButtonGui m_select_baudrates;
     
+    ButtonGui m_all_tty;
+    
+    
     void resizePage1();
     void onMousePage1(int x, int y);
     void drawPage1();
