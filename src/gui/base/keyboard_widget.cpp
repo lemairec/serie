@@ -397,7 +397,7 @@ void KeyBoardWidget::draw(){
         myDrawButton(&m_button6_tiret, "-");
         myDrawButton(&m_button7_point_virgule, ";");
         myDrawButton(&m_button8_tiret_bas, "_");
-        myDrawButton(&m_button9_tiret_bas, "_");
+        myDrawButton(&m_button9_tiret_bas, ".");
         myDrawButton(&m_button0, "0");
         myDrawButton(&m_buttonA, "a");
         myDrawButton(&m_buttonB, "b");
@@ -478,7 +478,7 @@ int KeyBoardWidget::onMouse(int x, int y){
     } else if(m_button8_tiret_bas.isActive(x, y)){
         addLetter2("8", "_");
     } else if(m_button9_tiret_bas.isActive(x, y)){
-        addLetter2("9", "_");
+        addLetter2("9", ".");
     } else if(m_buttonA.isActive(x, y)){
         addLetter2("A", "a");
     } else if(m_buttonB.isActive(x, y)){
