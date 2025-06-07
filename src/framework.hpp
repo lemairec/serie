@@ -42,6 +42,8 @@ public:
     void addSerialString(const std::string & s);
     void addSerialChar(char c);
     
+    void printMessage();
+    
     void sendMessages(const std::string & m);
     
     Config m_config;
@@ -49,6 +51,8 @@ public:
     void changeSaveLog();
     
     bool m_position = false;
+    bool m_hexa = false;
+    bool m_max = false;
     
     MyQTSerialPorts m_serial_port;
     MyQTFile m_file;

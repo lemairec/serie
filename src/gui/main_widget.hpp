@@ -18,9 +18,6 @@ public:
     static MainWidget * instance();
     
     OptionWidget m_option_widget;
-    HarxonWidget m_harxon_widget;
-    MotorWidget m_motor_widget;
-    BineuseWidget m_bineuse_widget;
     
     std::vector<BaseWidget *> m_widgets;
     
@@ -47,11 +44,10 @@ public:
     ButtonGui m_button_log;
     ButtonGui m_button_gcode;
     ButtonGui m_button_cfg;
-    ButtonGui m_buttonMenu2;
-    ButtonGui m_buttonMenu3;
-    ButtonGui m_buttonMenu4;
     ButtonGui m_buttonSendMessage;
     ButtonGui m_buttonPosition;
+    ButtonGui m_button_hexa;
+    ButtonGui m_button_max;
     
     bool m_debug = false;
     

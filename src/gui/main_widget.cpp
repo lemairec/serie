@@ -29,9 +29,6 @@ MainWidget::MainWidget()
     m_widgets.push_back(&m_search_widget);
     m_widgets.push_back(&m_log_widget);
     m_widgets.push_back(&m_key_pad_widget);
-    m_widgets.push_back(&m_harxon_widget);
-    m_widgets.push_back(&m_motor_widget);
-    m_widgets.push_back(&m_bineuse_widget);
 }
 
 void MainWidget::loadImages(){
@@ -65,7 +62,6 @@ void MainWidget::setSize(int width, int height){ BaseWidget::setSize(width, heig
     m_widthMax = m_width/2-50;
     m_heightMax = m_height/2-50;
     
-    m_harxon_widget.setSize(m_width, m_height);
     for(auto p : m_widgets){
         p->setSize(m_width, m_height);
     }
@@ -75,22 +71,15 @@ void MainWidget::setSize(int width, int height){ BaseWidget::setSize(width, heig
     m_gcode_widget.setSize(m_width, m_height);
     m_cfg_widget.setSize(m_width, m_height);
     m_can_widget.setSize(m_width, m_height);
-    
 
-    int inter_x = m_petit_button*3;
-    int x = inter_x;
-    x += inter_x;
-    x += inter_x;
-    m_buttonMenu2.setResize(x, m_height-30, m_petit_button);
-    x += inter_x;
-    m_buttonMenu3.setResize(x, m_height-30, m_petit_button);
-    x += inter_x;
-    m_buttonMenu4.setResize(x, m_height-30, m_petit_button);
-    
     y = 0.5*m_height;
     m_buttonSendMessage.setResizeStd(m_width*0.77, y, "");
     y += inter;
     m_buttonPosition.setResize(m_width*0.77+10, y, m_gros_button);
+    y += inter;
+    m_button_hexa.setResize(m_width*0.77+10, y, m_gros_button);
+    y += inter;
+    m_button_max.setResize(m_width*0.77+10, y, m_gros_button);
 }
 
 MainWidget * MainWidget::instance(){
@@ -100,7 +89,6 @@ MainWidget * MainWidget::instance(){
 
 void MainWidget::setPainter(QPainter * p){
     BaseWidget::setPainter(p);
-    m_harxon_widget.setPainter(p);
     for(auto p2 : m_widgets){
         p2->setPainter(p);
     }
@@ -205,12 +193,9 @@ void MainWidget::drawButtons(){
         drawButtonImageCarre(m_button_log, m_imgMenu, 0.8*0.4, false, "LOG");
     }
     
-    drawButtonLabel2(m_buttonMenu2);
-    drawButtonLabel2(m_buttonMenu3);
-    drawButtonLabel2(m_buttonMenu4);
-    
-    //todo drawButton(m_buttonPosition);
     drawButtonCheck(m_buttonPosition, f.m_position, "$P");
+    drawButtonCheck(m_button_hexa, f.m_hexa, "hexa");
+    drawButtonCheck(m_button_max, f.m_max, "[40]");
     
     drawButtonLabel2(m_buttonSendMessage);
     drawText("envoyer message", m_buttonSendMessage.m_x, m_buttonSendMessage.m_y, sizeText_little, true);
@@ -231,14 +216,12 @@ int MainWidget::onMouse(int x, int y){
     
     if(m_button_setting.isActive(x, y)){
         m_option_widget.open();
-    } else if(m_buttonMenu2.isActive(x, y)){
-        m_harxon_widget.m_close = false;
-    } else if(m_buttonMenu3.isActive(x, y)){
-        m_motor_widget.m_close = false;
-    } else if(m_buttonMenu4.isActive(x, y)){
-        m_bineuse_widget.m_close = false;
     } else if(m_buttonPosition.isActive(x, y)){
         f.m_position= !f.m_position;
+    } else if(m_button_hexa.isActive(x, y)){
+        f.m_hexa= !f.m_hexa;
+    } else if(m_button_max.isActive(x, y)){
+        f.m_max= !f.m_max;
     } else if(m_buttonSendMessage.isActive(x, y)){
         m_key_board_widget.m_close = false;
         

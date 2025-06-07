@@ -64,9 +64,30 @@ void Framework::addSerialString(const std::string & s){
     addSerialChar('\n');
 }
 
-void Framework::addSerialChar(char c){
-    if(c == '\n'){
+void Framework::printMessage(){
+    if(m_hexa){
+        std::stringstream ss;
+        ss << " hex - ";
+        for(auto c : m_message){
+            ss << " " << std::setw(2) << std::setfill('0') << std::hex << (int)((uchar)c);
+        }
+        m_messages_serial.push_front(ss.str());
+        m_message="";
+    } else{
         m_messages_serial.push_front(m_message);
+    }
+}
+
+void Framework::addSerialChar(char c){
+    if(m_max){
+        if(m_message.length() > 40){
+            printMessage();
+            m_message="";
+        }
+    }
+    //INFO(std::hex << (int)c)
+    if(c == '\n'){ //0x0b
+        printMessage();
         m_message="";
     } else {
         m_message+=c;
