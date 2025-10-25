@@ -198,6 +198,7 @@ void OptionWidget::resizePage1(){
     m_select_baudrates.setResize(m_part_1_x+m_part_1_w/2, y, "BAUDRATES", true, m_part_1_w/2);
     
     m_select_baudrates.clear();
+    m_select_baudrates.addValueInt("4800", 4800);
     m_select_baudrates.addValueInt("9600", 9600);
     m_select_baudrates.addValueInt("115200", 115200);
     
