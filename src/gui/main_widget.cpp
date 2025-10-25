@@ -206,7 +206,7 @@ void MainWidget::drawButtons(){
     
     drawButtonCheck(m_buttonPosition, f.m_position, "$P");
     drawButtonCheck(m_button_hexa, f.m_hexa, "hexa");
-    drawButtonCheck(m_button_max, f.m_max, "[40]");
+    drawButtonCheck(m_button_max, f.m_max, "max [20]");
     
     drawButtonLabel2(m_buttonSendMessage);
     drawText("envoyer message", m_buttonSendMessage.m_x, m_buttonSendMessage.m_y, sizeText_little, true);

@@ -81,7 +81,7 @@ void Framework::printMessage(){
 void Framework::addSerialChar(char c){
     m_number_receive++;
     if(m_max){
-        if(m_message.length() > 40){
+        if(m_message.length() > 20){
             printMessage();
             m_message="";
         }
