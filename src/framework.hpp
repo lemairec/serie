@@ -55,6 +55,8 @@ public:
     bool m_hexa = false;
     bool m_max = false;
     
+    int m_number_receive = 0;
+    
     MyQTSerialPorts m_serial_port;
     MyQTFile m_file;
     

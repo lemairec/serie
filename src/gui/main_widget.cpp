@@ -10,7 +10,7 @@
 #include "environnement.hpp"
 #include "../framework.hpp"
 #include "../util/log.hpp"
-
+#include "../util/util.hpp"
 
 #define MY_WIDTH 800
 #define MY_HEIGHT 400
@@ -173,6 +173,10 @@ void MainWidget::drawMessages(){
         ++i;
         
     }
+    
+    std::string s2 = strprintf("receive %i", f.m_number_receive);
+   
+    drawText(s2, 10 ,30);
     
 }
 
