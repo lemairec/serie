@@ -45,6 +45,7 @@ public:
     void printMessage();
     
     void sendMessages(const std::string & m);
+    void sendMessagesHexa(std::vector<unsigned char> & l);
     
     Config m_config;
     bool m_save_log;

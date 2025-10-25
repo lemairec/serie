@@ -1,5 +1,10 @@
 #include "keyboard_widget.hpp"
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
+
 void KeyPadWidget::setSize(int width, int height){
     BaseWidget::setSize(width, height);
     
@@ -102,8 +107,19 @@ int KeyPadWidget::onMouse(int x, int y){
 };
 
 void KeyPadWidget::addChiffre(QString s){
+    
     m_res = m_res + s;
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -150,6 +166,8 @@ void KeyPadHexaWidget::open(){
     BaseWidget::open();
     m_res.clear();
     m_res_int = 0;
+    m_res.clear();
+    m_hx_first_char = false;
 }
 
 void KeyPadHexaWidget::myDrawButton(ButtonGui * b, QString s){
@@ -165,7 +183,14 @@ void KeyPadHexaWidget::draw(){
     
     drawQText(m_title, m_x+m_lg/2, 0.15*m_height, sizeText_big, true);
     
-    QString s = m_res;
+    std::stringstream ss;
+    ss << " hex - ";
+    for(auto c : m_hx_res){
+        ss << " " << std::setw(2) << std::setfill('0') << std::hex << (int)((uchar)c);
+    }
+    std::cout << (ss.str()) << std::endl;
+    
+    QString s = QString::fromStdString(ss.str());
     drawQText(s, m_x+m_lg/2, 0.2*m_height, sizeText_big, true);
 
     drawButtonLabel2(m_button0, COLOR_WHITE);
@@ -231,6 +256,22 @@ int KeyPadHexaWidget::onMouse(int x, int y){
 };
 
 void KeyPadHexaWidget::addChiffre(QString s, int i){
+    if(m_hx_first_char){
+        m_hx_first_char = false;
+        uchar c= m_hx_first_char2 *16 + i;
+        m_hx_res.push_back(c);
+    } else {
+        m_hx_first_char = true;
+        m_hx_first_char2 = i;
+    }
+    
+    std::stringstream ss;
+    ss << " hex - ";
+    for(auto c : m_hx_res){
+        ss << " " << std::setw(2) << std::setfill('0') << std::hex << (int)((uchar)c);
+    }
+    std::cout << (ss.str()) << std::endl;
+    
     m_res = m_res + s;
     m_res_int = m_res_int*16+i;
 }
@@ -312,6 +353,14 @@ void KeyBoardWidget::setSize(int width, int height){
     m_button_cancel.setResize(x+9*inter, y, rayon);
     
 }
+
+
+
+
+
+
+
+
 
 KeyBoardWidget::KeyBoardWidget(){
     //m_close = false;

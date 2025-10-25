@@ -23,6 +23,7 @@ public:
     
     KeyPadWidget m_key_pad_widget;
     KeyBoardWidget m_key_board_widget;
+    KeyPadHexaWidget m_key_board_widget_hex;
     NMEAWidget m_gps_widget;
     GcodeWidget m_gcode_widget;
     CfgWidget m_cfg_widget;
@@ -45,6 +46,7 @@ public:
     ButtonGui m_button_gcode;
     ButtonGui m_button_cfg;
     ButtonGui m_buttonSendMessage;
+    ButtonGui m_buttonSendMessagHex;
     ButtonGui m_buttonPosition;
     ButtonGui m_button_hexa;
     ButtonGui m_button_max;

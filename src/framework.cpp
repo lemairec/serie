@@ -104,6 +104,16 @@ void Framework::sendMessages(const std::string & s){
     addSerialMessage(s2);
 }
 
+void Framework::sendMessagesHexa(std::vector<unsigned char> & l){
+    m_serial_port.writeGpsSerialD(l);
+    std::stringstream ss;
+    for(auto c : l){
+        ss << " " << std::setw(2) << std::setfill('0') << std::hex << (int)((uchar)c);
+    }
+    std::string s2 = "hex => " + ss.str();
+    addSerialMessage(s2);
+}
+
 void Framework::onCanMessage(CanFrame_ptr m_canFrame){
     if(m_frame_filter == 0 || m_frame_filter == m_canFrame->m_png){
         m_messages_can.push_front(m_canFrame->m_message);

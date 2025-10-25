@@ -161,19 +161,27 @@ void MyQTSerialPorts::writeGpsSerialS(const std::string & l){
     }
 }
 
-
-void MyQTSerialPorts::writePilotSerialD(std::vector<unsigned char> & l){
-    /*DEBUG("begin");
-    if(m_serialPortPilot.isOpen()){
+void MyQTSerialPorts::writeGpsSerialD(std::vector<unsigned char> & l){
+    if(m_serialPort.isOpen()){
         QByteArray b;
         for(long unsigned int i = 0; i < l.size(); ++i){
             b.append(l[i]);
         }
-        m_serialPortPilot.write(b);
-        QString hex(b.toHex());
+        m_serialPort.write(b);
     }
-    
-    DEBUG("end");*/
+}
+
+
+
+void MyQTSerialPorts::writePilotSerialD(std::vector<unsigned char> & l){
+    if(m_serialPort.isOpen()){
+        QByteArray b;
+        for(long unsigned int i = 0; i < l.size(); ++i){
+            b.append(l[i]);
+        }
+        m_serialPort.write(b);
+        //QString hex(b.toHex());
+    }
 }
 
 void MyQTSerialPorts::writePilotSerialDAndWait(std::vector<unsigned char> & l){

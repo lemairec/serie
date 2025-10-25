@@ -80,6 +80,12 @@ public:
     
     QString m_res;
     int m_res_int = 0;
+    
+    std::vector<uchar> m_hx_res;
+
+    bool m_hx_first_char = false;
+    uchar m_hx_first_char2 = 0;
+
 };
 
 
@@ -165,6 +171,9 @@ public:
         return m_res;
     }
 };
+
+
+
 
 
 #endif

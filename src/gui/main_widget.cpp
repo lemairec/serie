@@ -67,13 +67,16 @@ void MainWidget::setSize(int width, int height){ BaseWidget::setSize(width, heig
     }
     m_key_pad_widget.setSize(m_width, m_height);
     m_key_board_widget.setSize(m_width, m_height);
+    m_key_board_widget_hex.setSize(m_width, m_height);
     m_gps_widget.setSize(m_width, m_height);
     m_gcode_widget.setSize(m_width, m_height);
     m_cfg_widget.setSize(m_width, m_height);
     m_can_widget.setSize(m_width, m_height);
 
-    y = 0.5*m_height;
+    y = 0.4*m_height;
     m_buttonSendMessage.setResizeStd(m_width*0.77, y, "");
+    y += inter;
+    m_buttonSendMessagHex.setResizeStd(m_width*0.77, y, "");
     y += inter;
     m_buttonPosition.setResize(m_width*0.77+10, y, m_gros_button);
     y += inter;
@@ -93,6 +96,7 @@ void MainWidget::setPainter(QPainter * p){
         p2->setPainter(p);
     }
     m_key_board_widget.setPainter(p);
+    m_key_board_widget_hex.setPainter(p);
     m_gps_widget.setPainter(p);
     m_gcode_widget.setPainter(p);
     m_cfg_widget.setPainter(p);
@@ -129,6 +133,9 @@ void MainWidget::draw_force(){
     
     if(!m_key_board_widget.m_close){
         m_key_board_widget.draw();
+    }
+    if(!m_key_board_widget_hex.m_close){
+        m_key_board_widget_hex.draw();
     }
 
     if(m_gcode_widget.isOpen()){
@@ -199,6 +206,8 @@ void MainWidget::drawButtons(){
     
     drawButtonLabel2(m_buttonSendMessage);
     drawText("envoyer message", m_buttonSendMessage.m_x, m_buttonSendMessage.m_y, sizeText_little, true);
+    drawButtonLabel2(m_buttonSendMessagHex);
+    drawText("envoyer hexa", m_buttonSendMessagHex.m_x, m_buttonSendMessagHex.m_y, sizeText_little, true);
 }
 
 
@@ -224,8 +233,8 @@ int MainWidget::onMouse(int x, int y){
         f.m_max= !f.m_max;
     } else if(m_buttonSendMessage.isActive(x, y)){
         m_key_board_widget.m_close = false;
-        
-        
+    } else if(m_buttonSendMessagHex.isActive(x, y)){
+        m_key_board_widget_hex.m_close = false;
     } else if(!m_key_board_widget.m_close){
         m_key_board_widget.onMouse(x, y);
         if(m_key_board_widget.m_close){
@@ -233,6 +242,11 @@ int MainWidget::onMouse(int x, int y){
             s2 += "\r\n";
             std::string s = s2.toUtf8().constData();
             f.sendMessages(s);
+        }
+    } else if(!m_key_board_widget_hex.m_close){
+        m_key_board_widget_hex.onMouse(x, y);
+        if(m_key_board_widget_hex.m_close){
+            f.sendMessagesHexa(m_key_board_widget_hex.m_hx_res);
         }
     } else if(m_button_gps.isActive(x, y)){
         f.m_gps = !f.m_gps;
