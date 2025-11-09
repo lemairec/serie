@@ -163,15 +163,12 @@ void MainWidget::drawMessages(){
     int inter = 16;
     
     Framework & f = Framework::Instance();
-    int i = 0;
     for(auto s : f.m_messages_serial){
         if(y2 < y){
             break;
         }
         drawText(s, x+10, y2);
         y2+= -inter;
-        ++i;
-        
     }
     
     std::string s2 = strprintf("receive %i", f.m_number_receive);
