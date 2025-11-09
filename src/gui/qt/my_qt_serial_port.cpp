@@ -273,8 +273,10 @@ void MyQTSerialPorts::analyseRecherche(){
     
 }
 
+/**
+ * LIST PORT
+ */
 
-#include <boost/algorithm/string.hpp>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -290,30 +292,39 @@ std::string execute3(std::string cmd){
     return res;
 }
 
-void MyQTSerialPorts::addSerialPorts(std::string s){
-    std::string res = execute3(s);
-    std::vector<std::string> strs;
-    boost::split(strs, res, boost::is_any_of("\n"));
-    for(auto s : strs){
+std::vector<std::string> split(std::string s, std::string delimiter) {
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    std::string token;
+    std::vector<std::string> res;
+
+    while ((pos_end = s.find(delimiter, pos_start)) != std::string::npos) {
+        token = s.substr (pos_start, pos_end - pos_start);
+        pos_start = pos_end + delim_len;
+        res.push_back (token);
+    }
+
+    res.push_back (s.substr (pos_start));
+    return res;
+}
+
+
+void MyQTSerialPorts::addSerialPorts(std::string s2){
+    std::string res = execute3(s2);
+    std::vector<std::string> res2 = split(res, "\n");
+    for(auto s : res2){
         if(!s.empty()){
-            INFO(s);
             m_serials.push_back(s);
         }
     }
 }
 
-std::vector<std::string> & MyQTSerialPorts::getAvailablePorts(bool all_tty){
+std::vector<std::string> & MyQTSerialPorts::getAvailablePorts(){
     m_serials.clear();
     addSerialPorts("ls /dev/cu.*");
-    addSerialPorts("ls /dev/sda*");
-    if(all_tty){
-        addSerialPorts("ls /dev/tty*");
-    } else {
-        addSerialPorts("ls /dev/ttyACM*");
-        addSerialPorts("ls /dev/ttymxc*");
-        addSerialPorts("ls /dev/ttyUSB*");
-        addSerialPorts("ls /dev/ttyS*");
-    }
+    addSerialPorts("ls /dev/ttyACM*");
+    addSerialPorts("ls /dev/ttymxc*");
+    addSerialPorts("ls /dev/ttyUSB*");
+    addSerialPorts("ls /dev/ttyS*");
 
     return m_serials;
 }

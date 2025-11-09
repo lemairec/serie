@@ -1,10 +1,11 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.5)
+
 project(serie)
 
 # The version number.
-set (PROJECT_VERSION_MAJOR 24)
-set (PROJECT_VERSION_MINOR 01)
-set (PROJECT_VERSION_PATCH 04)
+set (PROJECT_VERSION_MAJOR 25)
+set (PROJECT_VERSION_MINOR 10)
+set (PROJECT_VERSION_PATCH 01)
 
 configure_file (
     "${PROJECT_SOURCE_DIR}/src/environnement.hpp.in"
@@ -27,9 +28,6 @@ if(UNIX)
     #ADD_DEFINITIONS(-g -Wall)
 endif()
 
-find_package(Boost REQUIRED COMPONENTS system)
-include_directories( ${Boost_INCLUDE_DIR}   )
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
 
 FILE(GLOB_RECURSE src_hpp src/*.hpp)
@@ -40,8 +38,6 @@ set(sources ${src_hpp} ${src_cpp} ${PROJECT_BINARY_DIR}/environnement.hpp src/en
 FIND_PACKAGE(Qt5Core)
 add_executable(serie ${sources})
 qt5_use_modules(serie Widgets SerialPort Multimedia)
-
-target_link_libraries(serie ${Boost_LIBRARIES})
 
 ###
 # grouping files for visual studio or xcode
