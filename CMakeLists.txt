@@ -5,7 +5,7 @@ project(serie)
 # The version number.
 set (PROJECT_VERSION_MAJOR 25)
 set (PROJECT_VERSION_MINOR 10)
-set (PROJECT_VERSION_PATCH 01)
+set (PROJECT_VERSION_PATCH 03)
 
 configure_file (
     "${PROJECT_SOURCE_DIR}/src/environnement.hpp.in"

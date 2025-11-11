@@ -97,6 +97,10 @@ void Framework::addSerialChar(char c){
     if(m_gps || m_can){
         m_nmea_parser.readChar(c);
     }
+    
+    if(m_hexa){
+        
+    }
 }
 
 void Framework::sendMessages(const std::string & s){

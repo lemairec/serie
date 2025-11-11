@@ -369,7 +369,7 @@ void OptionWidget::addSerials(){
     
     std::vector<std::string> serials;
     serials.push_back("none");
-    std::vector<std::string> & s2 = f.m_serial_port.getAvailablePorts(f.m_config.m_all_tty);
+    std::vector<std::string> & s2 = f.m_serial_port.getAvailablePorts();
     for(auto s : s2){
         serials.push_back(s);
     }

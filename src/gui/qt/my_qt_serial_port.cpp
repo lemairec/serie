@@ -200,7 +200,7 @@ void MyQTSerialPorts::searchBegin(){
     //TODOf.m_config.m_input_gps = "none";
     //TODOf.m_config.m_inputPilot = "none";
     //TODOf.initOrLoadConfig();
-    auto serials = getAvailablePorts(false);
+    auto serials = getAvailablePorts();
     m_serial_searchs.clear();
     for(auto s : serials){
         INFO("##0 " << s);

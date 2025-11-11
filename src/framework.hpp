@@ -4,7 +4,7 @@
 #include "gui/qt/my_qt_serial_port.hpp"
 #include "gui/qt/my_qt_file.hpp"
 #include "config/config.hpp"
-#include "gps/nmea_parser.hpp"
+#include "parser/nmea_parser.hpp"
 #include "log_module.hpp"
 #include <chrono>
 #include <QThread>
