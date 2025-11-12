@@ -1,6 +1,5 @@
 #include "my_qt_serial_port.hpp"
 #include "include_qt.hpp"
-#include <sstream>
 #include <QMetaEnum>
 #include <QSerialPortInfo>
 
@@ -8,9 +7,7 @@
 
 #include "environnement.hpp"
 #include "../../util/directory_manager.hpp"
-#include <iostream>
-#include <fstream>
-#include <sstream>
+
 
 #include "../../framework.hpp"
 
@@ -77,7 +74,7 @@ void MyQTSerialPorts::initOrLoad(Config & config){
     m_timerPilot.stop();
     m_timerPilot.start(1000/40);
     m_timer100ms.stop();
-    m_timer100ms.start(1000/40);
+    m_timer100ms.start(1000/10);
     DEBUG("end");
     
     double lat = 4937.6041777;
@@ -344,6 +341,8 @@ void MyQTSerialPorts::handle100Ms(){
             
         }
     }
+    Framework & f = Framework::Instance();
+    f.m_hexa_parser.handle100ms();
 }
 
 void MyQTSerialPorts::handlePilot(){

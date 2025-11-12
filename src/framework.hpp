@@ -5,6 +5,7 @@
 #include "gui/qt/my_qt_file.hpp"
 #include "config/config.hpp"
 #include "parser/nmea_parser.hpp"
+#include "parser/hexa_parser.hpp"
 #include "log_module.hpp"
 #include <chrono>
 #include <QThread>
@@ -26,6 +27,7 @@ public:
     bool m_gps = false;
     bool m_can = false;
     NmeaParser m_nmea_parser;
+    HexaParser m_hexa_parser;
     LogModule m_log_module;
     
     

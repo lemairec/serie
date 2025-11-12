@@ -7,10 +7,6 @@
 #include <QDateTime>
 #include <math.h>
 #include <time.h>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
 
 std::string file_info;
 std::ofstream file_job_stream;
@@ -99,7 +95,7 @@ void Framework::addSerialChar(char c){
     }
     
     if(m_hexa){
-        
+        m_hexa_parser.readChar(c);
     }
 }
 

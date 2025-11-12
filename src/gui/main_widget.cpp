@@ -5,7 +5,6 @@
 #include <math.h>
 #include <cmath>
 #include <chrono>
-#include <iomanip>
 
 #include "environnement.hpp"
 #include "../framework.hpp"
