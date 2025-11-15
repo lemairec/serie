@@ -180,7 +180,7 @@ void KeyPadHexaWidget::draw(){
     drawQText(m_title, m_x+m_lg/2, 0.15*m_height, sizeText_big, true);
     
     std::stringstream ss;
-    ss << " hex - ";
+    ss << " hex1 - ";
     for(auto c : m_hx_res){
         ss << " " << std::setw(2) << std::setfill('0') << std::hex << (int)((uchar)c);
     }
@@ -262,7 +262,7 @@ void KeyPadHexaWidget::addChiffre(QString s, int i){
     }
     
     std::stringstream ss;
-    ss << " hex - ";
+    ss << " hex2 - ";
     for(auto c : m_hx_res){
         ss << " " << std::setw(2) << std::setfill('0') << std::hex << (int)((uchar)c);
     }

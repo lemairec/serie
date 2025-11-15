@@ -63,7 +63,7 @@ void Framework::addSerialString(const std::string & s){
 void Framework::printMessage(){
     if(m_hexa){
         std::stringstream ss;
-        ss << " hex - ";
+        ss << " hex3 - ";
         for(auto c : m_message){
             ss << " " << std::setw(2) << std::setfill('0') << std::hex << (int)((uchar)c);
         }

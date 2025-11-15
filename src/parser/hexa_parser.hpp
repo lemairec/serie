@@ -14,6 +14,8 @@ protected:
     bool checkBuffer();
 
 public:
+    void parseSoil();
+    
     void handle100ms();
 };
 

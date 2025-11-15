@@ -16,6 +16,9 @@ void HexaParser::parseBuffer(){
         
         Framework & f = Framework::Instance();
         f.addSerialMessage(s2);
+        if(m_buffer[0] == 0x01 && m_buffer[1] == 0x03 && m_buffer[2] == 0x0e){
+            parseSoil();
+        }
         this->resetBuffer();
     }
 }
@@ -54,5 +57,30 @@ void HexaParser::handle100ms(){
             f.sendMessagesHexa(l);
         }
     }
+    
+}
+
+void HexaParser::parseSoil(){
+    int humidity = m_buffer[3]*256+m_buffer[4];
+    int temperature = m_buffer[5]*256+m_buffer[6];
+    int conductivity = m_buffer[7]*256+m_buffer[8];
+    int ph = m_buffer[9]*256+m_buffer[10];
+    int n = m_buffer[11]*256+m_buffer[12];
+    int p = m_buffer[13]*256+m_buffer[14];
+    int k = m_buffer[15]*256+m_buffer[16];
+    
+    double humidity_ = humidity*0.1;
+    double temperature_ = temperature*0.1;
+    double conductivity_ = conductivity*1;
+    double ph_ = ph*0.1;
+    double n_ = n*1;
+    double p_ = p*1;
+    double k_ = k*1;
+    
+    Framework & f = Framework::Instance();
+    std::string s = strprintf("hum %.1f, temp %.1f, cond %.1f", humidity_, temperature_, conductivity_);
+    f.addSerialMessage(s);
+    s = strprintf("ph %.1f, n %.1f, p %.1f, k %.1f", ph_, n_, p_, k_);
+    f.addSerialMessage(s);
     
 }
