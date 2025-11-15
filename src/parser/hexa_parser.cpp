@@ -62,7 +62,7 @@ void HexaParser::handle100ms(){
 
 void HexaParser::parseSoil(){
     int humidity = m_buffer[3]*256+m_buffer[4];
-    int temperature = m_buffer[5]*256+m_buffer[6];
+    int temperature = ((uchar)m_buffer[5])*256+((uchar)m_buffer[6]);
     int conductivity = m_buffer[7]*256+m_buffer[8];
     int ph = m_buffer[9]*256+m_buffer[10];
     int n = m_buffer[11]*256+m_buffer[12];
