@@ -78,9 +78,9 @@ void HexaParser::parseSoil(){
     double k_ = k*1;
     
     Framework & f = Framework::Instance();
-    std::string s = strprintf("hum %.1f, temp %.1f, cond %.1f", humidity_, temperature_, conductivity_);
+    std::string s = strprintf("hum %.1f  temp %.1f  cond %.1f", humidity_, temperature_, conductivity_);
     f.addSerialMessage(s);
-    s = strprintf("ph %.1f, n %.1f, p %.1f, k %.1f", ph_, n_, p_, k_);
+    s = strprintf("ph %.1f  n %.1f  p %.1f  k %.1f", ph_, n_, p_, k_);
     f.addSerialMessage(s);
     
 }
