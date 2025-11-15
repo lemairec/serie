@@ -9,10 +9,10 @@ HexaParser::HexaParser(){
 void HexaParser::parseBuffer(){
     if(m_bufferIndLast > 0){
         std::stringstream ss;
-        std::string s2 = "parse => " + ss.str();
         for(size_t i =0; i < m_bufferIndLast; ++i){
             ss << " " << std::setw(2) << std::setfill('0') << std::hex << (int)((uchar)m_buffer[i]);
         }
+        std::string s2 = "parse => " + ss.str();
         
         Framework & f = Framework::Instance();
         f.addSerialMessage(s2);
