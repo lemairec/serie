@@ -274,9 +274,6 @@ void MyQTSerialPorts::analyseRecherche(){
  * LIST PORT
  */
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
 
 std::string execute3(std::string cmd){
     std::string file = DirectoryManager::instance().getDataDirectory() + "/tmp_cmd";

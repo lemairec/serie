@@ -2,9 +2,6 @@
 #include "../../util/directory_manager.hpp"
 #include "../../util/log.hpp"
 //#include "../../framework_vision.hpp"
-#include <iostream>
-#include <sstream>
-
 //#define DEBUG_GUI
 
 BaseWidget::BaseWidget(){

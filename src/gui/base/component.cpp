@@ -1,7 +1,5 @@
 #include "base_widget.hpp"
 #include "../../util/directory_manager.hpp"
-#include <iostream>
-#include <sstream>
 
 void ButtonGui::setResize(int x, int y, int rayon){
     m_x = x;

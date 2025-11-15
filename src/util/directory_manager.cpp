@@ -1,7 +1,4 @@
 #include "directory_manager.hpp"
-#include <iostream>
-#include <fstream>
-#include <string>
 
 #include <environnement.hpp>
 #include "util.hpp"

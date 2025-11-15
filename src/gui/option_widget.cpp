@@ -11,10 +11,6 @@
 //#include <QMediaPlayer>
 
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-
 OptionWidget::OptionWidget(){
     //m_close=false;
     //m_page =5;

@@ -1,9 +1,5 @@
 #include "keyboard_widget.hpp"
-
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
+#include "../../util/util.hpp"
 
 void KeyPadWidget::setSize(int width, int height){
     BaseWidget::setSize(width, height);
