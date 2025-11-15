@@ -44,6 +44,7 @@ bool HexaParser::checkBuffer(){
 
 int m_parser_i = 0;
 void HexaParser::handle100ms(){
+    parseBuffer();
     m_parser_i++;
     if(m_parser_i>9){
         m_parser_i = 0;
@@ -53,5 +54,5 @@ void HexaParser::handle100ms(){
             f.sendMessagesHexa(l);
         }
     }
-    parseBuffer();
+    
 }
